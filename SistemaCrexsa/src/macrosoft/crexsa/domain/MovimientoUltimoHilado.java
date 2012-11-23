@@ -1,0 +1,128 @@
+package macrosoft.crexsa.domain;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+@Entity
+@Table(name="movimiento_ultimo_hilado")
+public class MovimientoUltimoHilado implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_movi_ulti")
+	private Integer idMoviUlti;
+
+	@Column(name="id_movi_hist")
+	private Integer idMoviHist;
+	
+	@Column(name="id_tipo_tran")
+	private Integer idTipoTran;
+	
+	@Column(name="id_hldo")
+	private Integer idHldo;
+	
+	@Column(name="co_unid_medi")
+	private String coUnidMedi;
+	
+	@Column(name="co_enti_orig")
+	private String coEntiOrig;
+
+	@Column(name="co_enti_dest")
+	private String coEntiDest;
+
+	@Column(name="nu_sald")
+	private BigDecimal nuSald;
+	
+	@Column(name="nu_cant")
+	private BigDecimal nuCant;
+	
+    @Temporal( TemporalType.TIMESTAMP)
+	@Column(name="fe_movi")
+	private Date feMovi;
+
+	public Integer getIdMoviUlti() {
+		return idMoviUlti;
+	}
+
+	public void setIdMoviUlti(Integer idMoviUlti) {
+		this.idMoviUlti = idMoviUlti;
+	}
+
+	public Integer getIdMoviHist() {
+		return idMoviHist;
+	}
+
+	public void setIdMoviHist(Integer idMoviHist) {
+		this.idMoviHist = idMoviHist;
+	}
+
+	public Integer getIdTipoTran() {
+		return idTipoTran;
+	}
+
+	public void setIdTipoTran(Integer idTipoTran) {
+		this.idTipoTran = idTipoTran;
+	}
+
+	public Integer getIdHldo() {
+		return idHldo;
+	}
+
+	public void setIdHldo(Integer idHldo) {
+		this.idHldo = idHldo;
+	}
+
+	public String getCoUnidMedi() {
+		return coUnidMedi;
+	}
+
+	public void setCoUnidMedi(String coUnidMedi) {
+		this.coUnidMedi = coUnidMedi;
+	}
+
+	public String getCoEntiOrig() {
+		return coEntiOrig;
+	}
+
+	public void setCoEntiOrig(String coEntiOrig) {
+		this.coEntiOrig = coEntiOrig;
+	}
+
+	public String getCoEntiDest() {
+		return coEntiDest;
+	}
+
+	public void setCoEntiDest(String coEntiDest) {
+		this.coEntiDest = coEntiDest;
+	}
+
+	public BigDecimal getNuSald() {
+		return nuSald;
+	}
+
+	public void setNuSald(BigDecimal nuSald) {
+		this.nuSald = nuSald;
+	}
+
+	public BigDecimal getNuCant() {
+		return nuCant;
+	}
+
+	public void setNuCant(BigDecimal nuCant) {
+		this.nuCant = nuCant;
+	}
+
+	public Date getFeMovi() {
+		return feMovi;
+	}
+
+	public void setFeMovi(Date feMovi) {
+		this.feMovi = feMovi;
+	}
+
+}
