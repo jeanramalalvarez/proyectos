@@ -7,7 +7,7 @@
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- Activa las diversas anotaciones que se detectan en las clases -->
+	<!-- Activa las diversas anotaciones que se detectan en las clases JEAN -->
 <!-- 	<context:annotation-config /> -->
 
 	<!-- Analiza la ruta de clases para las anotaciones de los componentes que 
