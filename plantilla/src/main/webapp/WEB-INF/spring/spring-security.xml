@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<beans:import resource="classpath:com/resources/applicationContext.xml" />
+
+<!-- 	<beans:bean id="exceptionTranslationFilter" -->
+<!-- 		class="org.springframework.security.web.access.ExceptionTranslationFilter"> -->
+<!-- 		<beans:property name="authenticationEntryPoint" ref="restAuthenticationEntryPoint" /> -->
+<!-- 		<beans:property name="accessDeniedHandler" ref="myAccessDeniedHandler" /> -->
+<!-- 	</beans:bean> -->
+
+<!-- <http> -->
+	<http entry-point-ref="restAuthenticationEntryPoint">
+		<!-- <http use-expressions="true" create-session="stateless"> -->
+		<intercept-url pattern="/api/**" access="ROLE_USER_REST" />
+<!-- 		<access-denied-handler ref="myAccessDeniedHandler" /> -->
+		<http-basic />
+	</http>
+
+
+	<!-- <authentication-manager> -->
+	<!-- <authentication-provider user-service-ref="customUserDetailsService" 
+		/> -->
+	<!-- </authentication-manager> -->
+
+	<authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="rest" password="rest" authorities="ROLE_USER_REST" />
+				<user name="user" password="1" authorities="ROLE_USER" />
+				<user name="admin" password="1" authorities="ROLE_ADMIN" />
+			</user-service>
+			<!-- <password-encoder hash="md5" /> -->
+		</authentication-provider>
+	</authentication-manager>
+
+
+	<!-- <authentication-manager> <authentication-provider> -->
+	<!-- <user-service id="userDetailsService" properties="users.properties"/> -->
+	<!-- <user-service> <user name="user" password="123" authorities="ROLE_USER" 
+		/> <user name="admin" password="123" authorities="ROLE_ADMIN" /> </user-service> 
+		<password-encoder hash="md5"/> -->
+
+	<!-- <jdbc-user-service data-source-ref="dataSource" users-by-username-query=" 
+		select username,password, enabled from users where username=?" authorities-by-username-query=" 
+		select u.username, ur.authority from users u, user_roles ur where u.user_id 
+		= ur.user_id and u.username =? " /> </authentication-provider> </authentication-manager> -->
+
+</beans:beans>
