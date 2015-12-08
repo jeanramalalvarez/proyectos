@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-10-10T22:39:23 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TotalVentadia" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="12e1bdde-6e1c-43f2-8212-224f8c3ebad8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="cnn_matriz_desarrollo"/>
+	<parameter name="fchInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2012-11-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fchFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2012-11-07"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     sum(tb_venta.`dbl_total`) AS tb_venta_dbl_total,
+     tb_venta.`str_fechaRegistro` AS tb_venta_str_fechaRegistro,
+     tb_venta.`int_local` AS tb_venta_int_local,
+     tb_locales.`str_nombre` AS tb_locales_str_nombre,
+     tb_locales.`str_direccion` AS tb_locales_str_direccion
+FROM
+     `tb_locales` tb_locales INNER JOIN `tb_venta` tb_venta ON tb_locales.`int_idLocal` = tb_venta.`int_local`
+
+where
+	date(tb_venta.`str_fechaRegistro`)>=date($P{fchInicial}) and 	date(tb_venta.`str_fechaRegistro`)<=date($P{fchFinal})
+    and tb_venta.`str_estado` like 'PAGADO'
+group by
+date(tb_venta.`str_fechaRegistro`)
+order by
+ date(tb_venta.`str_fechaRegistro`) asc]]>
+	</queryString>
+	<field name="tb_venta_dbl_total" class="java.lang.Double"/>
+	<field name="tb_venta_str_fechaRegistro" class="java.sql.Timestamp"/>
+	<field name="tb_venta_int_local" class="java.lang.Integer"/>
+	<field name="tb_locales_str_nombre" class="java.lang.String"/>
+	<field name="tb_locales_str_direccion" class="java.lang.String"/>
+	<variable name="sumaVentas" class="java.lang.Double" resetType="Group" resetGroup="tienda" calculation="Sum">
+		<variableExpression><![CDATA[$F{tb_venta_dbl_total}]]></variableExpression>
+	</variable>
+	<group name="tienda">
+		<groupExpression><![CDATA[$F{tb_venta_int_local}]]></groupExpression>
+		<groupHeader>
+			<band height="48">
+				<rectangle>
+					<reportElement x="0" y="2" width="595" height="18" uuid="e70b6625-8e59-4d3a-84e4-f0db02932c16"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="85" y="4" width="50" height="20" uuid="5e58b31d-54c8-446c-99eb-c9ef230ddfb7"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tienda :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="213" y="4" width="100" height="20" uuid="66e17a27-9fc6-41e6-9c44-e16850fd696e"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Dirección :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="85" y="25" width="155" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="18871361-c49b-420d-839a-a1026be3c2e8"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="241" y="25" width="220" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="38796ba6-2199-4122-a468-a3ed7100e02a"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Venta(Efectivo)]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="135" y="4" width="62" height="20" uuid="e7ab0a37-a33b-4386-b54f-15fc4c1b7f8b"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_locales_str_nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="313" y="4" width="164" height="20" uuid="a43eb41a-a7b4-492d-a0c3-3f47a4f228d0"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_locales_str_direccion}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="45">
+				<textField pattern="¤#,##0.##;¤-#,##0.##">
+					<reportElement mode="Opaque" x="241" y="0" width="220" height="20" backcolor="#EDB640" uuid="7aaa403f-413c-42c0-9421-0514231e8b04"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sumaVentas}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="85" y="0" width="155" height="20" forecolor="#000000" backcolor="#EDB640" uuid="138e60d0-02fe-4f05-b944-085d4f6fb5c1"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total: ]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="71" width="595" height="28" forecolor="#FFFFFF" backcolor="#D4810D" uuid="233961e2-b3b7-4043-a81e-95f2aa4ed5d3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DE VENTAS POR TIENDA Y DIA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="319" y="99" width="276" height="20" uuid="2a9c8834-a149-4836-b09b-7f9e44da7477"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[CONCATENATE($P{fchInicial}.toString()," - ",$P{fchFinal}.toString())]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="16" width="170" height="55" uuid="e102e457-39c5-4e36-b282-7db774df4308"/>
+				<imageExpression><![CDATA["C:/Users/pc/Documents/matriz/fuentes/matriz/src/main/resources/com/gestionmatriz/icon/jpg_logo_empresa.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="88" y="0" width="142" height="15" uuid="851a7d98-cb18-4d37-943f-6083b32278b5"/>
+				<textElement>
+					<font fontName="Comic Sans MS" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_venta_str_fechaRegistro}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="240" y="0" width="220" height="15" uuid="e5755310-1a3c-4b5f-8021-8f4d1a99175b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_venta_dbl_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="39" y="2" width="159" height="20" uuid="55762803-d118-4068-8322-b945ccac05b4"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="2" width="100" height="20" uuid="7ef2e77e-6af8-471f-bf03-8fab6ee92659"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

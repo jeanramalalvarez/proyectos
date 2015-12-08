@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UsuariosFunciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fbacc01c-54ba-484c-bb1b-a6921cb35caa">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="int_idFunciones" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     concat(tb_persona.`str_apePaterno`," ",tb_persona.`str_apeMaterno`," ",tb_persona.`str_nombres`)as nombres,
+      tb_funciones.`str_rol` AS tb_funciones_str_rol,
+     tb_funcionusuario.`str_estado` AS tb_funcionusuario_str_estado,
+     tb_usuario.`str_usuario` AS tb_usuario_str_usuario,
+     tb_usuario.`str_estado` AS tb_usuario_str_estado,
+     tb_usuario.`str_codigoPersona` AS tb_usuario_str_codigoPersona,
+     tb_persona.`str_dni` AS tb_persona_str_dni,
+     tb_modulo.`str_descripcion` AS tb_modulo_str_descripcion,
+     tb_funcionusuario.`str_usuarioCreador` AS tb_funcionusuario_str_usuarioCreador,
+     tb_funciones.`int_idFunciones` AS tb_funciones_int_idFunciones
+FROM
+     `tb_funciones` tb_funciones INNER JOIN `tb_funcionusuario` tb_funcionusuario ON tb_funciones.`int_idFunciones` = tb_funcionusuario.`int_idFunciones`
+     INNER JOIN `tb_usuario` tb_usuario ON tb_funcionusuario.`int_idUsuario` = tb_usuario.`int_idUsuario`
+     INNER JOIN `tb_persona` tb_persona ON tb_usuario.`int_idPersona` = tb_persona.`int_idPersona`
+     INNER JOIN `tb_modulo` tb_modulo ON tb_funciones.`int_modulo` = tb_modulo.`int_modulo`
+WHERE
+     tb_funciones.`int_idFunciones` LIKE $P{int_idFunciones}
+     and tb_funcionusuario.`str_estado` LIKE "ACTIVO"]]>
+	</queryString>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="tb_funciones_str_rol" class="java.lang.String"/>
+	<field name="tb_funcionusuario_str_estado" class="java.lang.String"/>
+	<field name="tb_usuario_str_usuario" class="java.lang.String"/>
+	<field name="tb_usuario_str_estado" class="java.lang.String"/>
+	<field name="tb_usuario_str_codigoPersona" class="java.lang.String"/>
+	<field name="tb_persona_str_dni" class="java.lang.String"/>
+	<field name="tb_modulo_str_descripcion" class="java.lang.String"/>
+	<field name="tb_funcionusuario_str_usuarioCreador" class="java.lang.String"/>
+	<field name="tb_funciones_int_idFunciones" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="10" width="528" height="57" uuid="972328a8-0112-4935-b2ae-4496888a2323"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="20"/>
+				</textElement>
+				<text><![CDATA[Reporte de Usuarios por Funciones]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="36" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="35" backcolor="#FFCC33" uuid="6155fd80-c8b6-4312-8c47-3ef9c403812b"/>
+			</rectangle>
+			<textField>
+				<reportElement x="24" y="15" width="208" height="20" uuid="055447e6-a053-4b12-9beb-a9323f7e0312"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Módulo :"+$F{tb_modulo_str_descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="15" width="268" height="20" uuid="7d90aae1-bef7-4e01-8b65-9d54e4a48fdb"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Función :"+$F{tb_funciones_str_rol}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="14" width="85" height="20" uuid="9f0aacce-0bc4-4775-86c2-1bcc9baa63b4"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="14" width="209" height="20" uuid="589c3ab0-5a8a-4e72-a691-95fc45c3fa9b"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trabajador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="14" width="67" height="20" uuid="73d44bc0-a916-4803-8feb-6f645cca7a0f"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="14" width="125" height="20" uuid="22a20166-c0ff-4f2e-943a-dceb599708dc"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asignado por:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="24" y="35" width="531" height="1" uuid="cdf966d0-b701-4f1d-8b6c-d606c92ddb71"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="24" y="12" width="85" height="20" uuid="e92464fa-4c28-4569-8285-e70e81a05ac4"/>
+				<textFieldExpression><![CDATA[$F{tb_usuario_str_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="12" width="209" height="20" uuid="1902edff-21de-42fe-a746-ecd17e47cdd9"/>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="13" width="68" height="20" uuid="df3107f5-f836-4a60-b206-da21f29252f8"/>
+				<textFieldExpression><![CDATA[$F{tb_funcionusuario_str_estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="13" width="125" height="20" uuid="e72be4ee-c56f-43cb-be1f-77e529276613"/>
+				<textFieldExpression><![CDATA[$F{tb_funcionusuario_str_usuarioCreador}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="26" y="34" width="100" height="20" uuid="60e8ff13-cfe4-4b77-a160-3d5f5b2fb04e"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="34" width="80" height="20" uuid="6336d0a0-9a51-48bf-812e-2bdf2ef72220"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="34" width="40" height="20" uuid="0f150aaf-a963-4adc-810d-cf812d971732"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

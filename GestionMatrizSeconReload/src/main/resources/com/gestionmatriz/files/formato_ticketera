@@ -1,0 +1,33 @@
+{{EMPRESA_NOMBRE}} - RUC: {{NUMERO_RUC}}
+{{DIRECCION_SUNAT}}
+SAN MARTIN DE P. - LIMA TELF.: 7392616
+{{DIRECCION_LOCAL}}
+{{TIPO_COMPROBANTE}} ELECTRONICA {{NUM_COMPROBANTE}}
+FECHA DE EMISION: {{FECHA_EMISION}}
+----------------------------------------
+COD. U.M. PRODU. CANT. P.UNIT. DSCTO IMPORTE
+----------------------------------------
+{{ITEMS}}
+----------------------------------------
+{{TOTAL}}
+----------------------------------------
+{{SUB_TOTAL}}
+{{DESC}}
+{{IGV}}
+{{TOTAL}}
+----------------------------------------
+{{EFECTIVO}}
+{{VUELTO}}
+{{MONTO_LETRAS}}
+N/S: {{N/S}}
+{{FACTURA}}
+
+
+
+
+
+
+
+
+
+m

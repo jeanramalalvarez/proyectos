@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MemorandumFecha" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3de12c85-3a36-41fa-bb93-6c4168d87b19">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="20"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fechaInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="str_asunto" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_memorandum.`str_numero` AS tb_memorandum_str_numero,
+     tb_memorandum.`str_emisor` AS tb_memorandum_str_emisor,
+     tb_memorandum.`str_receptor` AS tb_memorandum_str_receptor,
+     tb_memorandum.`str_asunto` AS tb_memorandum_str_asunto,
+     substring(tb_memorandum.`dte_fecha`,1,10) AS tb_memorandum_dte_fecha,
+     tb_memorandum.`str_usuarioCreador` AS tb_memorandum_str_usuarioCreador,
+     tb_memorandum.`str_estado` AS tb_memorandum_str_estado,
+     tb_memorandum.`int_idPersona` AS tb_memorandum_int_idPersona,
+     concat(tb_persona.`str_apePaterno`," ",tb_persona.`str_apeMaterno`," ",tb_persona.`str_nombres`) AS nombres,
+     tb_persona.`str_dni` AS tb_persona_str_dni,
+     tb_persona.`str_codigo` AS tb_persona_str_codigo
+FROM
+     `tb_persona` tb_persona INNER JOIN `tb_memorandum` tb_memorandum ON tb_persona.`int_idPersona` = tb_memorandum.`int_idPersona`
+where
+tb_memorandum.`dte_fecha` between $P{fechaInicial} and $P{fechaFinal}
+and
+tb_memorandum.`str_asunto` like $P{str_asunto}]]>
+	</queryString>
+	<field name="tb_memorandum_str_numero" class="java.lang.String"/>
+	<field name="tb_memorandum_str_emisor" class="java.lang.String"/>
+	<field name="tb_memorandum_str_receptor" class="java.lang.String"/>
+	<field name="tb_memorandum_str_asunto" class="java.lang.String"/>
+	<field name="tb_memorandum_dte_fecha" class="java.lang.String"/>
+	<field name="tb_memorandum_str_usuarioCreador" class="java.lang.String"/>
+	<field name="tb_memorandum_str_estado" class="java.lang.String"/>
+	<field name="tb_memorandum_int_idPersona" class="java.lang.Integer"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="tb_persona_str_dni" class="java.lang.String"/>
+	<field name="tb_persona_str_codigo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="793" height="33" uuid="9c005d29-5b5a-4fbb-b893-a6f340ab9192"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reportes de Memorandum ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="43" width="66" height="36" uuid="13cbdd5d-6a55-4c4d-a42c-ed06742cdeb8"/>
+				<textElement>
+					<font fontName="Consolas" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="317" y="43" width="85" height="36" uuid="7026e162-77e7-4144-8380-d3f6af2d0a21"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaInicial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="402" y="43" width="67" height="36" uuid="6bd0a89c-62ea-42ba-aa4d-6c0f6e5d906f"/>
+				<textElement>
+					<font fontName="Consolas" size="20"/>
+				</textElement>
+				<text><![CDATA[Hasta]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="469" y="43" width="87" height="36" uuid="523b4b60-8328-4d65-9248-d9b404394e73"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaFinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="588" y="12" width="79" height="20" uuid="8540bef3-6b95-49dc-b6d3-cefe71a76beb"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="12" width="175" height="20" uuid="3e985732-3da3-4a65-a405-b2aa36bc2efd"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[De]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="12" width="71" height="20" uuid="a87e2150-3faf-471d-8976-4fead7faa8e9"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[Numero ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="12" width="187" height="20" uuid="ae38302a-8238-452f-84ba-71e41024f00a"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[Para]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="682" y="12" width="100" height="20" uuid="402cf6a2-0e34-4e34-8e23-c65c33d3d862"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="92" y="12" width="98" height="20" uuid="49379c34-195e-4ace-8458-7277d9e732ed"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[Asunto]]></text>
+			</staticText>
+			<line>
+				<reportElement x="10" y="32" width="792" height="1" uuid="05739eec-d8fe-484a-abde-98533fd69233"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="202" y="13" width="175" height="20" uuid="e8d9f7d8-66c8-484a-a6e9-ad9ed04e0ef9"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_str_emisor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="588" y="13" width="79" height="20" uuid="fc2f387b-156b-44f0-8a63-882a898ec24b"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_dte_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="682" y="13" width="100" height="20" uuid="68e5fb18-519f-4d44-ae09-5028b2cfd091"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_str_estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="13" width="71" height="20" uuid="e441b84d-fbbb-477f-8c1d-47d83a4bf654"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_str_numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="13" width="187" height="20" uuid="0eb09729-9bbd-440b-9fed-39126ea5aab0"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_str_receptor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="13" width="98" height="20" uuid="750c6ff2-8611-42f9-808f-a6d6dda8978c"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_str_asunto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="10" y="34" width="100" height="20" uuid="f3e59991-ae7f-4d01-8852-80277e5b03c0"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="683" y="34" width="80" height="20" uuid="90639066-9bea-4a37-ad8e-f04961a8f5c0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="763" y="34" width="40" height="20" uuid="d35cb974-7926-4880-aa45-e6693c2faf2f"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-10-14T15:37:23 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ComprasFechas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5e6ee175-adf7-4b13-a304-cd77e87c6deb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="cnn_matriz_desarrollo"/>
+	<parameter name="nroOC" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_ordenCompra.`str_numeroOC` AS tb_ordenCompra_str_numeroOC,
+     tb_ordenCompra.`str_viaTransporte` AS tb_ordenCompra_str_viaTransporte,
+     tb_ordenCompra.`dbl_precioBruto` AS tb_ordenCompra_dbl_precioBruto,
+     tb_ordenCompra.`dbl_precioTotal` AS tb_ordenCompra_dbl_precioTotal,
+     tb_ordenCompra.`dbl_descuentoTotal` AS tb_ordenCompra_dbl_descuentoTotal,
+     tb_ordenCompra.`dbl_valorVenta` AS tb_ordenCompra_dbl_valorVenta,
+     tb_ordenCompra.`dbl_igv` AS tb_ordenCompra_dbl_igv,
+     tb_ordenCompra.`dbl_igvRecuperado` AS tb_ordenCompra_dbl_igvRecuperado,
+     tb_ordenCompra.`dbl_peso` AS tb_ordenCompra_dbl_peso,
+     tb_producto.`str_nombreProducto` AS tb_producto_str_nombreProducto,
+     tb_proveedorProductoOrdenCompra.`dbl_cantidad` AS tb_proveedorProductoOrdenCompra_int_cantidad,
+     tb_proveedorProductoOrdenCompra.`dbl_precio` AS tb_proveedorProductoOrdenCompra_dbl_precio,
+     tb_proveedorProductoOrdenCompra.`dbl_descuento` AS tb_proveedorProductoOrdenCompra_dbl_descuento,
+     tb_proveedorProductoOrdenCompra.`dbl_peso` AS tb_proveedorProductoOrdenCompra_dbl_peso,
+     tb_producto.`str_reintegroTributario` AS tb_producto_str_reintegroTributario,
+     tb_proveedor.`str_razonSocial` AS tb_proveedor_str_razonSocial,
+     tb_proveedor.`str_ruc` AS tb_proveedor_str_ruc,
+     tb_ordenCompra.`str_usuarioCreador` AS tb_ordenCompra_str_usuarioCreador,
+     tb_ordenCompra.`str_fechaCreacion` AS tb_ordenCompra_str_fechaCreacion,
+     tb_tipoObligacion.`str_nombreTO` AS tb_tipoObligacion_str_nombreTO
+FROM
+     `tb_ordenCompra` tb_ordenCompra INNER JOIN `tb_proveedorProductoOrdenCompra` tb_proveedorProductoOrdenCompra ON tb_ordenCompra.`int_idOrdenCompra` = tb_proveedorProductoOrdenCompra.`int_idOrdenCompra`
+     INNER JOIN `tb_proveedorproducto` tb_proveedorproducto_A ON tb_proveedorProductoOrdenCompra.`int_idProveedor` = tb_proveedorproducto_A.`int_idProveedor`
+     AND tb_proveedorproducto_A.`int_idProducto` = tb_proveedorProductoOrdenCompra.`int_idProducto`
+     INNER JOIN `tb_proveedor` tb_proveedor ON tb_proveedorproducto_A.`int_idProveedor` = tb_proveedor.`int_idProveedor`
+     INNER JOIN `tb_producto` tb_producto ON tb_proveedorproducto_A.`int_idProducto` = tb_producto.`int_idProducto`
+     INNER JOIN `tb_tipoObligacion` tb_tipoObligacion ON tb_ordenCompra.`int_idTipoObligacion` = tb_tipoObligacion.`int_idTipoObligacion`
+WHERE
+     tb_ordenCompra.`str_numeroOC`=$P{nroOC}]]>
+	</queryString>
+	<field name="tb_ordenCompra_str_numeroOC" class="java.lang.String"/>
+	<field name="tb_ordenCompra_str_viaTransporte" class="java.lang.String"/>
+	<field name="tb_ordenCompra_dbl_precioBruto" class="java.lang.Double"/>
+	<field name="tb_ordenCompra_dbl_precioTotal" class="java.lang.Double"/>
+	<field name="tb_ordenCompra_dbl_descuentoTotal" class="java.lang.Double"/>
+	<field name="tb_ordenCompra_dbl_valorVenta" class="java.lang.Double"/>
+	<field name="tb_ordenCompra_dbl_igv" class="java.lang.Double"/>
+	<field name="tb_ordenCompra_dbl_igvRecuperado" class="java.lang.Double"/>
+	<field name="tb_ordenCompra_dbl_peso" class="java.lang.Double"/>
+	<field name="tb_producto_str_nombreProducto" class="java.lang.String"/>
+	<field name="tb_proveedorProductoOrdenCompra_int_cantidad" class="java.lang.Double"/>
+	<field name="tb_proveedorProductoOrdenCompra_dbl_precio" class="java.lang.Double"/>
+	<field name="tb_proveedorProductoOrdenCompra_dbl_descuento" class="java.lang.Double"/>
+	<field name="tb_proveedorProductoOrdenCompra_dbl_peso" class="java.lang.Double"/>
+	<field name="tb_producto_str_reintegroTributario" class="java.lang.String"/>
+	<field name="tb_proveedor_str_razonSocial" class="java.lang.String"/>
+	<field name="tb_proveedor_str_ruc" class="java.lang.String"/>
+	<field name="tb_ordenCompra_str_usuarioCreador" class="java.lang.String"/>
+	<field name="tb_ordenCompra_str_fechaCreacion" class="java.sql.Timestamp"/>
+	<field name="tb_tipoObligacion_str_nombreTO" class="java.lang.String"/>
+	<group name="oc">
+		<groupExpression><![CDATA[$F{tb_ordenCompra_str_numeroOC}]]></groupExpression>
+		<groupHeader>
+			<band height="84">
+				<rectangle>
+					<reportElement x="5" y="9" width="792" height="49" uuid="0908fb8c-1d88-453d-8963-9f1163fd617d"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="16" y="14" width="106" height="20" uuid="364ec100-5965-49b0-90f2-3a03086fe44b"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nro Orden Compra :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="124" y="14" width="64" height="20" uuid="f8508477-a283-4afa-8309-6045527ecc8f"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_str_numeroOC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="220" y="14" width="34" height="20" uuid="f3fccc43-116d-43d4-9010-eabf2b7fc42a"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Vía :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="254" y="14" width="113" height="20" uuid="aaa911a6-74a5-4cc0-8b71-4a01927df9c0"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_str_viaTransporte}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="374" y="14" width="63" height="20" uuid="3b875451-b5f6-45aa-a740-ca0573354557"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Proveedor :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="437" y="14" width="349" height="20" uuid="dba180ea-27d9-46c2-8e1f-7fd26b734d2c"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_proveedor_str_ruc}+" - "+$F{tb_proveedor_str_razonSocial}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="632" y="34" width="51" height="20" uuid="e76b3051-0942-43f4-acc8-88b3d8d09b14"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="683" y="34" width="103" height="20" uuid="63ec5140-f94a-4af4-81a9-c2ff930b650a"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_str_fechaCreacion}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="56" y="34" width="66" height="20" uuid="da0165d0-8a34-426e-9f3c-badda89aeb43"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tipo pago:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="124" y="34" width="96" height="20" uuid="255ba89f-8035-4c5e-b3e7-f7e8bb34b399"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_tipoObligacion_str_nombreTO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="383" y="32" width="54" height="20" uuid="dfd7788a-b01f-4dc3-ac58-1ad4188fde87"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Usuario :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="437" y="34" width="119" height="20" uuid="f8af3065-d08b-42d6-b739-923a7600ecbf"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_str_usuarioCreador}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="70" y="63" width="220" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="f9387ba2-6d56-41a6-87d8-80c8302e6292"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="292" y="63" width="114" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="8f93b056-9d6a-4c90-b525-3bb0af2f8fca"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cantidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="407" y="63" width="127" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="22b298b0-7449-45d7-9884-95a79d3b9973"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="537" y="63" width="100" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="91855ed4-c4b7-4f28-b93b-3b5f6ee0b923"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[% descuento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="640" y="63" width="100" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="ee63ee8d-9a59-4793-81ef-a554fc638399"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reintegro]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="41">
+				<staticText>
+					<reportElement mode="Opaque" x="265" y="0" width="74" height="20" backcolor="#D4810D" uuid="1a7e1b8c-ad41-41f4-a2c7-85f9f3ba6230"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio Bruto]]></text>
+				</staticText>
+				<textField pattern="¤#,##0.##;¤-#,##0.##">
+					<reportElement x="265" y="20" width="74" height="20" uuid="f55bf66c-c7d3-4ee7-8455-40efd1cc4d5c"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Dotted"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+						<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_dbl_precioBruto}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="351" y="0" width="67" height="20" backcolor="#D4810D" uuid="f0048185-79fb-497c-af3d-44e4c43ef85c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Descuento]]></text>
+				</staticText>
+				<textField pattern="¤#,##0.##;¤-#,##0.##">
+					<reportElement x="351" y="20" width="67" height="20" uuid="353ba922-538e-45f0-835e-2d69e0bf4893"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Dotted"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+						<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_dbl_descuentoTotal}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="432" y="0" width="63" height="20" backcolor="#D4810D" uuid="fae4efcd-e561-4a2a-9f67-93798862543f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[I.G.V.]]></text>
+				</staticText>
+				<textField pattern="¤#,##0.##;¤-#,##0.##">
+					<reportElement x="432" y="20" width="63" height="20" uuid="a388c4e2-d937-42c4-a526-1a2100ff5afb"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Dotted"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+						<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_dbl_igv}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="515" y="0" width="100" height="20" backcolor="#D4810D" uuid="e3bc637c-6e67-45dc-afb6-7bf838bc9100"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[I.G.V. Recuperado]]></text>
+				</staticText>
+				<textField pattern="¤#,##0.##;¤-#,##0.##">
+					<reportElement x="515" y="20" width="100" height="20" uuid="b117d669-269d-4ab2-a4b8-d4cadca070c2"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Dotted"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+						<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_dbl_igvRecuperado}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="639" y="0" width="100" height="20" backcolor="#D4810D" uuid="51a8a273-e34a-47cf-997c-321b68ab97d8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio Total]]></text>
+				</staticText>
+				<textField pattern="¤#,##0.##;¤-#,##0.##">
+					<reportElement x="639" y="20" width="100" height="20" uuid="5ef13376-9ba5-48b0-a31c-b5da1306ffd3"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Dotted"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+						<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_dbl_precioTotal}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="70" y="0" width="670" height="1" uuid="a0ba0661-2517-48ee-bb20-a1d8efd56a0d">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="95" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="64" width="800" height="31" forecolor="#FFFFFF" backcolor="#D4810D" uuid="a273ce8f-82db-4c31-a74d-86d5eb95ce00"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[CONCATENATE("ORDEN DE COMPRA NRO: ",$F{tb_ordenCompra_str_numeroOC})]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="4" y="5" width="170" height="54" uuid="95d9287c-62ec-48d7-a905-71833d29a39a"/>
+				<imageExpression><![CDATA["C:/Users/pc/Documents/matriz/fuentes/matriz/src/main/resources/com/gestionmatriz/icon/jpg_logo_empresa.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="70" y="0" width="220" height="15" uuid="b197e23c-daa3-4901-9c96-632f1b634a68"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="292" y="0" width="114" height="15" uuid="b2c5b80a-fee2-4e48-800d-b9e149822740"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_proveedorProductoOrdenCompra_int_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="408" y="0" width="126" height="15" uuid="9d259333-ce26-4b2d-9220-b949c7f03f9a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_proveedorProductoOrdenCompra_dbl_precio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="537" y="0" width="100" height="15" uuid="0e895d63-23ab-4f49-9753-44be054bd597"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_proveedorProductoOrdenCompra_dbl_descuento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="640" y="0" width="100" height="15" uuid="fdc3c123-9618-4116-9071-5cc839f6b324"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_reintegroTributario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="18" y="34" width="170" height="20" uuid="52b5858e-5816-4a31-9864-ab96da1dbe21"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="674" y="34" width="80" height="20" uuid="60b269ac-94e8-428e-bbba-1e411cdcc32d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="754" y="34" width="40" height="20" uuid="22b11d2d-8175-44ee-a4e4-0ce836721359"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

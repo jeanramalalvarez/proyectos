@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PermisoPersona" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2d7badd7-f797-437b-a997-8b759aa49084">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="int_idPersona" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     substring(tb_permisos.`dte_fecha`,1,10) AS tb_permisos_dte_fecha,
+     substring(tb_permisos.`tm_horaSalida`,1,5) AS tb_permisos_tm_horaSalida,
+     substring(tb_permisos.`tm_horaLlegada`,1,5) AS tb_permisos_tm_horaLlegada,
+     substring(SUBSTRING_INDEX(tb_permisos.`str_observacion`,')',1),2) AS cargo,
+     substring(tb_permisos.`tm_horaMarcadoSalida`,1,5) AS tb_permisos_tm_horaMarcadoSalida,
+     substring(tb_permisos.`tm_horaMarcadoLlegada`,1,5) AS tb_permisos_tm_horaMarcadoLlegada,
+     substring(tb_permisos.`dte_fechaRegistro`,1,10) AS tb_permisos_dte_fechaRegistro,
+     concat(tb_persona.`str_apePaterno`," ",tb_persona.`str_apeMaterno`," ",tb_persona.`str_nombres`) AS nombres,
+     tb_permisos.`str_motivo` AS tb_permisos_str_motivo,
+     tb_permisos.`str_observacion` AS tb_permisos_str_observacion,
+     tb_permisos.`str_estado` AS tb_permisos_str_estado,
+     tb_permisos.`int_idPersona` AS tb_permisos_int_idPersona,
+     tb_persona.`str_codigo` AS tb_persona_str_codigo,
+     tb_persona.`str_dni` AS tb_persona_str_dni,
+     tb_permisos.`str_usuarioaAprobo` AS tb_permisos_str_usuarioaAprobo
+FROM
+     `tb_persona` tb_persona INNER JOIN `tb_permisos` tb_permisos ON tb_persona.`int_idPersona` = tb_permisos.`int_idPersona`
+WHERE
+     tb_permisos.`int_idPersona` LIKE $P{int_idPersona}]]>
+	</queryString>
+	<field name="tb_permisos_dte_fecha" class="java.lang.String"/>
+	<field name="tb_permisos_tm_horaSalida" class="java.lang.String"/>
+	<field name="tb_permisos_tm_horaLlegada" class="java.lang.String"/>
+	<field name="cargo" class="java.lang.String"/>
+	<field name="tb_permisos_tm_horaMarcadoSalida" class="java.lang.String"/>
+	<field name="tb_permisos_tm_horaMarcadoLlegada" class="java.lang.String"/>
+	<field name="tb_permisos_dte_fechaRegistro" class="java.lang.String"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="tb_permisos_str_motivo" class="java.lang.String"/>
+	<field name="tb_permisos_str_observacion" class="java.lang.String"/>
+	<field name="tb_permisos_str_estado" class="java.lang.String"/>
+	<field name="tb_permisos_int_idPersona" class="java.lang.Integer"/>
+	<field name="tb_persona_str_codigo" class="java.lang.String"/>
+	<field name="tb_persona_str_dni" class="java.lang.String"/>
+	<field name="tb_permisos_str_usuarioaAprobo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="13" width="790" height="49" uuid="e2d97f5d-4c53-4460-aeee-9cb7dc1b31d1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reportes de Permisos Solicitados por Trabajador]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<rectangle>
+				<reportElement x="12" y="0" width="790" height="35" backcolor="#FFCC33" uuid="fa3c6f6e-5e3d-4293-8f5d-a490a00d17ff"/>
+			</rectangle>
+			<textField>
+				<reportElement x="12" y="15" width="112" height="20" uuid="46a2bdd5-28a7-45d0-b5de-5d167168edd0"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DNI : "+$F{tb_persona_str_dni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="15" width="278" height="20" uuid="fbf2aeff-503f-4478-841c-30a57102826a"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nombres : "+$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="565" y="15" width="223" height="20" uuid="1573f493-e721-45f9-aecb-6b0160fc57ec"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cargo : "+$F{cargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="139" y="15" width="121" height="20" uuid="6f2319c1-0918-4fd1-9dc0-f58b08ceffa8"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Código : "+$F{tb_persona_str_codigo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="24" width="90" height="20" uuid="d70fc532-808e-4858-847d-02227eab7603"/>
+				<text><![CDATA[Fecha de Permiso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="113" y="24" width="87" height="20" uuid="2f915f69-c649-4696-be97-8d13ef039994"/>
+				<text><![CDATA[Motivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="24" width="63" height="20" uuid="1b3bc587-6d6c-40b4-b081-207d4902e2d0"/>
+				<text><![CDATA[Hora Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="24" width="74" height="20" uuid="073f910a-f61b-4705-ba57-945692467102"/>
+				<text><![CDATA[Hora Retorno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="24" width="82" height="20" uuid="c08aa188-6b73-47c3-bcbb-f97ee0052ce5"/>
+				<text><![CDATA[Marcado Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="468" y="24" width="84" height="20" uuid="6f49de3c-9986-4e28-a7ca-fbb1c6d4caad"/>
+				<text><![CDATA[Marcado Retorno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="565" y="24" width="74" height="20" uuid="bf1ed173-0816-4713-9634-c81c3713ba6d"/>
+				<text><![CDATA[Fecha Registro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="650" y="24" width="55" height="20" uuid="3377bbec-7c71-40df-bd14-b4d2931c9664"/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="715" y="24" width="87" height="20" uuid="a9acc344-6ba6-4b89-b8ff-a1a1bfd0761f"/>
+				<text><![CDATA[Autoriza]]></text>
+			</staticText>
+			<line>
+				<reportElement x="12" y="44" width="790" height="1" uuid="929afc63-299f-4841-a2b8-fd99f06da525"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="13" y="11" width="90" height="20" uuid="d13778b7-cd45-41f1-9a09-a4be22762244"/>
+				<textFieldExpression><![CDATA[$F{tb_permisos_dte_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="11" width="87" height="20" uuid="a836a419-9b52-40ea-b1c8-032a0a70e151"/>
+				<textFieldExpression><![CDATA[$F{tb_permisos_str_motivo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="211" y="11" width="63" height="20" uuid="396a3435-9363-4ae3-8e90-a5b0d5598dcf"/>
+				<textFieldExpression><![CDATA[$F{tb_permisos_tm_horaSalida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="287" y="11" width="74" height="20" uuid="8b9adb74-7b3f-460c-83a6-4e551d44ddcc"/>
+				<textFieldExpression><![CDATA[$F{tb_permisos_tm_horaLlegada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="11" width="82" height="20" uuid="1c0901f0-849f-4334-ac16-793e0f0d169a"/>
+				<textFieldExpression><![CDATA[$F{tb_permisos_tm_horaMarcadoSalida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="468" y="11" width="84" height="20" uuid="7389f074-0230-45c7-86a1-6170d0643257"/>
+				<textFieldExpression><![CDATA[$F{tb_permisos_tm_horaMarcadoLlegada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="565" y="11" width="74" height="20" uuid="b90e58e1-c331-49c8-93c0-38cb263e705f"/>
+				<textFieldExpression><![CDATA[$F{tb_permisos_dte_fechaRegistro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="650" y="11" width="55" height="20" uuid="46febb9b-6627-4191-9cbf-4daffc0a32a5"/>
+				<textFieldExpression><![CDATA[$F{tb_permisos_str_estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="715" y="11" width="86" height="20" uuid="34564288-6ab0-49e2-987d-4bfa0f527347"/>
+				<textFieldExpression><![CDATA[$F{tb_permisos_str_usuarioaAprobo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="13" y="34" width="100" height="20" uuid="f7b14fb2-6b38-4d5e-9085-e6f8d1c24c61"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="681" y="34" width="80" height="20" uuid="b0e9b660-9d2c-423c-b056-68f702f8a8d1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="761" y="34" width="40" height="20" uuid="cd1e1a33-e8a9-43de-9413-faeb2e45d167"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

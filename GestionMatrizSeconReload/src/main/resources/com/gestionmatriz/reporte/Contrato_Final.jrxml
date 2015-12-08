@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Contrato_Final" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f9059320-a5d2-475a-9d60-a83042dbaa6a">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1149"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="New Dataset 1" uuid="c14d3793-0054-4bc6-ac7c-1994a6aa7e96">
+		<parameter name="idContrato" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     substring(tb_jornada.`tme_HoraInicio`,1,2) AS HoraInicio_hora,
+     substring(tb_jornada.`tme_HoraInicio`,4,2) AS HoraInicio_min,
+     substring(tb_jornada.`tme_horaFin`,1,2) AS horaFin_hora,
+     substring(tb_jornada.`tme_horaFin`,4,2) AS horaFin_min,
+     tb_jornada.`int_idJornada` AS tb_jornada_int_idJornada,
+     tb_horario.`str_nombreHorario` AS tb_horario_str_nombreHorario,
+     tb_horariojornadacontrato.`int_idContrato` AS tb_horariojornadacontrato_int_idContrato,
+     tb_contrato.`int_idContrato` AS tb_contrato_int_idContrato,
+     tb_contrato.`str_estado` AS tb_contrato_str_estado,
+     tb_horariojornada.`str_estado` AS tb_horariojornada_str_estado,
+     tb_horariojornadacontrato.`str_estado` AS tb_horariojornadacontrato_str_estado
+FROM
+     `tb_horario` tb_horario INNER JOIN `tb_horariojornada` tb_horariojornada ON tb_horario.`int_idHorario` = tb_horariojornada.`int_idHorario`
+     INNER JOIN `tb_horariojornadacontrato` tb_horariojornadacontrato ON tb_horariojornada.`int_idHorario` = tb_horariojornadacontrato.`int_idHorario`
+     AND tb_horariojornada.`int_idJornada` = tb_horariojornadacontrato.`int_idJornada`
+     INNER JOIN `tb_jornada` tb_jornada ON tb_horariojornada.`int_idJornada` = tb_jornada.`int_idJornada`
+     INNER JOIN `tb_contrato` tb_contrato ON tb_horariojornadacontrato.`int_idContrato` = tb_contrato.`int_idContrato`
+WHERE
+     tb_contrato.`int_idContrato` LIKE $P{idContrato}
+     and tb_contrato.`str_estado` = 'ACTIVO'
+     and tb_horariojornada.`str_estado` = 'ACTIVO'
+and tb_horariojornadacontrato.`str_estado` = 'ACTIVO'
+ORDER BY
+     tb_horario.`int_idHorario` ASC]]>
+		</queryString>
+		<field name="HoraInicio_hora" class="java.lang.String"/>
+		<field name="HoraInicio_min" class="java.lang.String"/>
+		<field name="horaFin_hora" class="java.lang.String"/>
+		<field name="horaFin_min" class="java.lang.String"/>
+		<field name="tb_jornada_int_idJornada" class="java.lang.Integer"/>
+		<field name="tb_horario_str_nombreHorario" class="java.lang.String"/>
+		<field name="tb_horariojornadacontrato_int_idContrato" class="java.lang.Integer"/>
+		<field name="tb_contrato_int_idContrato" class="java.lang.Integer"/>
+		<field name="tb_contrato_str_estado" class="java.lang.String"/>
+		<field name="tb_horariojornada_str_estado" class="java.lang.String"/>
+		<field name="tb_horariojornadacontrato_str_estado" class="java.lang.String"/>
+		<group name="tb_horario_str_nombreHorario">
+			<groupExpression><![CDATA[$F{tb_horario_str_nombreHorario}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="idContrato" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     Concat(dayname(tb_contrato.`dte_fechaInicial`),' de ',monthname(tb_contrato.`dte_fechaInicial`),' de ',year(tb_contrato.`dte_fechaInicial`)),
+     Concat(dayname(tb_contrato.`dte_fechaFinal`),' de ',monthname(tb_contrato.`dte_fechaFinal`),' de ',year(tb_contrato.`dte_fechaFinal`)),
+     concat(tb_persona.`str_nombres`,' ',tb_persona.`str_apePaterno`,' ',tb_persona.`str_apeMaterno`),
+     tb_contrato.`int_idContrato` AS tb_contrato_int_idContrato,
+     tb_contrato.`int_idPersona` AS tb_contrato_int_idPersona,
+     tb_contrato.`int_idTipoContrato` AS tb_contrato_int_idTipoContrato,
+     tb_contrato.`int_idEmpresa` AS tb_contrato_int_idEmpresa,
+     tb_contrato.`dbl_sueldo` AS tb_contrato_dbl_sueldo,
+     tb_contrato.`str_estado` AS tb_contrato_str_estado,
+     tb_contrato.`str_observacion` AS tb_contrato_str_observacion,
+     tb_tipocontrato.`int_idTipoContrato` AS tb_tipocontrato_int_idTipoContrato,
+     tb_tipocontrato.`str_tipoContrato` AS tb_tipocontrato_str_tipoContrato,
+     tb_persona.`int_idPersona` AS tb_persona_int_idPersona,
+     tb_persona.`str_codigo` AS tb_persona_str_codigo,
+     tb_persona.`str_dni` AS tb_persona_str_dni,
+     tb_persona.`str_direccion` AS tb_persona_str_direccion,
+     tb_empresa.`int_idEmpresa` AS tb_empresa_int_idEmpresa,
+     tb_empresa.`str_razonSocial` AS tb_empresa_str_razonSocial,
+     tb_empresa.`str_ruc` AS tb_empresa_str_ruc,
+     tb_empresa.`str_domicilioEmpresa` AS tb_empresa_str_domicilioEmpresa,
+     tb_empresa.`str_representanteLegal` AS tb_empresa_str_representanteLegal,
+     tb_empresa.`str_dniRepresentante` AS tb_empresa_str_dniRepresentante,
+     tb_contrato.`dte_fechaInicial` AS tb_contrato_dte_fechaInicial,
+     tb_contrato.`dte_fechaFinal` AS tb_contrato_dte_fechaFinal,
+     tb_persona.`str_apePaterno` AS tb_persona_str_apePaterno,
+     tb_persona.`str_apeMaterno` AS tb_persona_str_apeMaterno,
+     tb_persona.`str_nombres` AS tb_persona_str_nombres,
+     tb_tipocontrato.`str_sextoArticulo` as tb_tipocontrato_str_sextoArticulo
+FROM
+     `tb_tipocontrato` tb_tipocontrato INNER JOIN `tb_contrato` tb_contrato ON tb_tipocontrato.`int_idTipoContrato` = tb_contrato.`int_idTipoContrato`
+     INNER JOIN `tb_persona` tb_persona ON tb_contrato.`int_idPersona` = tb_persona.`int_idPersona`
+     INNER JOIN `tb_empresa` tb_empresa ON tb_contrato.`int_idEmpresa` = tb_empresa.`int_idEmpresa`
+WHERE
+     tb_contrato.`int_idContrato` = $P{idContrato}]]>
+	</queryString>
+	<field name="Concat(dayname(tb_contrato.`dte_fechaInicial`),&apos; de &apos;,monthname(tb_contrato.`dte_fechaInicial`),&apos; de &apos;,year(tb_contrato.`dte_fechaInicial`))" class="java.lang.String"/>
+	<field name="Concat(dayname(tb_contrato.`dte_fechaFinal`),&apos; de &apos;,monthname(tb_contrato.`dte_fechaFinal`),&apos; de &apos;,year(tb_contrato.`dte_fechaFinal`))" class="java.lang.String"/>
+	<field name="concat(tb_persona.`str_nombres`,&apos; &apos;,tb_persona.`str_apePaterno`,&apos; &apos;,tb_persona.`str_apeMaterno`)" class="java.lang.String"/>
+	<field name="tb_contrato_int_idContrato" class="java.lang.Integer"/>
+	<field name="tb_contrato_int_idPersona" class="java.lang.Integer"/>
+	<field name="tb_contrato_int_idTipoContrato" class="java.lang.Integer"/>
+	<field name="tb_contrato_int_idEmpresa" class="java.lang.Integer"/>
+	<field name="tb_contrato_dbl_sueldo" class="java.lang.Double"/>
+	<field name="tb_contrato_str_estado" class="java.lang.String"/>
+	<field name="tb_contrato_str_observacion" class="java.lang.String"/>
+	<field name="tb_tipocontrato_int_idTipoContrato" class="java.lang.Integer"/>
+	<field name="tb_tipocontrato_str_tipoContrato" class="java.lang.String"/>
+	<field name="tb_persona_int_idPersona" class="java.lang.Integer"/>
+	<field name="tb_persona_str_codigo" class="java.lang.String"/>
+	<field name="tb_persona_str_dni" class="java.lang.String"/>
+	<field name="tb_persona_str_direccion" class="java.lang.String"/>
+	<field name="tb_empresa_int_idEmpresa" class="java.lang.Integer"/>
+	<field name="tb_empresa_str_razonSocial" class="java.lang.String"/>
+	<field name="tb_empresa_str_ruc" class="java.lang.String"/>
+	<field name="tb_empresa_str_domicilioEmpresa" class="java.lang.String"/>
+	<field name="tb_empresa_str_representanteLegal" class="java.lang.String"/>
+	<field name="tb_empresa_str_dniRepresentante" class="java.lang.String"/>
+	<field name="tb_contrato_dte_fechaInicial" class="java.sql.Date"/>
+	<field name="tb_contrato_dte_fechaFinal" class="java.sql.Date"/>
+	<field name="tb_persona_str_apePaterno" class="java.lang.String"/>
+	<field name="tb_persona_str_apeMaterno" class="java.lang.String"/>
+	<field name="tb_persona_str_nombres" class="java.lang.String"/>
+	<field name="tb_tipocontrato_str_sextoArticulo" class="java.lang.String"/>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<staticText>
+				<reportElement x="74" y="65" width="417" height="65" uuid="e9d7f2ba-d747-4b43-8599-3c63b47e15cb"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Conste mediante el presente documento suscrito por duplicado con igual valor  y tenor el contrato de trabajo que al amparo del T.O.U. de la Ley de Fomento al Empleo, Ley de Productividad y Competitividad Laboral, aprobado por Decreto Supremo N° 003-97-TR, celebran de una parte ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="130" width="77" height="20" uuid="efa447a8-c107-4e9c-a85c-ee01ba1924a0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[La empresa :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="150" width="77" height="20" uuid="79ec5af6-ab36-4d27-b4b2-ab5c4e9f4440"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[RUC :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="170" width="77" height="20" uuid="63e5a91f-a296-40ff-a311-1cfb0cbb5433"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Domicilio :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="190" width="417" height="20" uuid="0ed488ad-1d36-43e2-8de3-4a6df2ef9cbf"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[debidamente representado por su Gerente ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="210" width="64" height="20" uuid="26309b4b-cc75-4773-95e1-83b8b07fafdf"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Don ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="230" width="64" height="20" uuid="36c28df6-4a42-48ba-a9b4-b214d68654df"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[DNI :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="218" y="130" width="222" height="20" uuid="f8360cdc-942c-4bc7-9434-d804ab6aa13a"/>
+				<textFieldExpression><![CDATA[$F{tb_empresa_str_razonSocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="150" width="222" height="20" uuid="80106d67-4c54-4b72-9904-277c4c33d307"/>
+				<textFieldExpression><![CDATA[$F{tb_empresa_str_ruc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="170" width="222" height="20" uuid="3b962599-fe1d-40f9-ae6c-96d55e50066c"/>
+				<textFieldExpression><![CDATA[$F{tb_empresa_str_domicilioEmpresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="210" width="235" height="20" uuid="bb1f798e-2a8a-4789-9b8d-a533a1646fdf"/>
+				<textFieldExpression><![CDATA[$F{tb_empresa_str_representanteLegal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="230" width="235" height="20" uuid="be54df6f-e371-425f-8ca7-60ea1a52c173"/>
+				<textFieldExpression><![CDATA[$F{tb_empresa_str_dniRepresentante}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="141" y="250" width="64" height="20" uuid="2aade791-7c2a-470e-9187-981053032f79"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Domicilio :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="205" y="250" width="235" height="20" uuid="0c0569dd-ca07-4702-a13f-5662e39bfaad"/>
+				<textFieldExpression><![CDATA[$F{tb_empresa_str_domicilioEmpresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="74" y="270" width="417" height="20" uuid="9f3cbc44-c140-4eea-bbbc-8f00dfee3b7a"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[a quien en adelante se le denominará EMPLEADOR y de la otra parte]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="290" width="64" height="20" uuid="7e9914e1-588c-425a-93b2-7ec664a62d35"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Don]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="310" width="64" height="20" uuid="f41c4ee6-1f27-4b82-bbf7-06c74235c452"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[DNI :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="330" width="64" height="20" uuid="85c997d2-b912-40c0-a14f-7deb4bdd0382"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Domicilio :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="205" y="290" width="235" height="20" uuid="32543168-f9b9-4b1d-9303-567de9e15d5b"/>
+				<textFieldExpression><![CDATA[$F{concat(tb_persona.`str_nombres`,' ',tb_persona.`str_apePaterno`,' ',tb_persona.`str_apeMaterno`)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="310" width="235" height="20" uuid="78e04546-4c29-4364-a178-e6cefbc7015a"/>
+				<textFieldExpression><![CDATA[$F{tb_persona_str_dni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="330" width="235" height="20" uuid="3708cf9a-c53a-4493-9db2-daf04bb79adf"/>
+				<textFieldExpression><![CDATA[$F{tb_persona_str_direccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="74" y="14" width="417" height="24" uuid="9b6c63c7-47ca-4d34-8c3f-947031485027"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CONTRATO DE TRABAJO SUJETO A MODALIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="350" width="417" height="35" uuid="b1a804c7-9606-4a43-a2af-61ab0486104c"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[a quien en adelante se le denominará EL TRABAJADOR en los términos y condiciones siguientes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="395" width="111" height="20" uuid="c7be2070-fc46-4fa9-aef1-c447aec3c0bc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRIMERO : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="415" width="386" height="112" uuid="356fa83a-25b4-4f1c-9d8b-b8ca2bf54dfa"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[EL EMPLEADOR es una Empresa dedicada a la comercialización de artículos de ferretería y materiales de construcción, al por mayor y menor, atendiendo a las necesidades del mercado local y regional en ventas al contado y al crédito, y tiene la necesidad de atender incrementos coyunturales de sus ventas motivadas por la demanda de sus productos; para  la cual requiere de los servicios de EL TRABAJADOR en forma permanente para realizar ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="218" y="527" width="222" height="20" uuid="cebdb794-88f9-4cdb-b545-c57a84019bad"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_tipocontrato_str_tipoContrato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="105" y="547" width="386" height="48" uuid="30c53557-aec0-4354-b33f-83d5084ebbb9"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[debiendo someterse al cumplimiento estricto de la labor para la cual ha sido contratado y a las directivas que emanen de sus jefes o instructores.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="527" width="77" height="20" uuid="4de622af-1219-4042-aef8-5680af939c4d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Labores de :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="606" width="100" height="20" uuid="c52d86f4-e141-44b4-a2a3-46c7d6b708d7"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SEGUNDO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="626" width="198" height="20" uuid="240ff77a-a240-4555-b2e3-ecb7549bb8f4"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[El periodo del contrato  es desde]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="218" y="646" width="222" height="20" uuid="5259e908-f10a-4f66-bb82-9b5f3c68dbb5"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Concat(dayname(tb_contrato.`dte_fechaInicial`),' de ',monthname(tb_contrato.`dte_fechaInicial`),' de ',year(tb_contrato.`dte_fechaInicial`))}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="141" y="646" width="77" height="20" uuid="34756369-1a9a-463d-90cf-16944effcca6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Inicio :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="666" width="77" height="20" uuid="9b065547-6e59-486c-9b4d-52bdf681ec84"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Final :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="218" y="666" width="222" height="20" uuid="badf4256-4d91-4e56-9e4c-e0482d823963"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Concat(dayname(tb_contrato.`dte_fechaFinal`),' de ',monthname(tb_contrato.`dte_fechaFinal`),' de ',year(tb_contrato.`dte_fechaFinal`))}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="95" y="686" width="386" height="81" uuid="c6f117e9-4bfa-443f-88a5-837dec96b2fa"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[teniendo en dicho período la protección y los derechos de ley, conforme lo establece nuestro ordenamiento jurídico laboral vigente - Decreto Supremo N° 003-97-TR. LA EMPRESA no esta obligada a dar pre aviso del vencimiento del contrato para entender su término, bastando la no renovación del mismo para darse por concluido.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="491" y="18" width="64" height="20" uuid="ea169b6f-14c3-452c-8056-41a59033e754"/>
+				<textFieldExpression><![CDATA[$F{tb_contrato_str_estado}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="703">
+			<staticText>
+				<reportElement x="74" y="49" width="100" height="20" uuid="71d98ea7-0d92-4917-ae3c-8d5d6f1735df"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TERCERO: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="69" width="386" height="67" uuid="b89bc3b9-095b-41ff-821a-cc67c734a3be"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Las partes convienen y acuerdan que al término del presente contrato se le abonará al  trabajador sus beneficios sociales de acuerdo a Ley y podrá ser renovado nuevo contrato previa evaluación del empleador de las labores realizadas por EL TRABAJADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="167" width="100" height="20" uuid="1e59c230-aff1-454b-a790-106188139aab"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUARTO: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="187" width="386" height="35" uuid="ea5dcd45-1f67-4db4-83bc-280c4ccbc487"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[En contraprestación a los servicios del TRABAJADOR, EL EMPLEADOR se obliga a pagar una remuneración mensual de ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="241" y="222" width="77" height="20" uuid="2a4e6156-e5a8-4efa-a974-4736700396b3"/>
+				<textFieldExpression><![CDATA[$F{tb_contrato_dbl_sueldo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="141" y="222" width="100" height="20" uuid="cd82d62c-f33a-4a2b-89ca-98efb60c7840"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Sueldo :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="242" width="386" height="48" uuid="073a985c-3bf2-450b-8b29-af40049c8a19"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[igualmente se obliga a facilitar al  TRABAJADOR los materiales y   condiciones necesarias para el adecuado desarrollo de sus actividades.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="314" width="100" height="20" uuid="d762c819-d1a9-4677-afed-80d0593f98ff"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QUINTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="334" width="386" height="20" uuid="1a28f479-9d34-438d-b694-d2feaf667e29"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[EL TRABAJADOR, deberá prestar sus servicios en el siguiente horario:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="105" y="354" width="270" height="140" uuid="e9d506a3-185b-490f-af48-63b7659abdea"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="New Dataset 1" uuid="cdc5b781-d3d2-4c6f-bc3b-ad3730f72890">
+						<datasetParameter name="idContrato">
+							<datasetParameterExpression><![CDATA[$P{idContrato}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="5b4dd2dd-9be7-4128-9e1a-20a1ac5295d6">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<elementGroup>
+								<staticText>
+									<reportElement x="0" y="0" width="90" height="30" isRemoveLineWhenBlank="true" uuid="b2d50f3a-bf62-4fbb-ad1f-2a0a2cc4e0ab"/>
+									<text><![CDATA[Día]]></text>
+								</staticText>
+							</elementGroup>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="c47f96af-1ed5-4b3a-865f-2a6add03b60c"/>
+								<textFieldExpression><![CDATA[$F{tb_horario_str_nombreHorario}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="3ffd0b3b-d9cc-46c3-b9a3-35586e6eae97">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="b96daa4e-8e56-47ad-9a91-05766012cfa3"/>
+								<text><![CDATA[Hora Ingreso]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="92f96549-f979-42f2-8b9a-4b8fad3a3161"/>
+								<textFieldExpression><![CDATA[$F{HoraInicio_hora}.toString()+":"+$F{HoraInicio_min}.toString()+"h"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="a8d41638-ab45-43ce-a423-4cb0c099931d">
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="f7e52bce-232f-44f8-bf30-4e5c3ea05e39"/>
+								<text><![CDATA[Hora Salida]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="c432ba80-7b45-4573-b491-c22581d81fc7"/>
+								<textFieldExpression><![CDATA[$F{horaFin_hora}.toString()+":"+$F{horaFin_min}.toString()+"h"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="802">
+			<staticText>
+				<reportElement x="105" y="24" width="386" height="52" uuid="a21df326-e180-4153-a7f9-af6743fae287"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[acumulándose las 48 horas semanales como máximo. Existiendo cinco minutos de tolerancia, vencido dicho tiempo será considerado falta al centro laboral.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="96" width="100" height="20" uuid="546e09d5-1c76-4030-bf8b-3f5a330f9c25"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SEXTO: ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="105" y="116" width="386" height="486" uuid="c9630cfa-dbcf-4076-8ff4-653fa42433a7"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_tipocontrato_str_sextoArticulo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="174" y="96" width="317" height="20" uuid="d6fb0d8f-c2f0-4122-a279-0918c3a0e4c2"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Son funciones del  trabajador lo siguiente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="602" width="100" height="20" uuid="2ed3ab0f-1497-441c-ba8e-9e1631bc0cac"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SÉPTIMO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="622" width="386" height="120" uuid="b0054a5d-2c01-49c0-9df5-c84777a36f0c"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Queda entendido entre las partes, que el contrato de trabajo queda automáticamente resuelto por las siguientes causas:
+-Por comisión de falta grave (Art. 25 del D.S. 003-97-TR)
+-Por incumplimiento de las funciones establecidas en el presente contrato.
+-Por incumplimiento al Reglamento Interno de Trabajo  y Reglamento de Seguridad e Higiene Ocupacional de la empresa.
+]]></text>
+			</staticText>
+		</band>
+		<band height="802">
+			<staticText>
+				<reportElement x="74" y="37" width="100" height="20" uuid="52dec4dc-e45c-46fa-823d-73e93d2ce5bc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OCTAVO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="57" width="386" height="133" uuid="8173afbc-1c05-45cf-aae4-2058455d2baa"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[EL TRABAJADOR se compromete a no dar en uso o entregar a terceros información reservada y confidencial de la empresa; a no sustraer o utilizar sin autorización documentos y/o bienes de la empresa; a no entregar a la empresa información falsa causándole perjuicio u obteniendo ventaja por ello. En caso de incumplimiento LA EMPRESA quedará facultada a resolver automáticamente el contrato, sin perjuicio de la responsabilidad penal o civil que la acción  del TRABAJADOR pudiere conllevar.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="205" width="100" height="20" uuid="6c1956bc-6714-478e-9ed5-013735d57776"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOVENO: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="225" width="386" height="136" uuid="41f5f757-fea7-4235-a720-2fb2fce48be7"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[EL TRABAJADOR se compromete a cumplir las normas contenidas en el Reglamento Interno de Trabajo de la Empresa, así como las del Reglamento de Seguridad e Higiene Ocupacional y las ordenes que imparta la EMPRESA en ejercicio de las facultades conferidas en el Art. 9° de la ley de productividad y competitividad Laboral. En todo lo no previsto por el presente contrato, se estará a lo establecido en las disposiciones laborales que regulan los contratos de trabajo por tiempo determinado contenidas en el T.U.O. del Decreto Legislativo N° 728.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="389" width="100" height="20" uuid="6b085d3b-df2f-4443-bc3c-10fdafe44c17"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[DECIMO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="409" width="386" height="55" uuid="9650089d-ef18-458e-bdf5-50328d9f8164"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[EL TRABAJADOR se compromete ha asumir  las diferencias  de inventario, autorizando a la empresa al descuento de sus haberes que percibe.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="486" width="144" height="20" uuid="fc286c06-e382-478d-a699-ca89d79e3930"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DÉCIMO PRIMERO: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="506" width="386" height="95" uuid="d9e8a7f8-be6d-439e-8bd0-d656360d0789"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Las partes contratantes expresamente renuncian al fuero judicial de sus domicilios y se someten a la jurisdicción de los jueces de Loreto, a efectos de resolver cualquier controversia que el cumplimiento del presente contrato pudiera originar, Las partes para constancia y fiel cumplimiento de las cláusulas que anteceden, firman en la fecha.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="601" width="417" height="40" uuid="09c26484-e2ac-4de2-b21d-0ee46afe16ec"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Extendida en tres ejemplares, una para el Ministerio de Trabajo, una para la EMPRESA y la otra para EL TRABAJADOR.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="721" width="188" height="20" uuid="25fc41a2-8e2e-4943-97ba-b3efdf7cc793"/>
+				<text><![CDATA[Agregar fecha y firma]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

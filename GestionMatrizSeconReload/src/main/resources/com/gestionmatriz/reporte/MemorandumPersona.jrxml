@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MemorandumPersona" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ac6efbaf-370c-4b47-9fb7-d6edf81d465b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="21"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="int_idPersona" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_memorandum.`str_numero` AS tb_memorandum_str_numero,
+     tb_memorandum.`str_emisor` AS tb_memorandum_str_emisor,
+     tb_memorandum.`str_receptor` AS tb_memorandum_str_receptor,
+     tb_memorandum.`str_asunto` AS tb_memorandum_str_asunto,
+     substring(tb_memorandum.`dte_fecha`,1,10) AS tb_memorandum_dte_fecha,
+     tb_memorandum.`str_usuarioCreador` AS tb_memorandum_str_usuarioCreador,
+     tb_memorandum.`str_estado` AS tb_memorandum_str_estado,
+     tb_memorandum.`int_idPersona` AS tb_memorandum_int_idPersona,
+     concat(tb_persona.`str_apePaterno`," ",tb_persona.`str_apeMaterno`," ",tb_persona.`str_nombres`) AS nombres,
+     tb_persona.`str_dni` AS tb_persona_str_dni,
+     tb_persona.`str_codigo` AS tb_persona_str_codigo
+FROM
+     `tb_persona` tb_persona INNER JOIN `tb_memorandum` tb_memorandum ON tb_persona.`int_idPersona` = tb_memorandum.`int_idPersona`
+where
+tb_memorandum.`int_idPersona` like $P{int_idPersona}]]>
+	</queryString>
+	<field name="tb_memorandum_str_numero" class="java.lang.String"/>
+	<field name="tb_memorandum_str_emisor" class="java.lang.String"/>
+	<field name="tb_memorandum_str_receptor" class="java.lang.String"/>
+	<field name="tb_memorandum_str_asunto" class="java.lang.String"/>
+	<field name="tb_memorandum_dte_fecha" class="java.lang.String"/>
+	<field name="tb_memorandum_str_usuarioCreador" class="java.lang.String"/>
+	<field name="tb_memorandum_str_estado" class="java.lang.String"/>
+	<field name="tb_memorandum_int_idPersona" class="java.lang.Integer"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="tb_persona_str_dni" class="java.lang.String"/>
+	<field name="tb_persona_str_codigo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="792" height="49" uuid="d4ce19d9-047d-4eb6-875d-94f891d0b065"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reportes de Memorandum por Trabajador]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="30" backcolor="#FFCC33" uuid="0b53447f-4b12-4402-861d-55c3baba3976"/>
+			</rectangle>
+			<textField>
+				<reportElement x="30" y="10" width="100" height="20" uuid="1085617f-e8c3-44dd-911a-ded8a5f77a80"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_persona_str_codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="10" width="288" height="20" uuid="93ae216d-ee7b-4749-a4c3-5fa33870f330"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="479" y="10" width="117" height="20" uuid="36a674d0-085a-46a2-8205-70e2196bb73c"/>
+				<textElement>
+					<font fontName="Consolas" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_persona_str_dni}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="14" width="71" height="20" uuid="0c07a3bc-3cbf-439c-afe9-5df54a92fa28"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[Numero ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="112" y="14" width="98" height="20" uuid="332a4ba2-8060-4954-9a0b-7ad5af596631"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[Asunto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="14" width="175" height="20" uuid="361b81ac-2368-4757-affe-34f66e9ec301"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[De]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="14" width="187" height="20" uuid="9b531eb4-7e51-48f8-8a1c-1367df281592"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[Para]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="608" y="14" width="79" height="20" uuid="7cf9d8f1-c8f2-491f-aa4c-3b26b907c771"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="702" y="14" width="100" height="20" uuid="3318fb8a-049c-45ad-b009-e63f02ec6dfe"/>
+				<textElement>
+					<font fontName="Consolas" size="12"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="34" width="802" height="1" uuid="002ec7b9-236f-4bb6-b985-bd49d90ac76a"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="30" y="12" width="71" height="20" uuid="7e2aee44-1173-47c2-a3df-9188c032f8fd"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_str_numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="112" y="12" width="98" height="20" uuid="69bb8bc5-8d43-4d08-8f91-f6fdf910b341"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_str_asunto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="222" y="12" width="175" height="20" uuid="154b21d1-9ff9-40af-95a1-64ec91d5961b"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_str_emisor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="409" y="12" width="187" height="20" uuid="30aae5a0-b87f-494b-b677-2fd08674e8b7"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_str_receptor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="608" y="12" width="79" height="20" uuid="6bad756c-74cb-441c-a7d0-a846be4be2d9"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_dte_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="702" y="12" width="100" height="20" uuid="ef4cbe23-d5d9-4e40-a66c-551026b7a8bd"/>
+				<textFieldExpression><![CDATA[$F{tb_memorandum_str_estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="7" y="34" width="100" height="20" uuid="0ce7ab6d-a2d8-4d5d-9b82-0e4f73f918f8"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="682" y="34" width="80" height="20" uuid="106aa696-e967-48eb-ad71-e16201a49ea4"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="34" width="40" height="20" uuid="9c22b441-5dd9-4834-992d-d50f8ef153b5"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

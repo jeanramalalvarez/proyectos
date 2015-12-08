@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProveedorProducto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0c77ddfa-8b87-4d7f-87c2-2373d9321492">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idProveedor" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_proveedor.`str_razonSocial` AS tb_proveedor_str_razonSocial,
+     tb_proveedor.`str_ruc` AS tb_proveedor_str_ruc,
+     tb_proveedor.`str_direccion` AS tb_proveedor_str_direccion,
+     tb_producto.`str_nombreProducto` AS tb_producto_str_nombreProducto,
+     tb_producto.`str_codigoInterno` AS tb_producto_str_codigoInterno,
+     tb_producto.`str_fabricante` AS tb_producto_str_fabricante,
+     tb_producto.`str_reintegroTributario` AS tb_producto_str_reintegroTributario,
+     tb_proveedorproducto.`str_estado` AS tb_proveedorproducto_str_estado,
+     tb_productoHistorial.`dbl_precio` AS tb_productoHistorial_dbl_precio,
+     tb_productoHistorial.`str_estado` AS tb_productoHistorial_str_estado,
+     tb_producto.`int_idUnidadMedida` AS tb_producto_int_idUnidadMedida,
+     tb_unidadmedida.`str_nombreUM` AS tb_unidadmedida_str_nombreUM,
+     tb_proveedor.`int_idProveedor` AS tb_proveedor_int_idProveedor
+FROM
+     `tb_proveedor` tb_proveedor INNER JOIN `tb_proveedorproducto` tb_proveedorproducto ON tb_proveedor.`int_idProveedor` = tb_proveedorproducto.`int_idProveedor`
+     INNER JOIN `tb_producto` tb_producto ON tb_proveedorproducto.`int_idProducto` = tb_producto.`int_idProducto`
+     INNER JOIN `tb_productoHistorial` tb_productoHistorial ON tb_proveedorproducto.`int_idProveedor` = tb_productoHistorial.`int_idProveedor`
+     AND tb_proveedorproducto.`int_idProducto` = tb_productoHistorial.`int_idProducto`
+     INNER JOIN `tb_unidadmedida` tb_unidadmedida ON tb_producto.`int_idUnidadMedida` = tb_unidadmedida.`int_idUnidadMedida`
+WHERE
+ tb_proveedor.`int_idProveedor` like $P{idProveedor} and
+     tb_productoHistorial.`str_estado` = 'ACTIVO'
+ORDER BY
+     tb_proveedor.`str_ruc` ASC]]>
+	</queryString>
+	<field name="tb_proveedor_str_razonSocial" class="java.lang.String"/>
+	<field name="tb_proveedor_str_ruc" class="java.lang.String"/>
+	<field name="tb_proveedor_str_direccion" class="java.lang.String"/>
+	<field name="tb_producto_str_nombreProducto" class="java.lang.String"/>
+	<field name="tb_producto_str_codigoInterno" class="java.lang.String"/>
+	<field name="tb_producto_str_fabricante" class="java.lang.String"/>
+	<field name="tb_producto_str_reintegroTributario" class="java.lang.String"/>
+	<field name="tb_proveedorproducto_str_estado" class="java.lang.String"/>
+	<field name="tb_productoHistorial_dbl_precio" class="java.lang.Double"/>
+	<field name="tb_productoHistorial_str_estado" class="java.lang.String"/>
+	<field name="tb_producto_int_idUnidadMedida" class="java.lang.Integer"/>
+	<field name="tb_unidadmedida_str_nombreUM" class="java.lang.String"/>
+	<field name="tb_proveedor_int_idProveedor" class="java.lang.Integer"/>
+	<group name="Proveedor">
+		<groupExpression><![CDATA[$F{tb_proveedor_str_ruc}]]></groupExpression>
+		<groupHeader>
+			<band height="49">
+				<staticText>
+					<reportElement x="259" y="0" width="46" height="20" uuid="42bcd3ba-3f53-4b62-ad4f-16a9bdec5acb"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[R.U.C. :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="305" y="0" width="89" height="20" uuid="b7a31a98-3872-4d7d-8167-278981d4718b"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_proveedor_str_ruc}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="15" y="0" width="76" height="20" uuid="b3000bda-01af-44a0-8dbb-edcab2a9c0cd"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Proveedor :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="91" y="0" width="155" height="20" uuid="c314a694-f79b-4782-8fdd-18b7b72adbf7"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_proveedor_str_razonSocial}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="414" y="0" width="75" height="20" uuid="5be6eb0b-031e-48be-b0e8-6668cebea69e"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Dirección :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="489" y="0" width="183" height="20" uuid="e289ade2-75a6-4516-b876-f4628c987858"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_proveedor_str_direccion}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="14" y="20" width="658" height="1" uuid="a4482353-aabd-4403-9894-0f8675707b9c"/>
+				</line>
+				<staticText>
+					<reportElement x="80" y="29" width="67" height="20" uuid="6a3232c1-3cdc-43a3-9499-3460d1b0be9d"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cod. Interno]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="178" y="29" width="68" height="20" uuid="87210938-526a-4e1b-93f7-bd62b6c05f5f"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="294" y="29" width="100" height="20" uuid="b50b1214-0f4e-4474-95ba-8d8542cb0287"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fabricante]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="414" y="29" width="100" height="20" uuid="059576d0-e713-495c-a2f5-a3926e356315"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reintegro]]></text>
+				</staticText>
+				<line>
+					<reportElement x="80" y="48" width="708" height="1" uuid="b783fc96-a794-451e-8b5e-e04c619bd435"/>
+				</line>
+				<staticText>
+					<reportElement x="527" y="29" width="78" height="20" uuid="45c3f730-53f7-491e-8048-dd499fffd836"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Costo Compra]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="630" y="29" width="100" height="20" uuid="c711987d-afeb-4ef4-a3c0-5a8ebb50beec"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Unidad Medida]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="13" width="399" height="31" uuid="de58a9cd-b23c-4d4f-bc31-5244a4d6c397"/>
+				<textElement>
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Productos por Proveedor]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="67" height="15" uuid="8a3d6d65-2716-46f5-85ad-cec3e042d8fb"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_codigoInterno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="178" y="0" width="97" height="15" uuid="176604ed-85b6-4def-bdf1-9c10bad409d7"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="100" height="15" uuid="daaa4e63-4cf1-42c1-a615-3ea3c54b9ff1"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_reintegroTributario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="294" y="0" width="100" height="15" uuid="d434e063-9144-4d31-a8d2-a761b4df8bba"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_fabricante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="527" y="0" width="78" height="15" uuid="b48e4d8b-838a-45f4-85f2-94a6beb50837"/>
+				<textFieldExpression><![CDATA[$F{tb_productoHistorial_dbl_precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="630" y="0" width="100" height="15" uuid="34090770-4a9e-40ed-ada7-c56ee98fb8fe"/>
+				<textFieldExpression><![CDATA[$F{tb_unidadmedida_str_nombreUM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="682" y="34" width="80" height="20" uuid="27400bad-3ff4-46f9-971f-8b5ddf22c3da"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="34" width="40" height="20" uuid="27c085e3-6667-416c-9503-f70160bcadb9"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="14" y="34" width="100" height="20" uuid="a6af3fa4-221a-45de-9502-2e69376afd8a"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

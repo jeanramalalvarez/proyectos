@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DescansoTrabajador" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39b74fdd-ca9e-4981-92a1-ac419f1c304b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fechaInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="int_idCodigo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     substring(tb_asistencia.`dte_fecha`,1,10) AS tb_asistencia_dte_fecha,
+     tb_persona.`str_apePaterno` AS tb_persona_str_apePaterno,
+     tb_persona.`str_apeMaterno` AS tb_persona_str_apeMaterno,
+     tb_persona.`str_nombres` AS tb_persona_str_nombres,
+     substring(tb_refrigerio.`dt_horaSalida`,11) AS tb_refrigerio_dt_horaSalida,
+     substring(tb_refrigerio.`dt_horaRegreso`,11) AS tb_refrigerio_dt_horaRegreso,
+     tb_refrigerio.`str_estado` AS tb_refrigerio_str_estado,
+     tb_persona.`str_codigo` AS tb_persona_str_codigo,
+     tb_empresa.`str_razonSocial` AS tb_empresa_str_razonSocial,
+     tb_persona.`int_idPersona`
+FROM
+     `tb_persona` tb_persona INNER JOIN `tb_contrato` tb_contrato ON tb_persona.`int_idPersona` = tb_contrato.`int_idPersona`
+     INNER JOIN `tb_empresa` tb_empresa ON tb_contrato.`int_idEmpresa` = tb_empresa.`int_idEmpresa`
+     INNER JOIN `tb_horariojornadacontrato` tb_horariojornadacontrato ON tb_contrato.`int_idContrato` = tb_horariojornadacontrato.`int_idContrato`
+     INNER JOIN `tb_asistencia` tb_asistencia ON tb_horariojornadacontrato.`int_idHorario` = tb_asistencia.`int_idHorario`
+     AND tb_horariojornadacontrato.`int_idContrato` = tb_asistencia.`int_idContrato`
+     AND tb_horariojornadacontrato.`int_idJornada` = tb_asistencia.`int_idJornada`
+     INNER JOIN `tb_refrigerio` tb_refrigerio ON tb_asistencia.`int_asistencia` = tb_refrigerio.`int_asistencia`
+where
+(date(tb_asistencia.`dte_fecha`) >=date($P{fechaInicial}) and date(tb_asistencia.`dte_fecha`)<=date($P{fechaFinal}))
+and tb_persona.`int_idPersona` = $P{int_idCodigo}]]>
+	</queryString>
+	<field name="tb_asistencia_dte_fecha" class="java.lang.String"/>
+	<field name="tb_persona_str_apePaterno" class="java.lang.String"/>
+	<field name="tb_persona_str_apeMaterno" class="java.lang.String"/>
+	<field name="tb_persona_str_nombres" class="java.lang.String"/>
+	<field name="tb_refrigerio_dt_horaSalida" class="java.lang.String"/>
+	<field name="tb_refrigerio_dt_horaRegreso" class="java.lang.String"/>
+	<field name="tb_refrigerio_str_estado" class="java.lang.String"/>
+	<field name="tb_persona_str_codigo" class="java.lang.String"/>
+	<field name="tb_empresa_str_razonSocial" class="java.lang.String"/>
+	<field name="int_idPersona" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="17" y="11" width="538" height="68" uuid="a31c954b-09b6-42d4-9af5-e2daec4f1500"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Reporte de Descansos por Trabajador]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="42" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="11" width="555" height="31" backcolor="#FFCC33" uuid="9728db6b-1570-40e0-8529-422ff26fd75f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="17" y="22" width="75" height="20" uuid="9432a575-1af8-4429-a6b9-a32be0b0c5ed"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trabajador :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="92" y="22" width="247" height="20" uuid="0f708c10-25a8-4e3b-8ad5-8c28a41ebd99"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_persona_str_apePaterno}+" "+$F{tb_persona_str_apeMaterno}+" "+$F{tb_persona_str_nombres}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="339" y="22" width="68" height="20" uuid="b1ba4c45-fad5-406e-af28-831af59a7a5e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empresa :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="408" y="22" width="147" height="20" uuid="9dfabd7b-efeb-44f9-bc12-58d7e371f487"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_empresa_str_razonSocial}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="131" y="17" width="100" height="20" uuid="a4dd63e1-9a18-4819-b8bd-15e121aa4982"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salida descanso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="17" width="75" height="20" uuid="6ea1e668-1cb3-49f4-a903-f277635a6642"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="17" width="100" height="20" uuid="ab6f5912-9c6f-4f9d-818f-4fd0b9bed4f2"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Retorno descanso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="17" width="100" height="20" uuid="e399aa15-f6df-4456-a0f1-8600ea1efd56"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="17" y="37" width="508" height="1" uuid="6e003bba-763c-446b-9e9e-8e96b4ad53c5"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="83" splitType="Stretch">
+			<textField>
+				<reportElement x="17" y="0" width="75" height="20" uuid="bc812f28-1dbf-4674-87f4-9fe80559e797"/>
+				<textFieldExpression><![CDATA[$F{tb_asistencia_dte_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="131" y="0" width="100" height="20" uuid="f5aea1b2-9a06-4ea8-9c91-03bbbf1cc5e0"/>
+				<textFieldExpression><![CDATA[$F{tb_refrigerio_dt_horaSalida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="269" y="0" width="100" height="20" uuid="1a89bfe2-1973-4ea6-a934-188aacf54fc8"/>
+				<textFieldExpression><![CDATA[$F{tb_refrigerio_dt_horaRegreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="0" width="100" height="20" uuid="e856d00a-2483-4555-8841-07a193682b97"/>
+				<textFieldExpression><![CDATA[$F{tb_refrigerio_str_estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="455" y="34" width="100" height="20" uuid="72b8d28f-30ad-4560-bcf8-660434051b21"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

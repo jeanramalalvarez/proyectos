@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrecioProductoFamilia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="37a49ce6-fba0-493a-84d7-73565aa8dfc8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idFamilia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_familia.`str_codigoFamilia` AS tb_familia_str_codigoFamilia,
+     tb_familia.`str_nombre` AS tb_familia_str_nombre,
+     tb_familia.`str_descripcion` AS tb_familia_str_descripcion,
+     tb_familia.`str_estado` AS tb_familia_str_estado,
+     tb_producto.`str_codigoInterno` AS tb_producto_str_codigoInterno,
+     tb_producto.`str_estado` AS tb_producto_str_estado,
+     tb_producto.`str_nombreProducto` AS tb_producto_str_nombreProducto,
+     tb_proveedorProductoUnidadMedida.`str_estado` AS tb_proveedorProductoUnidadMedida_str_estado,
+     tb_proveedorProductoUnidadMedida.`dbl_precioUnidadContenida` AS tb_proveedorProductoUnidadMedida_dbl_precioUnidadContenida,
+     tb_medidarotacion.`dbl_utilidad` AS tb_medidarotacion_dbl_utilidad,
+     tb_medidarotacion.`str_usuarioModificador` AS tb_medidarotacion_str_usuarioModificador,
+     tb_proveedorProductoUnidadMedida.`dbl_costoTraslado` AS tb_proveedorProductoUnidadMedida_dbl_costoTraslado,
+     tb_medidarotacion.`dbl_adicional` AS tb_medidarotacion_dbl_adicional,
+
+round((tb_proveedorProductoUnidadMedida.`dbl_precioUnidadContenida`*(1+(tb_medidarotacion.`dbl_utilidad`/100))+
+	tb_proveedorProductoUnidadMedida.`dbl_costoTraslado`)*(1+(tb_medidarotacion.`dbl_adicional`/100)),2) as precio
+FROM
+     `tb_familia` tb_familia INNER JOIN `tb_producto` tb_producto ON tb_familia.`int_idFamilia` = tb_producto.`int_idFamilia`
+     INNER JOIN `tb_proveedorproducto` tb_proveedorproducto ON tb_producto.`int_idProducto` = tb_proveedorproducto.`int_idProducto`
+     INNER JOIN `tb_medidarotacion` tb_medidarotacion ON tb_producto.`int_idMedidaRotacion` = tb_medidarotacion.`int_idMedidaRotacion`
+     INNER JOIN `tb_proveedorProductoUnidadMedida` tb_proveedorProductoUnidadMedida ON tb_proveedorproducto.`int_idProveedor` = tb_proveedorProductoUnidadMedida.`int_idProveedor`
+     AND tb_proveedorproducto.`int_idProducto` = tb_proveedorProductoUnidadMedida.`int_idProducto`
+WHERE
+     tb_familia.`str_estado` = 'ACTIVO'
+ AND tb_producto.`str_estado` = 'ACTIVO'
+ AND tb_proveedorProductoUnidadMedida.`str_estado` = 'ACTIVO'
+     and tb_familia.`int_idFamilia` LIKE $P{idFamilia}
+ORDER BY
+     tb_familia.`str_codigoFamilia` ASC]]>
+	</queryString>
+	<field name="tb_familia_str_codigoFamilia" class="java.lang.String"/>
+	<field name="tb_familia_str_nombre" class="java.lang.String"/>
+	<field name="tb_familia_str_descripcion" class="java.lang.String"/>
+	<field name="tb_familia_str_estado" class="java.lang.String"/>
+	<field name="tb_producto_str_codigoInterno" class="java.lang.String"/>
+	<field name="tb_producto_str_estado" class="java.lang.String"/>
+	<field name="tb_producto_str_nombreProducto" class="java.lang.String"/>
+	<field name="tb_proveedorProductoUnidadMedida_str_estado" class="java.lang.String"/>
+	<field name="tb_proveedorProductoUnidadMedida_dbl_precioUnidadContenida" class="java.lang.Double"/>
+	<field name="tb_medidarotacion_dbl_utilidad" class="java.lang.Double"/>
+	<field name="tb_medidarotacion_str_usuarioModificador" class="java.lang.String"/>
+	<field name="tb_proveedorProductoUnidadMedida_dbl_costoTraslado" class="java.lang.Double"/>
+	<field name="tb_medidarotacion_dbl_adicional" class="java.lang.Double"/>
+	<field name="precio" class="java.lang.Double"/>
+	<group name="Familia">
+		<groupExpression><![CDATA[$F{tb_familia_str_codigoFamilia}]]></groupExpression>
+		<groupHeader>
+			<band height="52">
+				<staticText>
+					<reportElement x="13" y="0" width="78" height="20" uuid="fbaf8632-4b94-4e30-9ac8-ab9d67ca0000"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cod. Familia:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="33" y="49" width="507" height="1" uuid="8105d471-19fa-411f-a266-0dcf7500f663"/>
+				</line>
+				<textField>
+					<reportElement x="104" y="0" width="42" height="20" uuid="0ae34716-9981-4d71-b231-1e00e1d4e3bb"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_familia_str_codigoFamilia}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="169" y="0" width="66" height="20" uuid="0d54cf23-7b99-4c43-853e-497913cb858c"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Familia:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="235" y="0" width="144" height="20" uuid="a366c6d4-f2b0-44ba-94d6-67a711f4a320"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_familia_str_nombre}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="12" y="23" width="408" height="1" uuid="adb14c05-3203-4950-af00-c13fcddb692b"/>
+				</line>
+				<staticText>
+					<reportElement x="33" y="30" width="74" height="20" uuid="0c6d8264-8a99-4f5e-81f5-25271d0d9875"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cod. Producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="119" y="30" width="93" height="20" uuid="1d5a8453-609d-4feb-a0a4-8417cbb62ca7"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="235" y="30" width="100" height="20" uuid="0a9de410-8158-4a09-88b8-c9bc9687e705"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio de Venta]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="10" width="322" height="56" uuid="9b9e20e1-071b-45e5-bab5-bcfedff4a760"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTA DE PRECIOS DE PRODUCTOS POR FAMILIAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="14" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="33" y="0" width="74" height="15" uuid="8bc9f1f6-55d2-46cd-9f86-b42451b0f92e"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_codigoInterno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="0" width="93" height="15" uuid="63a76f04-5b8e-45be-96a3-03fec0685c48"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="0" width="100" height="15" uuid="bfe5b236-e49e-46e3-815e-c4fc7ef06661"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="435" y="34" width="80" height="20" uuid="8314c7ce-0eae-4536-8fe4-b899801ef143"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="34" width="40" height="20" uuid="fa4484af-3613-4623-b35b-5b71f713fa4d"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="13" y="34" width="144" height="20" uuid="93024745-bdbe-4552-a1d5-13b17199731a"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

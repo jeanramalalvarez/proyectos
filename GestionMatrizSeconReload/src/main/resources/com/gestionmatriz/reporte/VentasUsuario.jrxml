@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-10-12T16:39:31 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="VentasUsuario" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="794048a1-bbaf-4a52-a837-bedbacf97064">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="cnn_matriz_desarrollo"/>
+	<parameter name="fchInicial" class="java.lang.String"/>
+	<parameter name="fchFinal" class="java.lang.String"/>
+	<parameter name="usuario" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     tb_locales.`str_nombre` AS tb_locales_str_nombre,
+     tb_venta.`str_numeroDocumento` AS tb_venta_str_numeroDocumento,
+     tb_venta.`dbl_total` AS tb_venta_dbl_total,
+     tb_persona.`str_codigo` AS tb_persona_str_codigo,
+     tb_persona.`str_apePaterno` AS tb_persona_str_apePaterno,
+     tb_persona.`str_apeMaterno` AS tb_persona_str_apeMaterno,
+     tb_persona.`str_nombres` AS tb_persona_str_nombres,
+     tb_persona.`str_dni` AS tb_persona_str_dni,
+     tb_venta.`str_usuario` AS tb_venta_str_usuario,
+     tb_venta.`str_fechaRegistro` AS tb_venta_str_fechaRegistro,
+     tb_usuario.`str_usuario` AS tb_usuario_str_usuario,
+     tb_venta.`str_estado` AS tb_venta_str_estado
+FROM
+  `tb_venta` tb_venta  INNER JOIN `tb_locales` tb_locales ON tb_venta.`int_local`  = tb_locales.`int_idLocal` inner join 
+    `tb_usuario` tb_usuario on tb_usuario.`str_usuario`  like tb_venta.`str_usuario`  inner join `tb_persona` tb_persona on
+    tb_persona.`int_idPersona` = tb_usuario.`int_idPersona`
+where tb_usuario.`str_usuario`=tb_venta.`str_usuario` and tb_venta.`str_usuario` like $P{usuario}
+and (date(tb_venta.`str_fechaRegistro`)>=date($P{fchInicial}) and date(tb_venta.`str_fechaRegistro`)<=date($P{fchFinal}))
+and (tb_venta.`str_estado` = 'PAGADO' or tb_venta.`str_estado` = 'ANULADO')
+
+order by  tb_venta.`str_usuario` ASC, date(tb_venta.`str_fechaRegistro` )desc]]>
+	</queryString>
+	<field name="tb_locales_str_nombre" class="java.lang.String"/>
+	<field name="tb_venta_str_numeroDocumento" class="java.lang.String"/>
+	<field name="tb_venta_dbl_total" class="java.lang.Double"/>
+	<field name="tb_persona_str_codigo" class="java.lang.String"/>
+	<field name="tb_persona_str_apePaterno" class="java.lang.String"/>
+	<field name="tb_persona_str_apeMaterno" class="java.lang.String"/>
+	<field name="tb_persona_str_nombres" class="java.lang.String"/>
+	<field name="tb_persona_str_dni" class="java.lang.String"/>
+	<field name="tb_venta_str_usuario" class="java.lang.String"/>
+	<field name="tb_venta_str_fechaRegistro" class="java.sql.Timestamp"/>
+	<field name="tb_usuario_str_usuario" class="java.lang.String"/>
+	<field name="tb_venta_str_estado" class="java.lang.String"/>
+	<variable name="totalVenta" class="java.lang.Double" resetType="Group" resetGroup="Vendedor" calculation="Sum">
+		<variableExpression><![CDATA[$F{tb_venta_dbl_total}]]></variableExpression>
+	</variable>
+	<variable name="totalEfectivo" class="java.lang.Double" resetType="Group" resetGroup="Vendedor" calculation="Sum">
+		<variableExpression><![CDATA[($F{tb_venta_str_estado}.equals( "ANULADO" ))?0.00:$F{tb_venta_dbl_total}]]></variableExpression>
+	</variable>
+	<group name="Vendedor">
+		<groupExpression><![CDATA[$F{tb_venta_str_usuario}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<rectangle>
+					<reportElement x="0" y="0" width="595" height="20" uuid="ac1730e2-f766-4828-910d-2dfcca81c2aa"/>
+				</rectangle>
+				<textField>
+					<reportElement x="93" y="0" width="216" height="20" uuid="787ac293-bd26-483e-81e5-ca3b9c00b0a5"/>
+					<textElement>
+						<font fontName="Comic Sans MS"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_persona_str_apePaterno}+" "+$F{tb_persona_str_apeMaterno}+" "+$F{tb_persona_str_nombres}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="38" y="0" width="55" height="20" uuid="11ee3706-ddfc-4cd4-8d48-455eb888220b"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Vendedor :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="349" y="0" width="62" height="20" uuid="2623df16-732d-41b7-882f-dfb4f0b29e6a"/>
+					<textElement>
+						<font fontName="Comic Sans MS"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_persona_str_dni}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="309" y="0" width="40" height="20" uuid="d7556d63-c4e7-413e-81f4-e302c4d21b00"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[D.N.I :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="411" y="0" width="49" height="20" uuid="e4e935aa-3847-4256-9d38-3697d79ff16d"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Usuario :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="461" y="0" width="100" height="20" uuid="a83540a1-7e86-4dfe-b4a8-7e5dfb2199ff"/>
+					<textElement>
+						<font fontName="Comic Sans MS"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_venta_str_usuario}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="5" y="25" width="99" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="e7a75f26-55c5-415e-967e-bea8026cbd85"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Documento Venta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="107" y="25" width="103" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="5c7efe24-2638-41fa-9f95-90f15f6b2426"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha Venta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="402" y="25" width="84" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="8792b5e5-d991-424b-9074-8e5c944c1431"/>
+					<textElement textAlignment="Right">
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Venta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="212" y="25" width="110" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="ebbadd9e-daa8-4fc9-92ca-6a2b971b85d6"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Local Venta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="488" y="25" width="100" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="dd57b5ec-e584-49fe-9321-d804dac49c8d"/>
+					<textElement textAlignment="Right">
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Efectivo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="323" y="25" width="77" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="30c81b6e-bed5-4a31-9869-f83723dbac24"/>
+					<textElement>
+						<font fontName="Comic Sans MS" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Local Venta]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="37">
+				<textField pattern="¤#,##0.##;¤-#,##0.##">
+					<reportElement mode="Opaque" x="402" y="0" width="84" height="20" backcolor="#EDB640" uuid="9fbe7cf2-75b5-41aa-8a3e-ecdc08fc0ba5"/>
+					<textElement textAlignment="Right">
+						<font fontName="Comic Sans MS" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalVenta}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="264" y="0" width="137" height="20" backcolor="#EDB640" uuid="680b251d-75c2-4b32-86c5-9af12ef85df2"/>
+					<textElement textAlignment="Right">
+						<font fontName="Comic Sans MS" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total:]]></text>
+				</staticText>
+				<textField pattern="¤#,##0.##;¤-#,##0.##">
+					<reportElement mode="Opaque" x="488" y="0" width="102" height="20" backcolor="#EDB640" uuid="76116f2d-5ef5-4bc4-b925-ff5db70ec489"/>
+					<textElement textAlignment="Right">
+						<font fontName="Comic Sans MS" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalEfectivo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="128">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="71" width="595" height="30" forecolor="#FFFFFF" backcolor="#D4810D" uuid="2e1165c0-49a2-4005-83d4-fb43a63fef60"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="20"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE VENTAS POR VENDEDOR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="300" y="104" width="295" height="20" uuid="f2a59c36-d21a-49c2-ba44-71ea6907d605"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[CONCATENATE($P{fchInicial}," - ",$P{fchFinal})]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="10" width="170" height="55" uuid="7bde8d31-f6b8-4365-bd90-93a8817e3c0c"/>
+				<imageExpression><![CDATA["C:/Users/pc/Documents/matriz/fuentes/matriz/src/main/resources/com/gestionmatriz/icon/jpg_logo_empresa.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="31" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="5" y="0" width="99" height="15" uuid="fa94ea1a-2713-45d0-aed5-22cb157b272f"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_venta_str_numeroDocumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="0" width="103" height="15" uuid="aa263190-4154-4304-bad2-585befff7dbc"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_venta_str_fechaRegistro}.toString().substring(0,16)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="0" width="110" height="15" uuid="2a2bb55e-efab-4563-8c24-cf91dad82174"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_locales_str_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="402" y="0" width="84" height="15" uuid="262eef5a-6df9-429b-a260-ff4983722e27"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_venta_dbl_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="488" y="0" width="100" height="15" uuid="150b0749-0349-4d2e-816a-7f492cea652e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{tb_venta_str_estado}.equals( "ANULADO" ))?"0.00":$F{tb_venta_dbl_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="323" y="0" width="76" height="15" uuid="19727259-c438-42e8-a87c-5dce464ebcef"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_venta_str_estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="17" y="34" width="148" height="20" uuid="da9f112a-0e44-444f-95ad-3cdae14419f8"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="33" width="80" height="20" uuid="b7c472c8-8c8a-49fd-aa85-247b6f97fdf4"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="508" y="33" width="40" height="20" uuid="b83ddb22-1ed5-4786-8a9a-95039b7153aa"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

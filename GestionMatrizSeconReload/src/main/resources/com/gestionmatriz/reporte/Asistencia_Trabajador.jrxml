@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Asistencia_Trabajador" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0412dbb3-0849-4e78-9415-9f3f2f087fc4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="233"/>
+	<parameter name="fechaInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="str_persona" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     substring(tb_asistencia.`dte_fecha`,1,10) AS tb_asistencia_dte_fecha,
+     substring(tb_asistencia.`dte_fecha`,12) AS tb_asistencia_dte_fecha_hora,
+     substring(tb_jornada.`tme_HoraInicio`,1,8) AS tb_jornada_tme_HoraInicio,
+     substring(tb_jornada.`tme_horaFin`,1,8) AS tb_jornada_tme_horaFin,
+     tb_persona.`str_codigo` AS tb_persona_str_codigo,
+     concat(tb_persona.`str_apePaterno`,' ',tb_persona.`str_apeMaterno`,' ',tb_persona.`str_nombres`) as nombres,
+     tb_persona.`str_dni` AS tb_persona_str_dni,
+     tb_contrato.`int_idEmpresa` AS tb_contrato_int_idEmpresa,
+     cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),1,2))as unsigned)as signed) as horas_marcacion,
+     cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),4,2))as unsigned)as signed) as minutos_marcacion,
+     cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),1,2))as unsigned)as signed) as hora_horario_inicio,
+     cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),4,2))as unsigned)as signed) as minutos_horario_inicio,
+
+if(cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),1,2))as unsigned)as signed)-cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),1,2))as unsigned)as signed)=0,if(cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),4,2))as unsigned) as signed)- 	    cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),4,2))as unsigned) as signed)>=5,0,cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),4,2))as unsigned) as signed)- 	    cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),4,2))as unsigned) as signed)),0) as minutosTardanza,
+
+count(if(cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),1,2))as unsigned)as signed)-cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),1,2))as unsigned)as signed)=0,if(cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),4,2))as unsigned) as signed)- 	    cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),4,2))as unsigned) as signed)>=5,0,cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),4,2))as unsigned) as signed)- 	    cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),4,2))as unsigned) as signed)),0)>0)  as numTardanzas,
+
+if(if(cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),1,2))as unsigned)as signed)-cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),1,2))as unsigned)as signed)=0,if(cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),4,2))as unsigned) as signed)- 	    cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),4,2))as unsigned) as signed)>=5,0,cast(cast((substring((substring(tb_asistencia.`dte_fecha`,12)),4,2))as unsigned) as signed)- 	    cast(cast((substring(substring(tb_jornada.`tme_HoraInicio`,1,8),4,2))as unsigned) as signed)),0)>0,0,1)as numr
+
+FROM
+     `tb_contrato` tb_contrato INNER JOIN `tb_horariojornadacontrato` tb_horariojornadacontrato ON tb_contrato.`int_idContrato` = tb_horariojornadacontrato.`int_idContrato`
+     INNER JOIN `tb_asistencia` tb_asistencia ON tb_horariojornadacontrato.`int_idHorario` = tb_asistencia.`int_idHorario`
+     AND tb_horariojornadacontrato.`int_idContrato` = tb_asistencia.`int_idContrato`
+     AND tb_horariojornadacontrato.`int_idJornada` = tb_asistencia.`int_idJornada`
+     INNER JOIN `tb_horariojornada` tb_horariojornada ON tb_horariojornadacontrato.`int_idHorario` = tb_horariojornada.`int_idHorario`
+     AND tb_horariojornada.`int_idJornada` = tb_horariojornadacontrato.`int_idJornada`
+     INNER JOIN `tb_jornada` tb_jornada ON tb_horariojornada.`int_idJornada` = tb_jornada.`int_idJornada`
+     INNER JOIN `tb_persona` tb_persona ON tb_contrato.`int_idPersona` = tb_persona.`int_idPersona`
+where
+tb_persona.`str_codigo`=$P{str_persona}
+and substring(tb_asistencia.`dte_fecha`,1,10)
+between $P{fechaInicial} and $P{fechaFinal}
+
+group by
+tb_persona.`str_codigo`,tb_asistencia.`dte_fecha`]]>
+	</queryString>
+	<field name="tb_asistencia_dte_fecha" class="java.lang.String"/>
+	<field name="tb_asistencia_dte_fecha_hora" class="java.lang.String"/>
+	<field name="tb_jornada_tme_HoraInicio" class="java.lang.String"/>
+	<field name="tb_jornada_tme_horaFin" class="java.lang.String"/>
+	<field name="tb_persona_str_codigo" class="java.lang.String"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="tb_persona_str_dni" class="java.lang.String"/>
+	<field name="tb_contrato_int_idEmpresa" class="java.lang.Integer"/>
+	<field name="horas_marcacion" class="java.lang.Integer"/>
+	<field name="minutos_marcacion" class="java.lang.Integer"/>
+	<field name="hora_horario_inicio" class="java.lang.Integer"/>
+	<field name="minutos_horario_inicio" class="java.lang.Integer"/>
+	<field name="minutosTardanza" class="java.lang.Integer"/>
+	<field name="numTardanzas" class="java.lang.Long"/>
+	<field name="numr" class="java.lang.Integer"/>
+	<variable name="tardanzaAcumulada" class="java.lang.Number" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{minutosTardanza}]]></variableExpression>
+	</variable>
+	<variable name="contarTardanzas" class="java.lang.Number" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{numr}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="19" width="555" height="36" uuid="39156c11-ba8d-439a-94cc-183b611f71d8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte  de Asistencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="144" y="55" width="57" height="20" uuid="27fd7981-5bae-40e7-a22f-a2c7f5c831d8"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Desde el :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="201" y="55" width="84" height="20" uuid="0d98a137-6d21-4336-b837-3f7d4c3ba9f0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaInicial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="285" y="55" width="43" height="20" uuid="4be4be80-95f0-4f23-8e29-b5e79d1937a4"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Hasta :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="328" y="55" width="92" height="20" uuid="c76bcb4d-480f-43c0-a42e-fe58e0260318"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaFinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="10" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="87" y="41" width="110" height="20" uuid="004ada0b-7743-4af0-9e70-e0f2f90088ff"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="41" width="72" height="20" uuid="7b644f3f-4003-4804-9eb5-1b8e92b35b02"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="10" width="555" height="21" forecolor="#000000" backcolor="#FFE665" uuid="c5ce5503-733c-4925-9fca-984faba67e8e"/>
+			</rectangle>
+			<textField>
+				<reportElement x="100" y="11" width="206" height="20" uuid="30be0a9b-808d-4b7e-82f8-51a488b0f8ff"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="41" width="91" height="20" uuid="cb00625d-115d-43ab-94e4-4676a0152a10"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tardanza(Min)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="398" y="41" width="100" height="20" uuid="bf9c440b-ca58-46e3-84d2-22769d4aedeb"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="25" y="11" width="62" height="20" uuid="3ec92649-ca80-4ee2-b316-05255b5e1904"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_persona_str_codigo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="201" y="41" width="88" height="20" uuid="d47df236-c1a6-411c-a46a-0a402d8d40dc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[H. de Marcado]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="340" y="11" width="100" height="20" uuid="f4f83635-92fa-4179-9447-aca0d03c6a25"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DNI :"+$F{tb_persona_str_dni}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="87" y="0" width="110" height="20" uuid="9576e60a-b3a7-4832-aeef-692b87c6cc5d"/>
+				<textFieldExpression><![CDATA[$F{tb_jornada_tme_HoraInicio}+'-'+$F{tb_jornada_tme_horaFin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="201" y="0" width="88" height="20" uuid="4994b1ba-4242-42bd-b4d4-04858574c1d4"/>
+				<textFieldExpression><![CDATA[$F{tb_asistencia_dte_fecha_hora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="16" y="0" width="71" height="20" uuid="b1e8ee23-b3da-4161-af77-18bf63ebddd5"/>
+				<textFieldExpression><![CDATA[$F{tb_asistencia_dte_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="398" y="0" width="100" height="20" uuid="1a6ac231-eb91-42fb-9721-e0fd52ee3b51"/>
+				<textFieldExpression><![CDATA[($F{minutosTardanza}>0?"Tarde":"Puntual")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="289" y="0" width="91" height="20" uuid="d38f54a1-872d-4895-8039-b83634222ac5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{minutosTardanza}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="498" y="0" width="0" height="0" uuid="b1e8d238-d5a3-41f9-b25d-79a6030555e7"/>
+				<textFieldExpression><![CDATA[$F{numr}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="56" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="34" width="100" height="20" uuid="5f0af32c-9f66-48c5-92ce-6403f0ebacbd"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="34" width="80" height="20" uuid="648d2c35-049a-4d39-8193-61f1381cce2a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="34" width="40" height="20" uuid="ea3a23af-e46b-47f3-be46-d988af3916be"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="245" splitType="Stretch">
+			<textField>
+				<reportElement x="289" y="11" width="91" height="20" uuid="ba289b7c-62a4-415b-ae2a-ab3054c9cd40"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{tardanzaAcumulada}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="11" width="129" height="20" uuid="41a25368-6fc7-40cb-badc-81c2c57f37d0"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tardanza acumuluda :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="289" y="10" width="91" height="1" uuid="47ffedc8-4e16-4c2e-8542-cd0280898827"/>
+			</line>
+			<pieChart>
+				<chart>
+					<reportElement x="129" y="31" width="281" height="170" uuid="f07d7f46-1fe1-4088-867d-f7e1c428062e"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<pieSeries>
+						<keyExpression><![CDATA["Porcentaje de Tardanzas"]]></keyExpression>
+						<valueExpression><![CDATA[(($V{REPORT_COUNT}.intValue()-$V{contarTardanzas}.intValue() )*100)/($V{REPORT_COUNT})]]></valueExpression>
+						<labelExpression><![CDATA[((($V{REPORT_COUNT}.intValue() -$V{contarTardanzas}.intValue() )*100)/$V{REPORT_COUNT})+"% de Tardanzas"]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Porcentaje de Puntualidad"]]></keyExpression>
+						<valueExpression><![CDATA[100-((($V{REPORT_COUNT}.intValue()-$V{contarTardanzas}.intValue() )*100)/$V{REPORT_COUNT})]]></valueExpression>
+						<labelExpression><![CDATA[100-((($V{REPORT_COUNT}.intValue()-$V{contarTardanzas}.intValue())*100)/$V{REPORT_COUNT})+"%"+"Puntualidad"]]></labelExpression>
+					</pieSeries>
+					<otherKeyExpression><![CDATA["Porcentaje de Puntualidad"]]></otherKeyExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>

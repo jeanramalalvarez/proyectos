@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteReintegro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc2f34e8-9df2-476b-afa7-f65ca201bf83">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fchInicial" class="java.lang.String"/>
+	<parameter name="fchFinal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     tb_producto.`str_nombreProducto` AS tb_producto_str_nombreProducto,
+     tb_producto.`str_reintegroTributario` AS tb_producto_str_reintegroTributario,
+     tb_ordenCompra.`dbl_igvRecuperado` AS tb_ordenCompra_dbl_igvRecuperado,
+     tb_ordenCompra.`str_numeroOC` AS tb_ordenCompra_str_numeroOC,
+     tb_proveedorProductoOrdenCompra.`dbl_cantidad` AS tb_proveedorProductoOrdenCompra_int_cantidad,
+     tb_proveedorProductoOrdenCompra.`dbl_precio` AS tb_proveedorProductoOrdenCompra_dbl_precio,
+     tb_ordenCompra.`dbl_precioTotal` AS tb_ordenCompra_dbl_precioTotal,
+     tb_proveedorProductoOrdenCompraFacturaCompra.`str_fechaDocumento` AS tb_proveedorProductoOrdenCompraFacturaCompra_str_fechaDocumento,
+     tb_producto.`int_idProducto` AS tb_producto_int_idProducto
+FROM
+     `tb_producto` tb_producto INNER JOIN `tb_proveedorproducto` tb_proveedorproducto ON tb_producto.`int_idProducto` = tb_proveedorproducto.`int_idProducto`
+     INNER JOIN `tb_proveedorProductoOrdenCompra` tb_proveedorProductoOrdenCompra ON tb_proveedorproducto.`int_idProveedor` = tb_proveedorProductoOrdenCompra.`int_idProveedor`
+     AND tb_proveedorproducto.`int_idProducto` = tb_proveedorProductoOrdenCompra.`int_idProducto`
+     INNER JOIN `tb_ordenCompra` tb_ordenCompra ON tb_proveedorProductoOrdenCompra.`int_idOrdenCompra` = tb_ordenCompra.`int_idOrdenCompra`
+     INNER JOIN `tb_proveedorProductoOrdenCompraFacturaCompra` tb_proveedorProductoOrdenCompraFacturaCompra ON tb_proveedorProductoOrdenCompra.`int_idProveedor` = tb_proveedorProductoOrdenCompraFacturaCompra.`int_idProveedor`
+     AND tb_proveedorProductoOrdenCompra.`int_idProducto` = tb_proveedorProductoOrdenCompraFacturaCompra.`int_idProducto`
+     AND tb_proveedorProductoOrdenCompra.`int_idOrdenCompra` = tb_proveedorProductoOrdenCompraFacturaCompra.`int_idOrdenCompra`
+WHERE
+     (date(tb_proveedorProductoOrdenCompraFacturaCompra.`str_fechaDocumento`) >= $P{fchInicial}
+     and date(tb_proveedorProductoOrdenCompraFacturaCompra.`str_fechaDocumento`) <= $P{fchFinal})
+ORDER BY
+     tb_ordenCompra.`str_numeroOC` ASC]]>
+	</queryString>
+	<field name="tb_producto_str_nombreProducto" class="java.lang.String"/>
+	<field name="tb_producto_str_reintegroTributario" class="java.lang.String"/>
+	<field name="tb_ordenCompra_dbl_igvRecuperado" class="java.lang.Double"/>
+	<field name="tb_ordenCompra_str_numeroOC" class="java.lang.String"/>
+	<field name="tb_proveedorProductoOrdenCompra_int_cantidad" class="java.lang.Double"/>
+	<field name="tb_proveedorProductoOrdenCompra_dbl_precio" class="java.lang.Double"/>
+	<field name="tb_ordenCompra_dbl_precioTotal" class="java.lang.Double"/>
+	<field name="tb_proveedorProductoOrdenCompraFacturaCompra_str_fechaDocumento" class="java.lang.String"/>
+	<field name="tb_producto_int_idProducto" class="java.lang.Integer"/>
+	<variable name="igvReultGrupo" class="java.lang.Double" resetType="Group" resetGroup="OrdenCompra" calculation="First">
+		<variableExpression><![CDATA[$F{tb_ordenCompra_dbl_igvRecuperado}]]></variableExpression>
+	</variable>
+	<variable name="igvFinal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$V{igvReultGrupo}]]></variableExpression>
+	</variable>
+	<group name="OrdenCompra">
+		<groupExpression><![CDATA[$F{tb_ordenCompra_str_numeroOC}]]></groupExpression>
+		<groupHeader>
+			<band height="49">
+				<staticText>
+					<reportElement x="14" y="0" width="96" height="20" uuid="7939c5e2-3310-427d-bbdc-22b869c5445b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Orden de Compra :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="110" y="0" width="113" height="20" uuid="f11c7818-2e19-4aea-8f45-41c1235ccc2a"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_str_numeroOC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="110" y="27" width="99" height="20" uuid="f9fc778d-b041-4f7d-9f38-1e349546e981"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Producto]]></text>
+				</staticText>
+				<line>
+					<reportElement x="14" y="21" width="209" height="1" uuid="35314271-4766-4a61-87bb-7db6e805d89a"/>
+				</line>
+				<staticText>
+					<reportElement x="234" y="27" width="56" height="20" uuid="52bea9d4-fa46-4a42-9423-87cdcd698188"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Reintegro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="319" y="27" width="56" height="20" uuid="0bf08d2f-3660-4933-89ce-bd54a9a887b5"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cantidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="396" y="27" width="56" height="20" uuid="c0edf1ea-40ee-4aec-be33-28627250f4f0"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="34" y="27" width="61" height="20" uuid="9a02af29-c4cc-41a0-bc62-b884ff7d5cc5"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Codigo]]></text>
+				</staticText>
+				<line>
+					<reportElement x="35" y="47" width="417" height="1" uuid="81a7042c-adb5-4c8c-b8f3-ecb7d6c501ef"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="27">
+				<staticText>
+					<reportElement x="190" y="0" width="75" height="20" uuid="7c75a1b6-1ba5-493d-9a66-e165b69b4dd7"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Compra :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="265" y="0" width="76" height="20" uuid="63929d9f-f990-481d-aeb2-55529e6dcf26"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_dbl_precioTotal}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="352" y="0" width="101" height="20" uuid="5b3ed438-6423-4cdb-b5d8-bf45f17cfa6d"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[I.G.V. Recuperado :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="453" y="0" width="67" height="20" uuid="3a6613af-c717-4e39-a0e8-5d6f4f320110"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_dbl_igvRecuperado}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="190" y="0" width="330" height="1" uuid="5d179c62-2cda-4a31-accc-70ed787a6e82"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="14" width="529" height="32" uuid="8c28204f-fc78-4306-94b6-aabd9dde7d5b"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="false"/>
+				</textElement>
+				<text><![CDATA[REPORTE DEVOLUCIÓN POR REINTEGRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="46" width="84" height="30" uuid="f707f801-69ba-4b99-9876-e6b0f75fbab4"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[ENTRE ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="166" y="46" width="113" height="30" uuid="f702e83e-c712-433b-be25-75786c32c40d"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fchInicial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="279" y="46" width="96" height="30" uuid="a245d312-7646-45d0-88cf-58a5afefb52c"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[HASTA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="375" y="46" width="113" height="30" uuid="b3981a48-a5c0-4bd8-8296-7b6f15233724"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fchFinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="35" y="0" width="60" height="15" uuid="bf04f706-c13b-4e32-bbb4-720fdf3da32e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_int_idProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="109" y="0" width="100" height="15" uuid="c00cf8f4-f08d-4ba2-a265-02cd47c3433c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="234" y="0" width="56" height="15" uuid="7e9ef249-ba4c-4bce-b79b-3ee6a9a22cf5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_reintegroTributario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="319" y="0" width="56" height="15" uuid="07d5d249-9c31-4787-b964-a6bcca362404"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_proveedorProductoOrdenCompra_int_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="396" y="0" width="56" height="15" uuid="f64bc113-1347-4036-921f-f706b8167aec"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_proveedorProductoOrdenCompra_dbl_precio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="423" y="8" width="80" height="20" uuid="768539b2-046b-49fd-9ecf-c50da4374c2b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="503" y="8" width="40" height="20" uuid="135cc189-db0b-414f-952d-8512f3967115"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="30" y="8" width="160" height="20" uuid="5aeb7e8f-c3ff-4d1a-b352-abc9acd2e5e6"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

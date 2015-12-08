@@ -1,0 +1,14 @@
+<configuracion>
+    <BD>
+		<!-- Local -->
+        <host-bd>7A67523112F4C572C5FEB0F6A93CD3D6556B337D0FB161DF</host-bd>
+		<usuario-bd>FCE401D7D4DE0619</usuario-bd>
+		<pass-bd>5BAF763076B57238</pass-bd>
+        <base-datos>5284F39FC9CD97F03D115FEC884F5C48</base-datos>
+    </BD>
+	
+	<OTROS>
+		<valor-igv>19.00</valor-igv>
+		<ruta-reportes>smb://YESMI:yamil2013@localhost/repo_reportes_matriz/</ruta-reportes>
+	</OTROS>
+</configuracion>

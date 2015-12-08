@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-10-12T13:18:58 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Proforma" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="92f1fe09-84e0-486e-8b46-2690a41d915f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="cnn_matriz_desarrollo"/>
+	<parameter name="nroProforma" class="java.lang.String">
+		<defaultValueExpression><![CDATA["PROFO-2-F"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Comercial Iquitos S.A."]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_cliente.`str_razonSocial` AS tb_cliente_str_razonSocial,
+     tb_cliente.`str_rucdni` AS tb_cliente_str_rucdni,
+     tb_venta.`dbl_cantidad` AS tb_venta_dbl_cantidad,
+     tb_venta.`dbl_precio` AS tb_venta_dbl_precio,
+     tb_venta.`dbl_subTotal` AS tb_venta_dbl_subTotal,
+     tb_venta.`dbl_descuento` AS tb_venta_dbl_descuento,
+     tb_venta.`dbl_total` AS tb_venta_dbl_total,
+     tb_venta.`str_numeroDocumento` AS tb_venta_str_numeroDocumento,
+     tb_venta.`dbl_unidadesContenidas` AS tb_venta_dbl_unidadesContenidas,
+     tb_producto.`str_nombreProducto` AS tb_producto_str_nombreProducto,
+     tb_producto.`str_codigoInterno` AS tb_producto_str_codigoInterno,
+     tb_venta.`str_estado` AS tb_venta_str_estado,
+     tb_venta.`dbl_igv` AS tb_venta_dbl_igv,
+     tb_proveedorProductoUnidadMedida.`str_UnidadMedidaCompra` AS tb_proveedorProductoUnidadMedida_str_UnidadMedidaCompra
+FROM
+     `tb_cliente` tb_cliente INNER JOIN `tb_venta` tb_venta ON tb_cliente.`int_idCliente` = tb_venta.`int_idCliente`
+     INNER JOIN `tb_proveedorproducto` tb_proveedorproducto ON tb_venta.`int_idProveedor` = tb_proveedorproducto.`int_idProveedor`
+     AND tb_proveedorproducto.`int_idProducto` = tb_venta.`int_idProducto`
+     INNER JOIN `tb_producto` tb_producto ON tb_proveedorproducto.`int_idProducto` = tb_producto.`int_idProducto`
+     INNER JOIN `tb_proveedorProductoUnidadMedida` tb_proveedorProductoUnidadMedida ON tb_proveedorproducto.`int_idProveedor` = tb_proveedorProductoUnidadMedida.`int_idProveedor`
+     AND tb_proveedorproducto.`int_idProducto` = tb_proveedorProductoUnidadMedida.`int_idProducto`
+WHERE
+     tb_venta.`str_numeroDocumento` = $P{nroProforma}
+     and tb_venta.`str_estado` = 'SINPAGO']]>
+	</queryString>
+	<field name="tb_cliente_str_razonSocial" class="java.lang.String"/>
+	<field name="tb_cliente_str_rucdni" class="java.lang.String"/>
+	<field name="tb_venta_dbl_cantidad" class="java.lang.Double"/>
+	<field name="tb_venta_dbl_precio" class="java.lang.Double"/>
+	<field name="tb_venta_dbl_subTotal" class="java.lang.Double"/>
+	<field name="tb_venta_dbl_descuento" class="java.lang.Double"/>
+	<field name="tb_venta_dbl_total" class="java.lang.Double"/>
+	<field name="tb_venta_str_numeroDocumento" class="java.lang.String"/>
+	<field name="tb_venta_dbl_unidadesContenidas" class="java.lang.Double"/>
+	<field name="tb_producto_str_nombreProducto" class="java.lang.String"/>
+	<field name="tb_producto_str_codigoInterno" class="java.lang.String"/>
+	<field name="tb_venta_str_estado" class="java.lang.String"/>
+	<field name="tb_proveedorProductoUnidadMedida_str_UnidadMedidaCompra" class="java.lang.String"/>
+	<field name="tb_venta_dbl_igv" class="java.lang.Double"/>
+	<variable name="TotatProfo" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{tb_venta_dbl_total}]]></variableExpression>
+	</variable>
+	<variable name="sumIGV" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{tb_venta_dbl_igv}]]></variableExpression>
+	</variable>
+	<variable name="sumDesc" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{tb_venta_dbl_descuento}]]></variableExpression>
+	</variable>
+	<variable name="sumSubTotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{tb_venta_dbl_subTotal}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="127" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-1" y="91" width="556" height="33" uuid="1a8c8cde-9a8b-4b08-a671-b802b7fe1cb8"/>
+			</rectangle>
+			<textField>
+				<reportElement x="160" y="91" width="395" height="34" uuid="ab5f8f98-f994-41fa-825e-5aa67761d4b5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[CONCATENATE("PROFORMA Nro:",$P{nroProforma})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="53" width="555" height="33" forecolor="#FFFFFF" backcolor="#D4810D" uuid="52f6a668-79ff-4227-b790-954706baf3cc"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="3" width="147" height="47" uuid="e53a2bdb-0b6b-40f6-82e8-45374008e2c0"/>
+				<imageExpression><![CDATA["C:/Users/pc/Documents/matriz/fuentes/matriz/src/main/resources/com/gestionmatriz/icon/jpg_logo_empresa.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="11" width="51" height="20" uuid="f4b1e592-686b-473e-9b90-dd03d5f86d03"/>
+				<textElement>
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="75" y="11" width="201" height="20" uuid="f13697d3-eecc-4165-a121-debf720ff214"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_cliente_str_razonSocial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="287" y="11" width="73" height="20" uuid="6e6dde0a-1ece-49c8-bb37-d7ff65026164"/>
+				<textElement>
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.U.C./D.N.I. :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="360" y="11" width="104" height="20" uuid="32bf7e46-0cba-457e-ad83-5fbdd8b056b0"/>
+				<textFieldExpression><![CDATA[$F{tb_cliente_str_rucdni}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="477" y="11" width="74" height="20" uuid="ac6dfe63-59f7-4d56-afe6-e48a3b877f44"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valides 7 dias ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="197" y="38" width="207" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="33e2389e-0fb1-4c3f-9cf8-d7177c5abf41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="117" y="38" width="80" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="c2c2a5db-bb41-42ed-a4d1-273c671172c0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unidad Medida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2" y="38" width="62" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="fb4ba242-f7fb-426b-bb84-960605fa9faa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="406" y="38" width="71" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="3fde75cc-4408-48dd-aec6-ef5e9c23fcd7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio Unit.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="478" y="38" width="78" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="dcfb03b0-b18b-494f-bae5-4c8fdd02f947"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<line>
+				<reportElement x="24" y="59" width="531" height="1" uuid="014c4bb3-00cf-4c09-946b-087e9672963e"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="64" y="38" width="53" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="7d18bb0e-42ac-42c3-90f5-9a66b615a625"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="62" height="15" uuid="1313880a-7dd1-4d57-a8ae-4d65e7cce2fd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_codigoInterno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="64" y="0" width="53" height="15" uuid="3db3bb29-8316-434b-afca-8c36be18c363"/>
+				<textElement textAlignment="Center">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_venta_dbl_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="117" y="0" width="80" height="15" uuid="166cf314-db8a-47d8-a923-4e9a7da664d0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_proveedorProductoUnidadMedida_str_UnidadMedidaCompra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="0" width="207" height="15" uuid="053daa48-4d88-4775-99ef-2f4787223609"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="406" y="0" width="71" height="15" uuid="3c41f789-5bb3-40f8-bfa0-9fa5ea3de055"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_venta_dbl_precio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="478" y="0" width="78" height="15" uuid="4b433161-cdf4-47e4-a558-e08abb67ca83"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[PRODUCT($F{tb_venta_dbl_precio},$F{tb_venta_dbl_cantidad} )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="2" y="0" width="165" height="20" uuid="7bb12129-380d-44e5-bf94-1c71c7bde989"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="455" y="0" width="100" height="20" uuid="aec25192-f81a-4076-953f-dd8e21bee09d"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="101" splitType="Stretch">
+			<line>
+				<reportElement x="455" y="0" width="100" height="1" uuid="d8e702c3-f9ca-4a69-8857-c51561f13562">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="456" y="0" width="98" height="20" uuid="46d88c44-2747-4072-926d-a71277385b5b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumSubTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement mode="Opaque" x="320" y="45" width="131" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="6e4c4b62-850a-4d18-9449-d69d6984cf1a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[CONCATENATE("IGV(18.0%):")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="320" y="1" width="131" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="3817825a-8984-4d3f-aff2-cb1f57fcf149"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sub Total: ]]></text>
+			</staticText>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="456" y="45" width="98" height="20" uuid="f810c486-6cd3-4e8f-83e0-39c5bb939a8c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumIGV}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="320" y="67" width="131" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="a8107c21-b4ae-4365-8bc4-0dcda382d7a3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total: ]]></text>
+			</staticText>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement mode="Opaque" x="456" y="68" width="98" height="20" backcolor="#EDB640" uuid="e431028c-968c-4e13-8003-601cd7fc51ff"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotatProfo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="456" y="65" width="100" height="1" uuid="69efe623-4aba-496f-94ed-7bd571da7eef">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement mode="Opaque" x="320" y="23" width="131" height="20" forecolor="#FFFFFF" backcolor="#EDB640" uuid="2ac7cbd3-af3b-468d-b0a1-dab0986de77f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[CONCATENATE("Desc.: ")]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="456" y="23" width="98" height="20" uuid="2726276d-cfe1-4014-b6a2-b86ab5904438"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comic Sans MS" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumDesc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

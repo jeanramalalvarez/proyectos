@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-10-13T15:55:27 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GraficoVentaTiendaDia" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="719d350b-e6be-444e-b71e-47add8b3dd1f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="fchInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2012-09-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fchFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2012-12-01"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     sum(tb_venta.`dbl_total`) AS tb_venta_dbl_total,
+     date(tb_venta.`str_fechaRegistro`) AS tb_venta_str_fechaRegistro,
+     tb_locales.`str_nombre` AS tb_locales_str_nombre ,
+     tb_venta.`str_estado` AS tb_venta_str_estado
+FROM
+     `tb_locales` tb_locales INNER JOIN `tb_venta` tb_venta ON tb_locales.`int_idLocal` = tb_venta.`int_local`
+WHERE
+    date(tb_venta.`str_fechaRegistro`) >=date($P{fchInicial})and
+	date(tb_venta.`str_fechaRegistro`) <=date($P{fchFinal})
+     and tb_venta.`int_local` LIKE '%'
+     and tb_venta.`str_estado` = 'PAGADO'
+GROUP BY
+     tb_venta.`int_local`,
+date(tb_venta.`str_fechaRegistro`)
+order by date(tb_venta.`str_fechaRegistro`)]]>
+	</queryString>
+	<field name="tb_venta_dbl_total" class="java.lang.Double"/>
+	<field name="tb_venta_str_fechaRegistro" class="java.sql.Date"/>
+	<field name="tb_locales_str_nombre" class="java.lang.String"/>
+	<field name="tb_venta_str_estado" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="122" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="56" width="842" height="36" forecolor="#FFFFFF" backcolor="#D4810D" uuid="77a8551d-cad4-411f-85e5-6d72590582f1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DE VENTAS DIARIAS POR TIENDAS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="292" y="92" width="510" height="28" uuid="55e667de-2e1f-4af4-85ae-6b5c4f83c3aa"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[CONCATENATE( $P{fchInicial}.toString()," - ",  $P{fchFinal}.toString())]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="170" height="54" uuid="a494368b-d91d-411c-b4de-bd3e7fc12575"/>
+				<imageExpression><![CDATA["C:/Users/pc/Documents/matriz/fuentes/matriz/src/main/resources/com/gestionmatriz/icon/jpg_logo_empresa.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="347" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<bar3DChart>
+				<chart isShowLegend="true" renderType="draw" theme="default">
+					<reportElement x="0" y="0" width="842" height="347" isPrintWhenDetailOverflows="true" uuid="6fc92c8d-8772-42f4-b5da-8b20fca27756"/>
+					<chartTitle>
+						<font fontName="Comic Sans MS" size="10"/>
+					</chartTitle>
+					<chartSubtitle>
+						<font fontName="Comic Sans MS" size="10"/>
+					</chartSubtitle>
+					<chartLegend position="Bottom">
+						<font fontName="Comic Sans MS" size="10"/>
+					</chartLegend>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{tb_locales_str_nombre}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{tb_venta_str_fechaRegistro}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{tb_venta_dbl_total}]]></valueExpression>
+						<labelExpression><![CDATA[$F{tb_venta_dbl_total}.toString()]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot isShowLabels="true">
+					<plot backgroundAlpha="1.0" foregroundAlpha="1.0" labelRotation="360.0"/>
+					<itemLabel color="#000000">
+						<font fontName="Comic Sans MS" size="6" isBold="false" isStrikeThrough="false"/>
+					</itemLabel>
+					<categoryAxisLabelExpression><![CDATA[CONCATENATE("Ventas S/. ")]]></categoryAxisLabelExpression>
+					<categoryAxisFormat labelRotation="360.0">
+						<axisFormat labelColor="#FFFFFF" verticalTickLabels="true">
+							<labelFont>
+								<font fontName="Comic Sans MS" size="10"/>
+							</labelFont>
+							<tickLabelFont>
+								<font fontName="Comic Sans MS" size="7" isBold="true"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisLabelExpression><![CDATA[CONCATENATE("Fecha de Venta")]]></valueAxisLabelExpression>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont>
+								<font fontName="Comic Sans MS" size="10" isBold="false"/>
+							</labelFont>
+							<tickLabelFont>
+								<font fontName="Comic Sans MS" size="8" isBold="true"/>
+							</tickLabelFont>
+						</axisFormat>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="0" width="172" height="20" uuid="bd294f38-2767-40d8-a671-1fef553dec08"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

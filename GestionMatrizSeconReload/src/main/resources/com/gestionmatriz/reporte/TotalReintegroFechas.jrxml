@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TotalReintegroFechas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f740ad6c-c9f7-49ca-b0af-5df6a5251a23">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fchInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fchFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_ordenCompra.`str_numeroOC` AS tb_ordenCompra_str_numeroOC,
+     tb_ordenCompra.`dbl_precioTotal` AS tb_ordenCompra_dbl_precioTotal,
+     tb_ordenCompra.`dbl_igvRecuperado` AS tb_ordenCompra_dbl_igvRecuperado,
+     tb_proveedorProductoOrdenCompraFacturaCompra.`str_fechaDocumento` AS tb_proveedorProductoOrdenCompraFacturaCompra_str_fechaDocumento
+FROM
+     `tb_ordenCompra` tb_ordenCompra INNER JOIN `tb_proveedorProductoOrdenCompra` tb_proveedorProductoOrdenCompra ON tb_ordenCompra.`int_idOrdenCompra` = tb_proveedorProductoOrdenCompra.`int_idOrdenCompra`
+     INNER JOIN `tb_proveedorProductoOrdenCompraFacturaCompra` tb_proveedorProductoOrdenCompraFacturaCompra ON tb_proveedorProductoOrdenCompra.`int_idProveedor` = tb_proveedorProductoOrdenCompraFacturaCompra.`int_idProveedor`
+     AND tb_proveedorProductoOrdenCompra.`int_idOrdenCompra` = tb_proveedorProductoOrdenCompraFacturaCompra.`int_idOrdenCompra`
+     AND tb_proveedorProductoOrdenCompra.`int_idProducto` = tb_proveedorProductoOrdenCompraFacturaCompra.`int_idProducto`
+
+where date(tb_proveedorProductoOrdenCompraFacturaCompra.`str_fechaDocumento`)>= date($P{fchInicial})and
+date(tb_proveedorProductoOrdenCompraFacturaCompra.`str_fechaDocumento`)<= date($P{fchFinal})
+
+group by tb_ordenCompra.`str_numeroOC`]]>
+	</queryString>
+	<field name="tb_ordenCompra_str_numeroOC" class="java.lang.String"/>
+	<field name="tb_ordenCompra_dbl_precioTotal" class="java.lang.Double"/>
+	<field name="tb_ordenCompra_dbl_igvRecuperado" class="java.lang.Double"/>
+	<field name="tb_proveedorProductoOrdenCompraFacturaCompra_str_fechaDocumento" class="java.lang.String"/>
+	<variable name="igv" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{tb_ordenCompra_dbl_igvRecuperado}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="13" width="531" height="31" uuid="03400fbc-59e7-4619-91b4-fc573f049b3e"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TOTAL DE REINTEGRO TRIBUTARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="44" width="85" height="27" uuid="0fb3d392-eec2-4f12-87f3-d3b618c1ba8c"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[ENTRE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="167" y="44" width="113" height="27" uuid="bdda8d85-d405-445f-884f-329e63800e29"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fchInicial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="44" width="92" height="27" uuid="0f36194a-2aad-449f-ab8f-e497f1b0f23f"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[HASTA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="372" y="44" width="114" height="27" uuid="099dbc07-929f-488f-b1d1-23fafb58b63e"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fchFinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="7" width="100" height="20" uuid="2bc0b186-f7cd-4249-a73a-56cd795cdeec"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro Orden Compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="7" width="86" height="20" uuid="080d9b97-47c7-43b3-84df-d4c1d2a4a392"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="231" y="7" width="100" height="20" uuid="9eca044d-dc01-4691-ada4-114cb23574f1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="7" width="111" height="20" uuid="56d7f315-f57b-477c-a1ec-81fad53a4d4b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[I.G.V. Recuperado ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="13" y="26" width="444" height="1" uuid="f1096cb1-ee02-420a-a9f9-7cbcac336f8e"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="122" y="0" width="86" height="15" uuid="829c8b39-f6e8-43ef-b0af-f1746a53c8d5"/>
+				<textFieldExpression><![CDATA[$F{tb_proveedorProductoOrdenCompraFacturaCompra_str_fechaDocumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="0" width="100" height="15" uuid="93274aa4-6b1a-43c4-a635-ce926fdc6211"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{tb_ordenCompra_dbl_precioTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="346" y="0" width="111" height="15" uuid="f21e3d52-8978-49b3-9a88-4a808f090b41"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{tb_ordenCompra_dbl_igvRecuperado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="0" width="100" height="15" uuid="124b64cb-6595-4816-96f7-2e56fd598d70"/>
+				<textFieldExpression><![CDATA[$F{tb_ordenCompra_str_numeroOC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="31" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement x="434" y="24" width="80" height="20" uuid="4d643f80-7d28-43b6-8ccd-366c5a3746cc"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="514" y="24" width="40" height="20" uuid="63838f73-2463-430f-9f04-1d355b462ff5"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="16" y="26" width="151" height="20" uuid="41aadd18-5067-4403-89dd-15cad5eac6df"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="133" y="1" width="227" height="20" uuid="96f0edeb-d2d7-4909-9640-5c1572627f07"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total I.G.V. Recuperado por Reintegro]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="360" y="1" width="97" height="20" uuid="25241a8b-88e7-4920-beae-d4134a4ac034"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{igv}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="133" y="0" width="324" height="1" uuid="4300c4a1-5c23-47c7-8783-8f105fcf36da"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

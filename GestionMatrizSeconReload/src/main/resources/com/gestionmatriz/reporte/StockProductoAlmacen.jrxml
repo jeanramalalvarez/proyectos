@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StockProductoAlmacen" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ed6ecd0-7f3e-422b-8471-b2c885e18c2e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nomLocal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     ROUND(sum(tb_almacen.`dbl_cantidad`)*tb_proveedorProductoUnidadMedida.`dbl_unidadesContenidas`,2) AS tb_almacen_dbl_cantidad,
+     tb_almacen.`str_estado` AS tb_almacen_str_estado,
+     tb_producto.`str_nombreProducto` AS tb_producto_str_nombreProducto,
+     tb_producto.`str_codigoInterno` AS tb_producto_str_codigoInterno,
+     tb_producto.`str_estado` AS tb_producto_str_estado,
+     tb_locales.`str_nombre` AS tb_locales_str_nombre,
+     tb_locales.`str_direccion` AS tb_locales_str_direccion,
+     tb_almacen.`int_idLocal` AS tb_almacen_int_idLocal,
+     tb_proveedorProductoUnidadMedida.`dbl_unidadesContenidas` AS tb_proveedorProductoUnidadMedida_dbl_unidadesContenidas,
+     tb_proveedorProductoUnidadMedida.`int_idUnidadMedidaVenta` AS tb_proveedorProductoUnidadMedida_int_idUnidadMedidaVenta,
+     tb_unidadmedida.`str_nombreUM` AS tb_unidadmedida_str_nombreUM
+FROM
+     `tb_almacen` tb_almacen INNER JOIN `tb_locales` tb_locales ON tb_almacen.`int_idLocal` = tb_locales.`int_idLocal`
+     INNER JOIN `tb_proveedorproducto` tb_proveedorproducto ON tb_almacen.`int_idProveedor` = tb_proveedorproducto.`int_idProveedor`
+     AND tb_proveedorproducto.`int_idProducto` = tb_almacen.`int_idProducto`
+     INNER JOIN `tb_producto` tb_producto ON tb_proveedorproducto.`int_idProducto` = tb_producto.`int_idProducto`
+     INNER JOIN `tb_proveedorProductoUnidadMedida` tb_proveedorProductoUnidadMedida ON tb_proveedorproducto.`int_idProveedor` = tb_proveedorProductoUnidadMedida.`int_idProveedor`
+     AND tb_proveedorproducto.`int_idProducto` = tb_proveedorProductoUnidadMedida.`int_idProducto`
+     INNER JOIN `tb_unidadmedida` tb_unidadmedida ON tb_proveedorProductoUnidadMedida.`int_idUnidadMedidaVenta` = tb_unidadmedida.`int_idUnidadMedida`
+WHERE
+     tb_almacen.`int_idLocal` LIKE $P{nomLocal}
+     and tb_almacen.`str_estado` = 'ACTIVO'
+GROUP BY
+     tb_producto_str_codigoInterno,
+     tb_almacen.`int_idLocal`]]>
+	</queryString>
+	<field name="tb_almacen_dbl_cantidad" class="java.lang.Double"/>
+	<field name="tb_almacen_str_estado" class="java.lang.String"/>
+	<field name="tb_producto_str_nombreProducto" class="java.lang.String"/>
+	<field name="tb_producto_str_codigoInterno" class="java.lang.String"/>
+	<field name="tb_producto_str_estado" class="java.lang.String"/>
+	<field name="tb_locales_str_nombre" class="java.lang.String"/>
+	<field name="tb_locales_str_direccion" class="java.lang.String"/>
+	<field name="tb_almacen_int_idLocal" class="java.lang.Integer"/>
+	<field name="tb_proveedorProductoUnidadMedida_dbl_unidadesContenidas" class="java.lang.Double"/>
+	<field name="tb_proveedorProductoUnidadMedida_int_idUnidadMedidaVenta" class="java.lang.Integer"/>
+	<field name="tb_unidadmedida_str_nombreUM" class="java.lang.String"/>
+	<group name="Almacen">
+		<groupExpression><![CDATA[$F{tb_almacen_int_idLocal}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement x="84" y="0" width="272" height="20" uuid="490232d6-2357-402b-bf0b-ae333b0a155f"/>
+					<textFieldExpression><![CDATA[$F{tb_locales_str_nombre}+" "+$F{tb_locales_str_direccion}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="18" y="0" width="66" height="20" uuid="ee8c8e32-6d96-457d-bc83-7138a92f7ff0"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Almacén :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="53" y="30" width="69" height="20" uuid="b2e07198-742c-4a2d-acae-9694b677339c"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cod. Interno]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="139" y="30" width="178" height="20" uuid="4c0e3187-f3ee-4bfe-b5c4-9474ed26d8cb"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="317" y="30" width="73" height="20" uuid="a430896d-5608-4767-902c-36c3abc3cfe2"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Stock]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="408" y="30" width="100" height="20" uuid="b2ca4657-d09f-4787-8923-bedf7e2206b2"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Unidad Medida]]></text>
+				</staticText>
+				<line>
+					<reportElement x="19" y="24" width="337" height="1" uuid="de3148c1-9126-4564-9e79-e8dcf04d93af"/>
+				</line>
+				<line>
+					<reportElement x="55" y="49" width="453" height="1" uuid="b4d3ed90-8f50-42e6-8eb6-c2d2c3367d36"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="63" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="15" width="338" height="32" uuid="8bcda77a-a588-4db7-a0a9-0bbfa589e81d"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock  de Productos por Almacén]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="53" y="0" width="69" height="15" uuid="c7374ce5-d5a1-48c9-af2b-cb4f346dee52"/>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_codigoInterno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="139" y="0" width="178" height="15" uuid="7c32c8a9-7fda-4667-9b73-08f7ab13ce93"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="317" y="0" width="73" height="15" uuid="faaeb2c6-4453-4ed7-87ad-d092b5c8179b"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_almacen_dbl_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="408" y="0" width="100" height="15" uuid="5541adf4-ed2c-4360-a521-a730e4c734dc"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_unidadmedida_str_nombreUM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="18" y="34" width="178" height="20" uuid="b3ade8bf-480a-41f3-b468-e325710ab538"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="34" width="80" height="20" uuid="224c8d44-1a8b-4899-a8fd-c2dded4f61e5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="508" y="34" width="40" height="20" uuid="c98c9a89-38bd-4653-a87e-d95c275716cf"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

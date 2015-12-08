@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TodasCompras" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e606b1ba-a827-4a47-87e6-188bf4d7ea49">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fchInicial" class="java.lang.String"/>
+	<parameter name="fchFinal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     tb_ordenCompra.`str_numeroOC` AS tb_ordenCompra_str_numeroOC,
+     tb_ordenCompra.`dbl_precioTotal` AS tb_ordenCompra_dbl_precioTotal,
+     tb_proveedorProductoOrdenCompraFacturaCompra.`str_numeroFactura` AS tb_proveedorProductoOrdenCompraFacturaCompra_str_numeroFactura,
+     tb_ordenCompra.`str_usuarioCreador` AS tb_ordenCompra_str_usuarioCreador,
+     tb_proveedorProductoOrdenCompra.`dbl_precio` AS tb_proveedorProductoOrdenCompra_dbl_precio,
+     tb_proveedorProductoOrdenCompra.`dbl_cantidad` AS tb_proveedorProductoOrdenCompra_int_cantidad,
+     tb_proveedorProductoOrdenCompraFacturaCompra.`str_usuarioCreador` AS tb_proveedorProductoOrdenCompraFacturaCompra_str_usuarioCreador,
+     tb_ordenCompra.`str_fechaCreacion` AS tb_ordenCompra_str_fechaCreacion,
+     tb_proveedor.`str_razonSocial` AS tb_proveedor_str_razonSocial,
+     tb_proveedor.`str_ruc` AS tb_proveedor_str_ruc,
+     tb_producto.`str_nombreProducto` AS tb_producto_str_nombreProducto
+FROM
+     `tb_proveedorproducto` tb_proveedorproducto INNER JOIN `tb_proveedorProductoOrdenCompra` tb_proveedorProductoOrdenCompra ON tb_proveedorproducto.`int_idProveedor` = tb_proveedorProductoOrdenCompra.`int_idProveedor`
+     AND tb_proveedorproducto.`int_idProducto` = tb_proveedorProductoOrdenCompra.`int_idProducto`
+     INNER JOIN `tb_ordenCompra` tb_ordenCompra ON tb_proveedorProductoOrdenCompra.`int_idOrdenCompra` = tb_ordenCompra.`int_idOrdenCompra`
+     INNER JOIN `tb_proveedorProductoOrdenCompraFacturaCompra` tb_proveedorProductoOrdenCompraFacturaCompra ON tb_proveedorProductoOrdenCompra.`int_idProveedor` = tb_proveedorProductoOrdenCompraFacturaCompra.`int_idProveedor`
+     AND tb_proveedorProductoOrdenCompra.`int_idProducto` = tb_proveedorProductoOrdenCompraFacturaCompra.`int_idProducto`
+     AND tb_proveedorProductoOrdenCompra.`int_idOrdenCompra` = tb_proveedorProductoOrdenCompraFacturaCompra.`int_idOrdenCompra`
+     INNER JOIN `tb_proveedor` tb_proveedor ON tb_ordenCompra.`int_idProveedor` = tb_proveedor.`int_idProveedor`
+     INNER JOIN `tb_producto` tb_producto ON tb_proveedorproducto.`int_idProducto` = tb_producto.`int_idProducto`
+WHERE
+     tb_ordenCompra.`str_fechaCreacion` >= date($P{fchInicial})
+     and tb_ordenCompra.`str_fechaCreacion` <= date($P{fchFinal})
+ORDER BY
+     tb_ordenCompra.`str_numeroOC` ASC]]>
+	</queryString>
+	<field name="tb_ordenCompra_str_numeroOC" class="java.lang.String"/>
+	<field name="tb_ordenCompra_dbl_precioTotal" class="java.lang.Double"/>
+	<field name="tb_proveedorProductoOrdenCompraFacturaCompra_str_numeroFactura" class="java.lang.String"/>
+	<field name="tb_ordenCompra_str_usuarioCreador" class="java.lang.String"/>
+	<field name="tb_proveedorProductoOrdenCompra_dbl_precio" class="java.lang.Double"/>
+	<field name="tb_proveedorProductoOrdenCompra_int_cantidad" class="java.lang.Double"/>
+	<field name="tb_proveedorProductoOrdenCompraFacturaCompra_str_usuarioCreador" class="java.lang.String"/>
+	<field name="tb_ordenCompra_str_fechaCreacion" class="java.lang.String"/>
+	<field name="tb_proveedor_str_razonSocial" class="java.lang.String"/>
+	<field name="tb_proveedor_str_ruc" class="java.lang.String"/>
+	<field name="tb_producto_str_nombreProducto" class="java.lang.String"/>
+	<group name="ordenCompra">
+		<groupExpression><![CDATA[$F{tb_ordenCompra_str_numeroOC}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<staticText>
+					<reportElement x="13" y="0" width="100" height="20" uuid="e1f980d5-e9e9-4c3f-9635-f6ac12bd3626"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nro Orden Compra]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="113" y="0" width="74" height="20" uuid="29d47623-f43c-4428-b329-6a2b96cc7b90"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_str_numeroOC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="42" y="30" width="100" height="20" uuid="89709e10-16e4-4f6e-bed1-14033d4ed51b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="357" y="30" width="100" height="20" uuid="8d34d4c4-cd47-4b93-81ed-0616add4792b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nro de Factura]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="197" y="0" width="77" height="20" uuid="91d29e54-7dc7-4dd2-933d-29b67fe4f4c7"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha compra]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="274" y="0" width="71" height="20" uuid="227ebfe9-555a-4626-8b81-6412f0aaccb1"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_str_fechaCreacion}.substring( 0, 10 )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="156" y="30" width="75" height="20" uuid="948b8d2c-2c80-463f-ae19-c467e71ee8c8"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cantidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="259" y="30" width="69" height="20" uuid="4db993f2-9b44-4ceb-8966-f861736a7448"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="640" y="0" width="49" height="20" uuid="8bf32f2f-6943-4c44-8e04-638608965ce5"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Usuario ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="689" y="0" width="113" height="20" uuid="0a29da35-ccfd-4076-8341-3c8c6cfac225"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_str_usuarioCreador}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="43" y="49" width="546" height="1" uuid="8a415b11-4a19-4e23-bb60-a0e6533561c3"/>
+				</line>
+				<staticText>
+					<reportElement x="354" y="0" width="67" height="20" uuid="3b3f6fdc-b3dc-4044-a541-531e184df0a1"/>
+					<text><![CDATA[Proveedor :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="421" y="0" width="209" height="20" uuid="953b5892-ce71-4f18-bad0-084f137d0bec"/>
+					<textFieldExpression><![CDATA[$F{tb_proveedor_str_ruc}+" - "+$F{tb_proveedor_str_razonSocial}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="13" y="21" width="789" height="1" uuid="967cc838-2603-45a4-8abf-f82c543eb3c4"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<staticText>
+					<reportElement x="159" y="0" width="100" height="20" uuid="332c98b1-dc45-42ba-b6bb-eeb33b7936eb"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total de Compra]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="259" y="0" width="95" height="20" uuid="a7bb8172-f997-48f2-a78c-0da916aa34f3"/>
+					<textFieldExpression><![CDATA[$F{tb_ordenCompra_dbl_precioTotal}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="159" y="0" width="195" height="1" uuid="7bb85664-7e6d-4924-8762-c67447ac561e"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="13" width="315" height="33" uuid="e59f8bdc-adc7-4251-809f-1837a5867b13"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE COMPRAS ENTRE ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="328" y="13" width="107" height="33" uuid="d040d55a-87f0-487d-8d7d-c4a118c1d68e"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fchInicial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="435" y="13" width="90" height="33" uuid="47744e19-be6f-44f9-b6a0-975fe17771eb"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[HASTA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="525" y="13" width="116" height="33" uuid="21b7ef35-8bd6-463b-a862-7cedda961c08"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fchFinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="42" y="0" width="100" height="15" uuid="65aea7e8-fc8c-4f59-bf2c-81f38a1d5d5c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="0" width="75" height="15" uuid="df03aa30-1438-4ceb-8777-bf9ace44a5ad"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_proveedorProductoOrdenCompra_int_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="259" y="0" width="69" height="15" uuid="ee826a8c-8d6f-4233-bfd4-f8658762b36e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_proveedorProductoOrdenCompra_dbl_precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="357" y="0" width="100" height="15" uuid="5bd40880-f2e6-4fd6-88c7-3219ca789ccd"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_proveedorProductoOrdenCompraFacturaCompra_str_numeroFactura}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="13" y="34" width="160" height="20" uuid="b8079009-acfe-423b-aabb-dbb3573b16c5"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="648" y="34" width="80" height="20" uuid="2822017d-0536-410d-a43c-7c1125064243"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="728" y="34" width="40" height="20" uuid="a036f0de-0c74-44d1-8c08-8017591e788f"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

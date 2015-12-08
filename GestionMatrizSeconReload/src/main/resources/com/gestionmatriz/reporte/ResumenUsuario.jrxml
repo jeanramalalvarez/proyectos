@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ResumenUsuario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4828d1c2-4c08-425e-b9d7-10e9ba3fab6a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="str_usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="str_contrasenia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_usuario.`str_usuario` AS tb_usuario_str_usuario,
+     tb_usuario.`str_codigoPersona` AS tb_usuario_str_codigoPersona,
+     tb_persona.`str_codigo` AS tb_persona_str_codigo,
+     concat(tb_persona.`str_apePaterno`," ",
+     tb_persona.`str_apeMaterno`," ",
+     tb_persona.`str_nombres`) as nombres
+FROM
+     `tb_persona` tb_persona INNER JOIN `tb_usuario` tb_usuario ON tb_persona.`int_idPersona` = tb_usuario.`int_idPersona`
+where
+tb_usuario.`str_usuario` = $P{str_usuario}]]>
+	</queryString>
+	<field name="tb_usuario_str_usuario" class="java.lang.String"/>
+	<field name="tb_usuario_str_codigoPersona" class="java.lang.String"/>
+	<field name="tb_persona_str_codigo" class="java.lang.String"/>
+	<field name="nombres" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="201" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="144" width="555" height="41" uuid="22fb0a41-29c6-4d19-8565-207b6e67e130"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bienvenido al Sistema Integrado "Gestión Matriz" ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="105" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="0" width="72" height="20" uuid="4a6e57ab-1378-41f6-8d1e-97f0a99e7f65"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saludos: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="49" width="537" height="34" uuid="0103e296-9af6-47ff-a67f-fdc0dd1c24b8"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[El presente documento contiene información personal e intransferible, por lo cual es usted el unico responsable de esta información y de las acciones realizadas con este usuario.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="83" width="124" height="20" uuid="81ae0e17-4ffd-403e-9fc4-43d9ac0e48ed"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="83" width="137" height="20" uuid="8948a97f-54d4-4fbe-92a7-cd8f5492a735"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contraseña: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="0" width="465" height="20" uuid="427ee81e-5b54-4a43-abd9-1f9ad2f847c8"/>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="93" splitType="Stretch">
+			<textField>
+				<reportElement x="90" y="0" width="124" height="20" uuid="3637c04b-7c9b-45d7-84e5-ef1dd0d385ab"/>
+				<textFieldExpression><![CDATA[$F{tb_usuario_str_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="269" y="0" width="137" height="20" uuid="58deb406-0555-4c29-a6e8-53c06204ff92"/>
+				<textFieldExpression><![CDATA[$P{str_contrasenia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="34" width="537" height="59" uuid="8fe93ae8-a2ba-4b5d-92cd-cef8470e36b0"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[El Usuario que se le a sido asignado es único y lo identifica dentro del sistema por lo cual toda acción realizada con este usuario será única y totalmente responsabilidad suya, por lo que le rogamos no compartir esta información con nadie, al ingresar por primera vez al sistema se verá obligado a cambiar la contraseña por una personalizada la cual solo usted debe conocer.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="63" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="455" y="34" width="100" height="20" uuid="e1dcdfe6-622c-456c-984b-9a40c4f1fb2d"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BoletaVenta" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="991b4ffd-8622-48fe-b2ce-3c996facedd2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nroDocumento" class="java.lang.String">
+		<defaultValueExpression><![CDATA["B-10-9"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_producto.`str_codigoInterno` AS codigoInterno,
+     tb_venta.`dbl_cantidad` AS cantidad,
+     tb_unidadmedida.`str_nombreUM` AS nombreUM,
+     tb_producto.`str_nombreProducto` AS nombreProducto,
+     tb_venta.`dbl_subTotal` AS subTotal,
+     tb_venta.`dbl_descuento` AS descuento,
+     tb_venta.`dbl_total` AS total,
+     tb_venta.`str_usuario` AS vendedor,
+     tb_cliente.`str_razonSocial` AS razonSocialCliente,
+     tb_cliente.`str_rucdni` AS rucdniCliente,
+     tb_cliente.`str_direccion` AS direccionCliente,
+     tb_venta.`str_fechaModificacion` AS tb_venta_str_fechaModificacion
+
+
+FROM
+     `tb_proveedorproducto` tb_proveedorproducto INNER JOIN `tb_venta` tb_venta ON tb_proveedorproducto.`int_idProveedor` = tb_venta.`int_idProveedor`
+     AND tb_proveedorproducto.`int_idProducto` = tb_venta.`int_idProducto`
+     INNER JOIN `tb_producto` tb_producto ON tb_proveedorproducto.`int_idProducto` = tb_producto.`int_idProducto`
+     INNER JOIN `tb_proveedorProductoUnidadMedida` tb_proveedorProductoUnidadMedida ON tb_proveedorproducto.`int_idProveedor` = tb_proveedorProductoUnidadMedida.`int_idProveedor`
+     AND tb_proveedorproducto.`int_idProducto` = tb_proveedorProductoUnidadMedida.`int_idProducto`
+     INNER JOIN `tb_unidadmedida` tb_unidadmedida ON tb_proveedorProductoUnidadMedida.`int_idUnidadMedidaVenta` = tb_unidadmedida.`int_idUnidadMedida`
+     INNER JOIN `tb_cliente` tb_cliente ON tb_venta.`int_idCliente` = tb_cliente.`int_idCliente`
+WHERE
+     tb_venta.`str_numeroDocumento` = $P{nroDocumento}
+     and tb_venta.`str_estado` = 'PAGADO']]>
+	</queryString>
+	<field name="codigoInterno" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Double"/>
+	<field name="nombreUM" class="java.lang.String"/>
+	<field name="nombreProducto" class="java.lang.String"/>
+	<field name="subTotal" class="java.lang.Double"/>
+	<field name="descuento" class="java.lang.Double"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="vendedor" class="java.lang.String"/>
+	<field name="razonSocialCliente" class="java.lang.String"/>
+	<field name="rucdniCliente" class="java.lang.String"/>
+	<field name="direccionCliente" class="java.lang.String"/>
+	<field name="tb_venta_str_fechaModificacion" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="34" splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="58" splitType="Stretch">
+			<textField>
+				<reportElement x="155" y="15" width="151" height="16" uuid="aa54bbc0-22a6-4a34-9aff-e2ba6eeb5698"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razonSocialCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="30" width="151" height="15" uuid="4b993797-9756-4647-8d3b-75c41a54a3a7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direccionCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="15" width="65" height="15" uuid="62ce78b4-379c-43c9-9e27-34c68c405de1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vendedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="30" width="65" height="15" uuid="1a13e0a6-330c-4d42-9aef-f5ecd807ad11"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rucdniCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="488" y="15" width="56" height="15" uuid="775514af-e4a5-48a6-aec8-5f7f50285308"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_venta_str_fechaModificacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<textField>
+				<reportElement x="87" y="1" width="48" height="10" uuid="d99c821e-ced8-444c-8318-bf5cb26ea996"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigoInterno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="1" width="31" height="10" uuid="000d8373-825b-455f-a670-dcc401e23b64"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="177" y="1" width="46" height="10" uuid="0550e9ae-7183-4674-863c-61219c7f35a1"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreUM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="1" width="276" height="10" uuid="f06a020a-a4ef-43ac-9cff-1627359c45f4"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="499" y="1" width="56" height="10" uuid="d09a07af-d600-4971-a6bd-64b3d0092cf5"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

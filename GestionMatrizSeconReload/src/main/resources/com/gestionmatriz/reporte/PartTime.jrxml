@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PartTime" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c91a349-bcdd-429e-b202-1eeadc7d4ea0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idContrato" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaIni" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     subString(tb_medioTiempo.`dte_marcacion`,1,10) AS fecha,
+     subString(tb_medioTiempo.`dte_marcacion`,12,16) as Hora,
+     tb_medioTiempo.`str_iniFin` AS tb_medioTiempo_str_iniFin,
+     tb_persona.`str_apePaterno` AS apePaterno,
+     tb_persona.`str_apeMaterno` AS apeMaterno,
+     tb_persona.`str_nombres` AS nombres,
+     tb_persona.`str_dni` AS dni,
+     tb_asistencia.`int_idContrato` AS tb_asistencia_int_idContrato,
+     tb_asistencia.`str_tipoMarcado` AS tb_asistencia_str_tipoMarcado
+FROM
+     `tb_asistencia` tb_asistencia INNER JOIN `tb_medioTiempo` tb_medioTiempo ON tb_asistencia.`int_asistencia` = tb_medioTiempo.`int_asistencia`
+     INNER JOIN `tb_horariojornadacontrato` tb_horariojornadacontrato ON tb_asistencia.`int_idHorario` = tb_horariojornadacontrato.`int_idHorario`
+     AND tb_horariojornadacontrato.`int_idJornada` = tb_asistencia.`int_idJornada`
+     AND tb_horariojornadacontrato.`int_idContrato` = tb_asistencia.`int_idContrato`
+     INNER JOIN `tb_contrato` tb_contrato ON tb_horariojornadacontrato.`int_idContrato` = tb_contrato.`int_idContrato`
+     INNER JOIN `tb_persona` tb_persona ON tb_contrato.`int_idPersona` = tb_persona.`int_idPersona`
+
+where
+tb_asistencia.`int_idContrato`=$P{idContrato}
+and (date(tb_medioTiempo.`dte_marcacion`)>=date($P{fechaIni}) and date(tb_medioTiempo.`dte_marcacion`)<=date($P{fechaFin}))]]>
+	</queryString>
+	<field name="fecha" class="java.lang.String"/>
+	<field name="Hora" class="java.lang.String"/>
+	<field name="tb_medioTiempo_str_iniFin" class="java.lang.String"/>
+	<field name="apePaterno" class="java.lang.String"/>
+	<field name="apeMaterno" class="java.lang.String"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="dni" class="java.lang.String"/>
+	<field name="tb_asistencia_int_idContrato" class="java.lang.Integer"/>
+	<field name="tb_asistencia_str_tipoMarcado" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="14" width="301" height="65" uuid="0b382f61-7db0-4542-8f61-2ffa87acf1b9"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Marcación medio tiempo Por Trabajador]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="51" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="49" backcolor="#FF9900" uuid="729d9be2-36b9-4157-96c4-ae2edc61e37b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="14" y="0" width="73" height="20" uuid="0fe1170b-7d66-44d8-a2e8-19dc9366bfe6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trabajador :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="0" width="290" height="20" uuid="c76e94c3-4461-4f84-bf81-139e2d0b600a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apePaterno}+" "+$F{apeMaterno}+" "+$F{nombres}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="417" y="0" width="38" height="20" uuid="803c00a7-268e-4feb-bab1-031a8875abe4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DNI :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="038d4398-c45f-4fe0-a825-ee4cf4286cb5"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="82" y="29" width="104" height="20" uuid="e026e21c-a5a0-4d89-b753-4a6f50b41853"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="31" width="100" height="20" uuid="0cad6a4d-280f-48be-9e92-9ceedaf3cdc4"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Hora Marcado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="31" width="100" height="20" uuid="b854c44d-617d-4b00-9aa9-b63592ecbda1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tipo de Marcado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="14" y="49" width="541" height="1" uuid="34909865-0afd-4052-8969-59dc6f529539"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="82" y="2" width="104" height="20" uuid="306295ac-67d3-4741-886c-69901bfb79c6"/>
+				<textFieldExpression><![CDATA[$F{fecha}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="2" width="100" height="20" uuid="6aa2c46c-8722-4741-819e-ff62c46d13be"/>
+				<textFieldExpression><![CDATA[$F{Hora}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="2" width="100" height="20" uuid="1cac6201-d45d-41d1-aa9b-097ca92b9ad2"/>
+				<textFieldExpression><![CDATA[($F{tb_medioTiempo_str_iniFin}.equals( "I" ))?"Ingreso":"Salida"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

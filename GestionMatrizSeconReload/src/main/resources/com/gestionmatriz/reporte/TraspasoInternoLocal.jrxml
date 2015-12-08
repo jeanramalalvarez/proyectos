@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TraspasoInternoLocal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe0c3263-b0b1-48a8-a955-ab549578dda1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fchInicial" class="java.lang.String"/>
+	<parameter name="fchFinal" class="java.lang.String"/>
+	<parameter name="nomLocal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     date(tb_traspasointerno.`dte_fechaConfirma`) AS tb_traspasointerno_dte_fechaConfirma,
+     tb_traspasointerno.`int_idGuiaRemision` AS tb_traspasointerno_int_idGuiaRemision,
+     tb_traspasointerno.`str_codigoConfirma` AS tb_traspasointerno_str_codigoConfirma,
+     tb_traspasointerno.`str_estado` AS tb_traspasointerno_str_estado,
+     tb_traspasointerno.`dte_fechaCreacion` AS tb_traspasointerno_dte_fechaCreacion,
+     tb_traspasointerno.`str_usuarioCreador` AS tb_traspasointerno_str_usuarioCreador,
+     tb_guiaremision.`str_numeroGuia` AS tb_guiaremision_str_numeroGuia,
+     tb_guiaremision.`dte_fechaEmision` AS tb_guiaremision_dte_fechaEmision,
+     tb_guiaremision.`dte_fechaInicioTraslado` AS tb_guiaremision_dte_fechaInicioTraslado,
+     tb_guiaremision.`str_localPartida` AS tb_guiaremision_str_localPartida,
+     tb_detalleguia.`dbl_cantidadProducto` AS tb_detalleguia_dbl_cantidadProducto,
+     tb_detalleguia.`str_estado` AS tb_detalleguia_str_estado,
+     tb_producto.`str_nombreProducto` AS tb_producto_str_nombreProducto,
+     tb_guiaremision.`str_estado` AS tb_guiaremision_str_estado,
+     tb_detalleguia.`dbl_costoTraslado` AS tb_detalleguia_dbl_costoTraslado,
+     tb_traspasointerno.`int_idTraspasointerno` AS tb_traspasointerno_int_idTraspasointerno,
+     tb_traspasointerno.`str_usuarioModifcador` AS tb_traspasointerno_str_usuarioModifcador,
+     tb_traspasointerno.`dte_fechaModificacion` AS tb_traspasointerno_dte_fechaModificacion,
+     tb_guiaremision.`str_localLlegada` AS tb_guiaremision_str_localLlegada,
+     tb_unidadmedida.`str_nombreUM` AS tb_unidadmedida_str_nombreUM,
+     tb_producto.`str_codigoInterno` AS tb_producto_str_codigoInterno,
+     tb_detalleguia.`int_idGuiaremision` AS tb_detalleguia_int_idGuiaremision
+FROM
+     `tb_guiaremision` tb_guiaremision INNER JOIN `tb_traspasointerno` tb_traspasointerno ON tb_guiaremision.`int_idGuiaremision` = tb_traspasointerno.`int_idGuiaRemision`
+     INNER JOIN `tb_detalleguia` tb_detalleguia ON tb_guiaremision.`int_idGuiaremision` = tb_detalleguia.`int_idGuiaremision`
+     INNER JOIN `tb_producto` tb_producto ON tb_detalleguia.`int_idProducto` = tb_producto.`int_idProducto`
+     INNER JOIN `tb_unidadmedida` tb_unidadmedida ON tb_producto.`int_idUnidadMedida` = tb_unidadmedida.`int_idUnidadMedida`
+WHERE
+     (tb_traspasointerno.`dte_fechaCreacion` >= $P{fchInicial}
+     and tb_traspasointerno.`dte_fechaCreacion` <= $P{fchFinal})
+     and tb_guiaremision.`str_localPartida` LIKE $P{nomLocal}
+
+order by tb_traspasointerno.`int_idTraspasointerno`]]>
+	</queryString>
+	<field name="tb_traspasointerno_dte_fechaConfirma" class="java.sql.Date"/>
+	<field name="tb_traspasointerno_int_idGuiaRemision" class="java.lang.Integer"/>
+	<field name="tb_traspasointerno_str_codigoConfirma" class="java.lang.String"/>
+	<field name="tb_traspasointerno_str_estado" class="java.lang.String"/>
+	<field name="tb_traspasointerno_dte_fechaCreacion" class="java.sql.Date"/>
+	<field name="tb_traspasointerno_str_usuarioCreador" class="java.lang.String"/>
+	<field name="tb_guiaremision_str_numeroGuia" class="java.lang.String"/>
+	<field name="tb_guiaremision_dte_fechaEmision" class="java.sql.Date"/>
+	<field name="tb_guiaremision_dte_fechaInicioTraslado" class="java.sql.Date"/>
+	<field name="tb_guiaremision_str_localPartida" class="java.lang.String"/>
+	<field name="tb_detalleguia_dbl_cantidadProducto" class="java.lang.Double"/>
+	<field name="tb_detalleguia_str_estado" class="java.lang.String"/>
+	<field name="tb_producto_str_nombreProducto" class="java.lang.String"/>
+	<field name="tb_guiaremision_str_estado" class="java.lang.String"/>
+	<field name="tb_detalleguia_dbl_costoTraslado" class="java.lang.Double"/>
+	<field name="tb_traspasointerno_int_idTraspasointerno" class="java.lang.Integer"/>
+	<field name="tb_traspasointerno_str_usuarioModifcador" class="java.lang.String"/>
+	<field name="tb_traspasointerno_dte_fechaModificacion" class="java.sql.Date"/>
+	<field name="tb_guiaremision_str_localLlegada" class="java.lang.String"/>
+	<field name="tb_unidadmedida_str_nombreUM" class="java.lang.String"/>
+	<field name="tb_producto_str_codigoInterno" class="java.lang.String"/>
+	<field name="tb_detalleguia_int_idGuiaremision" class="java.lang.Integer"/>
+	<group name="traspaso">
+		<groupExpression><![CDATA[$F{tb_traspasointerno_int_idTraspasointerno}]]></groupExpression>
+		<groupHeader>
+			<band height="24">
+				<staticText>
+					<reportElement x="11" y="0" width="71" height="20" uuid="6560c79a-2b70-434a-bae4-1ef73b8d2d61"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nro. Traspaso:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="82" y="0" width="45" height="20" uuid="a751af1f-5997-4c72-adb1-fd4cfbd9cf76"/>
+					<textFieldExpression><![CDATA[$F{tb_traspasointerno_int_idTraspasointerno}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="142" y="0" width="40" height="20" uuid="8845f0b4-91b2-4222-83a5-d2a348fda902"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="182" y="0" width="63" height="20" uuid="0fce5d84-f9e3-424b-8ceb-6543aab736c2"/>
+					<textFieldExpression><![CDATA[$F{tb_traspasointerno_dte_fechaCreacion}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="261" y="0" width="83" height="20" uuid="82d34862-bb86-4028-85a3-a76a0eb57fc1"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Autorizado por:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="354" y="0" width="116" height="20" uuid="5a9f98b1-f419-4619-b40e-af072f9f8bef"/>
+					<textFieldExpression><![CDATA[$F{tb_traspasointerno_str_usuarioCreador}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="492" y="0" width="71" height="20" uuid="d4a6aaf6-aaba-4ba9-aa0b-22a119be5ed6"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Recibido por:  ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="563" y="0" width="138" height="20" uuid="ad1119f9-680c-4c2d-9302-cccf0842a256"/>
+					<textFieldExpression><![CDATA[($F{tb_traspasointerno_str_usuarioModifcador}.equals( null )==true)?"Pendiente":$F{tb_traspasointerno_str_usuarioModifcador}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="10" y="21" width="691" height="1" uuid="32e8d4e7-1a98-4b83-a4d4-1d9203906249"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="9"/>
+		</groupFooter>
+	</group>
+	<group name="Detalle">
+		<groupExpression><![CDATA[$F{tb_guiaremision_str_numeroGuia}]]></groupExpression>
+		<groupHeader>
+			<band height="48">
+				<staticText>
+					<reportElement x="42" y="0" width="100" height="20" uuid="646b3d61-28c6-4d61-9411-47b8edce6586"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Guía de Remisión:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="142" y="0" width="72" height="20" uuid="6591e2be-cc72-49c5-ac17-60780cc8167c"/>
+					<textFieldExpression><![CDATA[$F{tb_guiaremision_str_numeroGuia}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="227" y="0" width="79" height="20" uuid="92f15798-c5fd-4124-a6ee-4c0a12f0e69c"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha emisión:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="306" y="0" width="75" height="20" uuid="8a14ce7d-fc92-4aa5-a0b5-98bed1b171a4"/>
+					<textFieldExpression><![CDATA[$F{tb_guiaremision_dte_fechaEmision}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="392" y="0" width="88" height="20" uuid="46fa32aa-218a-45b3-b4a6-525fa448536c"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Local de Salida:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="480" y="0" width="42" height="20" uuid="3e1b25c8-750c-4cc0-abe2-99910d80291c"/>
+					<textFieldExpression><![CDATA[$F{tb_guiaremision_str_localPartida}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="532" y="0" width="77" height="20" uuid="e3ec7a6b-468d-41d8-aec7-84edaec89c10"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Local Llegada: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="609" y="0" width="44" height="20" uuid="11af89ae-6c05-49b6-8a16-14b1516357be"/>
+					<textFieldExpression><![CDATA[$F{tb_guiaremision_str_localLlegada}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="42" y="20" width="731" height="1" uuid="041c0ce0-104a-46d6-9a7e-a6ad1cda46d5"/>
+				</line>
+				<staticText>
+					<reportElement x="165" y="28" width="90" height="20" uuid="00221498-8033-49ca-9e4d-588e3d45a5c5"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="289" y="28" width="100" height="20" uuid="9d6bc601-26ca-4765-96d8-ce80ddf925c9"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cantidad]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="509" y="28" width="100" height="20" uuid="e67fd570-6fa8-4a48-bc55-9b4dd4198678"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio Traslado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="389" y="28" width="100" height="20" uuid="e0936e5e-78bc-4016-9826-986510760848"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Unidad Medida]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="49" y="28" width="100" height="20" uuid="7df6a8e4-648d-40e2-abe2-830ddd63367b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Codigo Interno]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="14"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<staticText>
+				<reportElement x="107" y="12" width="452" height="29" uuid="073f1414-e933-491f-b76a-4054fff83423"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE TRASPASOS INTERNOS DESDE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="559" y="12" width="138" height="29" uuid="b8a546df-9d5c-4f0c-819e-bc55ad220741"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fchInicial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="269" y="41" width="71" height="29" uuid="fdc4445e-7158-4797-999d-3c46257824f4"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HASTA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="340" y="41" width="126" height="29" uuid="3a3e1aba-8077-4079-8eaa-e5b07c470f2f"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fchFinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="165" y="0" width="100" height="12" uuid="4d54ae95-db89-4dff-9757-d55753ad60e3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_nombreProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="289" y="0" width="100" height="12" uuid="3458348a-ab4e-4d06-aea7-c1a30dd18588"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_detalleguia_dbl_cantidadProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="509" y="0" width="100" height="12" uuid="050e2647-f9ed-4134-a36f-dc8ab5944307"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_detalleguia_dbl_costoTraslado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="0" width="100" height="12" uuid="8ca0d50d-559a-482f-a298-4d9b0c00597d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_unidadmedida_str_nombreUM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="0" width="100" height="12" uuid="bceba5d8-6988-473c-ab52-10289a166140"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_producto_str_codigoInterno}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="11" y="34" width="171" height="20" uuid="c085987e-3b61-4a12-9cd2-c5ad981d2fe0"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="680" y="34" width="80" height="20" uuid="804cd183-da67-43ae-bdf7-9094f30b7ea1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="760" y="34" width="40" height="20" uuid="f2f0d8df-35c7-48cf-bbd4-9423d3a76922"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
