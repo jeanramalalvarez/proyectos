@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><ui:insert name="title"></ui:insert></title>
+	<h:outputStylesheet library="css" name="estilos.css" />
+	<h:outputScript library="js" name="scripts.js" />
+	<ui:insert name="css" />
+	<ui:insert name="script" />
+</h:head>
+<h:body>
+	<p:layout style="margin: 0 auto; width:900px; height:600px;">
+
+		<p:layoutUnit id="top" position="north" size="100">
+			<h2 style="margin: 5px;">#{mensajes['texto.titulo.sistema2']}</h2>
+			<h:form>
+				<p:menubar>
+					<p:menuitem value="Inicio"
+						url="/paginas/modulos/portal/principal.xhtml" icon="ui-icon-home" />
+					<p:menuitem value="Reglamentos"
+						url="/paginas/modulos/principal/listaKardex.xhtml"
+						icon="ui-icon-clipboard" />
+					<p:menuitem value="Acuerdos"
+						url="/paginas/modulos/principal/listaKardex.xhtml"
+						icon="ui-icon-document" />
+					<p:menuitem value="Convocatorias"
+						url="/paginas/modulos/principal/listaKardex.xhtml"
+						icon="ui-icon-calendar" />
+					<p:menuitem value="Anuncios"
+						url="/paginas/modulos/principal/listaKardex.xhtml"
+						icon="ui-icon-comment" />
+					<p:menuitem value="Recibos"
+						url="/paginas/modulos/principal/listaKardex.xhtml"
+						icon="ui-icon-mail-open" />
+
+					<f:facet name="options">
+
+						<!-- 							<p:inputText style="margin-right:10px" placeholder="Buscar" /> -->
+
+						<h:form>
+							<p:commandButton action="#{loginController.logout}" value="Salir"
+								icon="ui-icon-extlink" />
+						</h:form>
+					</f:facet>
+				</p:menubar>
+			</h:form>
+		</p:layoutUnit>
+
+		<!-- 		<p:layoutUnit id="bottom" position="south" size="35"> -->
+		<!-- 		Desarrollado por Puro Desarrollo -->
+		<!-- 		</p:layoutUnit> -->
+
+<!-- 		<p:layoutUnit id="left" position="west" size="200" resizable="false" -->
+<!-- 			closable="true" collapsible="true" header="Opciones" minSize="200"> -->
+<!-- 			<ui:insert name="options" /> -->
+<!-- 		</p:layoutUnit> -->
+
+		<p:layoutUnit id="right" position="east" size="250" header="Galeria"
+			resizable="false" closable="false" collapsible="false"
+			style="text-align:center">
+		</p:layoutUnit>
+
+		<p:layoutUnit id="center" position="center">
+			<ui:insert name="content" />
+		</p:layoutUnit>
+
+	</p:layout>
+</h:body>
+</html>

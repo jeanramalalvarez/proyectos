@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="button_estilo1_normal_start">#a50020</color>
+    <color name="button_estilo1_normal_end">#c40f30</color>
+    <color name="button_estilo1_normal_border">#89011a</color>
+    
+    <color name="button_estilo1_pressed_start">#a50020</color>
+    <color name="button_estilo1_pressed_end">#c40f30</color>
+    <color name="button_estilo1_pressed_border">#89011a</color>
+
+</resources>

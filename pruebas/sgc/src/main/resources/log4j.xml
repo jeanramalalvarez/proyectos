@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8" standalone="no" ?> -->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="SGC-CONSOLA" class="org.apache.log4j.ConsoleAppender">
+		<param name="Append" value="true" />
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- [%d{ISO8601}]%5p %6.6r[%t]%x - %C.%M(%F:%L) - %m%n -->
+			<!-- SERVER: ${weblogic.Name} [%5p] [%d{dd-MM-yyyy HH:mm:ss.SSS}] (%F:%L) 
+				- %m%n -->
+			<param name="ConversionPattern" value="[%d{ISO8601}]%5p %6.6r[%t]%x - %C.%M(%F:%L) - %m%n" />
+		</layout>
+	</appender>
+	
+	<!-- org.apache.log4j.RollingFileAppender -->
+	<appender name="SGC-ARCHIVO" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Append" value="true" />
+		<param name="File" value="C:\\LOGS/sgc.log" />
+		<!-- <param name="Threshold" value="INFO" /> -->
+		<!-- <param name="MaxFileSize" value="512KB" /> -->
+		<!-- <param name="MaxBackupIndex" value="10" /> -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{ISO8601}]%5p %6.6r[%t]%x - %C.%M(%F:%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="sgc">
+		<level value="debug" />
+		<appender-ref ref="SGC-CONSOLA" />
+		<appender-ref ref="SGC-ARCHIVO" />
+	</logger>
+	
+<!-- 	<appender name="APROVOSM_PORTIN_IL_ERROR_LOGFILE" class="org.apache.log4j.DailyRollingFileAppender"> -->
+<!-- 		<param name="Append" value="true" /> -->
+<!-- 		<param name="datePattern" value="'-'yyyy-MM-dd'.txt'" /> -->
+<!-- 		<param name="File" value="logs/proAprovisionamiento-ILConnector-error.txt" /> -->
+<!-- 		<layout class="org.apache.log4j.PatternLayout"> -->
+<!-- 			<param name="ConversionPattern" value="%m%d{yyyy-MM-dd HH:mm:ss}%n" /> -->
+<!-- 		</layout> -->
+<!-- 	</appender> -->
+
+<!-- 	<logger name="pe.com.claro.esb.services.aprovisionamiento.errorIL"> -->
+<!-- 		<level value="error" /> -->
+<!-- 		<appender-ref ref="APROVOSM_PORTIN_IL_ERROR_LOGFILE" /> -->
+<!-- 	</logger> -->
+
+	<root>
+		<priority value="info" />
+	</root>
+
+</log4j:configuration>

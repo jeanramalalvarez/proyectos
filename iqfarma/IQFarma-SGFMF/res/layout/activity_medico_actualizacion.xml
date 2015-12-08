@@ -1,0 +1,108 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:descendantFocusability="beforeDescendants"
+    	android:focusableInTouchMode="true"
+        android:paddingBottom="@dimen/activity_vertical_margin_"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.iqfarma.sgfmf.activity.MedicoActualizacionActivity" >
+
+        <TextView
+            style="@style/textTitulo"
+            android:text="@string/lbl_medico_nombre" />
+
+        <TextView
+            android:id="@+id/lbl_medico_nombre"
+            style="@style/textContent"
+            android:text="Ada Peralta C." />
+
+        <TextView
+            style="@style/textTitulo"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/lbl_medico_cmp" />
+
+        <TextView
+            android:id="@+id/lbl_medico_cmp"
+            style="@style/textContent"
+            android:text="0000026065" />
+
+        <TextView
+            style="@style/textTitulo"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/lbl_medico_direccion" />
+
+        <TextView
+            android:id="@+id/lbl_medico_direccion"
+            style="@style/textContent"
+            android:text="Jr. Las violetas CDR" />
+
+        <TextView
+            style="@style/textTitulo"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/lbl_medico_fecha_nac" />
+        
+        <EditText
+            android:id="@+id/txt_medico_fec_nac"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+        <TextView
+            style="@style/textTitulo"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/lbl_medico_correo" />
+
+        <EditText
+            android:id="@+id/txt_medico_correo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+        <TextView
+            style="@style/textTitulo"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/lbl_medico_telefono" />
+
+        <EditText
+            android:id="@+id/txt_medico_telefono"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+        <TextView
+            style="@style/textTitulo"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/lbl_medico_celular" />
+
+        <EditText
+            android:id="@+id/txt_medico_celular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/activity_vertical_margin" >
+
+            <Button
+                android:id="@+id/btn_actualizar"
+                style="@style/button_estilo1"
+                android:text="@string/btn_actualizar" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

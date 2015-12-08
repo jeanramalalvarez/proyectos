@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="../../recursos/plantillaPopup.xhtml">
+		<ui:define name="content">
+			<h2></h2>
+			<h:form id="form1">
+				<h3 style="margin: 5px">Busqueda</h3>
+				<p:panelGrid style="boder:0px;">
+					<f:facet name="header">
+						<p:row style="center">
+							<p:column colspan="3">Filtro</p:column>
+						</p:row>
+					</f:facet>
+					<p:row>
+						<p:column colspan="1">
+							<p:outputLabel for="nombre" value="#{mensaje['campo.busqueda.nombreCompleto']}" />
+							<p:inputText size="50" id="nombre"
+								value="#{empresaController.busqueda.nombreCompleto}" label="Nombre">
+							</p:inputText>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="1">
+							<p:outputLabel for="documento"
+								value="#{mensaje['campo.busqueda.docIdentidad']}" />
+							<p:inputText size="50" id="documento"
+								value="#{empresaController.busqueda.docIdentidad}"
+								label="Doc. Identidad">
+							</p:inputText>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</h:form>
+
+			<h:form id="form2">
+				<p:panel header="Lista Empresa">
+					<p:messages />
+					<p:dataTable var="abogado" value="#{abogadoController.abogados}">
+						<p:column headerText="Doc. Identidad">
+							<h:outputText value="#{abogado.TPersona.docidentidad}" />
+						</p:column>
+						<p:column headerText="Nombre">
+							<h:outputText value="#{abogado.TPersona.nombreCompleto}" />
+						</p:column>
+						<p:column headerText="Colegiatura">
+							<h:outputText value="#{abogado.colegiatura}" />
+						</p:column>
+						<p:column>
+							<p:commandButton value="Seleccionar" immediate="true"
+								icon="ui-icon-extlink"
+								actionListener="#{abogadoController.agregarAbogadoMinuta(abogado.idabogado)}" />
+						</p:column>
+					
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

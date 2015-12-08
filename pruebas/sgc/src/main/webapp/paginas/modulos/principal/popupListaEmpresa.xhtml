@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title>Preguntas Frecuentes</title>
+</h:head>
+<body>
+			<h:form id="formBusquedaListaEmpresa">
+				<h3 style="margin: 5px">Busqueda</h3>
+				<p:panelGrid style="boder:0px;">
+					<f:facet name="header">
+						<p:row style="center">
+							<p:column colspan="3">Filtro</p:column>
+						</p:row>
+					</f:facet>
+					<p:row>
+						<p:column>
+							<p:outputLabel for="ruc" value="#{mensaje['campo.busqueda.ruc']}" />
+							<p:inputText size="50" id="ruc"
+								value="#{empresaController.busqueda.ruc}" label="Ruc">
+							</p:inputText>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="1">
+							<p:outputLabel for="razsocial"
+								value="#{mensaje['campo.busqueda.razSocial']}" />
+							<p:inputText size="50" id="razsocial"
+								value="#{empresaController.busqueda.razSocial}"
+								label="razsocial">
+							</p:inputText>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</h:form>
+			<p:spacer height="10" />
+			<h:form id="formListaEmpresa">
+				<p:panel header="Lista Empresa">
+					<p:messages />
+					<p:dataTable var="empresa" value="#{empresaController.empresas}">
+						<p:column headerText="Id">
+							<h:outputText value="#{empresa.idempresa}" />
+						</p:column>
+
+						<p:column headerText="RUC">
+							<h:outputText value="#{empresa.ruc}" />
+						</p:column>
+
+						<p:column headerText="Razon Social">
+							<h:outputText value="#{empresa.razsocial}" />
+						</p:column>
+
+						<p:column headerText="Representantes">
+						
+						
+						<p:column>
+							<p:commandButton value="Buscar" immediate="true"
+								icon="ui-icon-extlink"
+								actionListener="#{popupController.popupListaPersona}"
+								update=":form1:intervinienteEmpresa" />
+						</p:column>
+							
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+</body>
+</html>

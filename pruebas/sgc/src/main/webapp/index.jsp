@@ -1,0 +1,1 @@
+<% response.sendRedirect("paginas/spinner.html"); %>

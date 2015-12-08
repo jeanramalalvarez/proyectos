@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.iqfarma.sgfmf"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="20" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme" >
+        <activity android:name=".activity.LoginActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.PrincipalActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".activity.MenuActivity"
+            android:label="@string/title_activity_menu" >
+        </activity>
+        <activity
+            android:name=".activity.MedicoActivity"
+            android:label="@string/title_activity_medicos" >
+        </activity>
+        <activity
+            android:name=".activity.FarmaciaActivity"
+            android:label="@string/title_activity_farmacia" >
+        </activity>
+        <activity
+            android:name=".activity.AvanceActivity"
+            android:label="@string/title_activity_avance" >
+        </activity>
+        <activity
+            android:name=".activity.SincronizacionActivity"
+            android:label="@string/title_activity_sincronizacion" >
+        </activity>
+        <activity
+            android:name=".activity.MedicoDetalleActivity"
+            android:label="@string/title_activity_medico_detalle" >
+        </activity>
+        <activity
+            android:name=".activity.MallaPromocionalActivity"
+            android:label="@string/title_activity_malla_promocional" >
+        </activity>
+        <activity
+            android:name=".activity.ObservacionActivity"
+            android:label="@string/title_activity_observacion" >
+        </activity>
+        <activity
+            android:name=".activity.NoVisitaActivity"
+            android:label="@string/title_activity_no_visita" >
+        </activity>
+        <activity
+            android:name=".activity.PrescripcionMedicaActivity"
+            android:label="@string/title_activity_prescripcion_medica" >
+        </activity>
+        <activity
+            android:name=".activity.MedicoActualizacionActivity"
+            android:label="@string/title_activity_medico_actualizacion" >
+        </activity>
+        <activity
+            android:name=".activity.FarmaciaDetalleActivity"
+            android:label="@string/title_activity_farmacia_detalle" >
+        </activity>
+        <activity
+            android:name=".activity.NoPedidoActivity"
+            android:label="@string/title_activity_no_pedido" >
+        </activity>
+        <activity
+            android:name=".activity.ProductoActivity"
+            android:label="@string/title_activity_producto" >
+        </activity>
+        <activity
+            android:name="com.iqfarma.sgfmf.activity.PedidoActivity"
+            android:label="@string/title_activity_pedido" >
+        </activity>
+    </application>
+
+</manifest>

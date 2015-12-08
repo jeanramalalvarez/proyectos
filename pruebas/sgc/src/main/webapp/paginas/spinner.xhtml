@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>PrimeFaces 5</title>
+</h:head>
+<h:body>
+	<h3>PrimeFaces 5</h3>
+	
+	<p:outputLabel value="#{spinnerBean.persona.nombres}" />
+	<p:outputLabel value=" " />
+	<p:outputLabel value="#{spinnerBean.persona.apellidos}" />
+	<p:outputLabel value=" " />
+	<p:outputLabel value="#{spinnerBean.persona.edad}" />
+	
+	<h:form>
+
+		<p:panel header="Spinners">
+			<h:panelGrid id="grid" columns="2" cellpadding="5">
+				<h:outputLabel for="basico" value="Spinner Basico: " />
+				<p:spinner id="basico" value="#{spinnerBean.numero1}" />
+
+				<h:outputLabel for="step" value="Factor de Paso: " />
+				<p:spinner id="step" value="#{spinnerBean.numero2}"
+					stepFactor="0.25" />
+
+				<h:outputLabel for="minmax" value="Min/Max: " />
+				<p:spinner id="minmax" value="#{spinnerBean.numero3}" min="0"
+					max="100" />
+
+				<h:outputLabel for="prefijo" value="Prefijo: " />
+				<p:spinner id="prefijo" value="0" prefix="$" min="0" />
+
+				<h:outputLabel for="ajaxspinner" value="Ajax Spinner: " />
+				<p:outputPanel>
+					<p:spinner id="ajaxspinner" value="#{spinnerBean.numero5}">
+						<p:ajax update="ajaxspinnervalue" process="@this" />
+					</p:spinner>
+					<h:outputText id="ajaxspinnervalue"
+						value="#{spinnerBean.numero5}" />
+				</p:outputPanel>
+
+
+			</h:panelGrid>
+		</p:panel>
+
+		<p:commandButton value="Submit" update="display"
+			oncomplete="PF('dlg').show()" />
+
+		<p:dialog header="Values" widgetVar="dlg" showEffect="fold"
+			hideEffect="fold">
+			<h:panelGrid id="display" columns="2" cellpadding="5">
+				<h:outputText value="Value 1: " />
+				<h:outputText value="#{spinnerBean.numero1}" />
+
+				<h:outputText value="Value 2: " />
+				<h:outputText value="#{spinnerBean.numero2}" />
+
+				<h:outputText value="Value 3: " />
+				<h:outputText value="#{spinnerBean.numero3}" />
+
+				<h:outputText value="Value 4: " />
+				<h:outputText value="#{spinnerBean.numero4}" />
+
+				<h:outputText value="Value 5: " />
+				<h:outputText value="#{spinnerBean.numero5}" />
+			</h:panelGrid>
+		</p:dialog>
+
+	</h:form>
+</h:body>
+</html>

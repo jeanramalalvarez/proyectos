@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">IQFarma</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_salir">Salir</string>
+    <string name="imagen">imagen</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="title_activity_medicos">Médicos</string>
+    <string name="title_activity_farmacia">Farmacias</string>
+    <string name="title_activity_avance">Avance</string>
+    <string name="title_activity_sincronizacion">Sincronización</string>
+    <string name="title_activity_medico_detalle">Detalle Médico</string>
+    <string name="title_activity_malla_promocional">Malla Promocional</string>
+    <string name="title_activity_observacion">Observación</string>
+    <string name="title_activity_no_visita">No visita</string>
+    <string name="title_activity_prescripcion_medica">Prescripcion Medica</string>
+    <string name="title_activity_medico_actualizacion">MedicoActualizacionActivity</string>
+    <string name="title_activity_farmacia_detalle">Detalle Farmacia</string>
+    <string name="title_activity_no_pedido">No pedido</string>
+    <string name="title_activity_producto">Productos</string>
+    <string name="some_text">Lista</string>
+    <string name="hint_medico">Escribe nombre o código&#8230;</string>
+    <string name="hint_farmacia">Escribe nombre o código&#8230;</string>
+    <string name="hint_producto">Escribe nombre o código&#8230;</string>
+    <string name="hint_observacion">Escriba su observación</string>
+    <string name="hint_cantidad">Ingresa una cantidad</string>
+    <string name="lbl_login">Login</string>
+    <string name="lbl_usuario">Usuario</string>
+    <string name="lbl_contrasena">Contraseña</string>
+    <string name="lbl_avances_medicos">Avances Médicos:</string>
+    <string name="lbl_avances_farmacias">Avances Farmacias:</string>
+    <string name="lbl_medico_nombre">Nombre:</string>
+    <string name="lbl_medico_cmp">CMP:</string>
+    <string name="lbl_medico_direccion">Dirección:</string>
+    <string name="lbl_medico_fecha_nac">Fecha de nacimiento:</string>
+    <string name="lbl_medico_correo">Correo:</string>
+    <string name="lbl_medico_telefono">Teléfono:</string>
+    <string name="lbl_medico_celular">Celular:</string>
+    <string name="lbl_muestra_motivo">Motivo 1</string>
+    <string name="lbl_muestra_numero">1.</string>
+    <string name="lbl_muestra_producto">AMBROXIL TABLETAS X</string>
+    <string name="lbl_muestra_muestra">Muestra:</string>
+    <string name="lbl_muestra_cantidad">0</string>
+    <string name="lbl_muestra_mas">+</string>
+    <string name="lbl_muestra_menos">-</string>
+    <string name="lbl_farmacia_razon_social">Razon Social:</string>
+    <string name="lbl_farmacia_ruc">RUC:</string>
+    <string name="lbl_farmacia_direccion">Dirección:</string>
+    <string name="lbl_farmacia_telefono">Teléfono:</string>
+    <string name="lbl_menu_pedidos">Pedidos</string>
+    <string name="btn_visita">Visita</string>
+    <string name="btn_no_visita">No Visita</string>
+    <string name="btn_prescipcion_medica">Prescripción</string>
+    <string name="btn_actualizar">Actualizar</string>
+    <string name="btn_aceptar">Aceptar</string>
+    <string name="btn_continuar">Continuar</string>
+    <string name="btn_pedido">Pedido</string>
+    <string name="btn_no_pedido">No Pedido</string>
+    <string name="title_activity_pedido">PedidoActivity</string>
+
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Ingreso al sistema</title>
+	<h:outputStylesheet library="css" name="estilos.css" />
+</h:head>
+<h:body>
+	<div style="height: 350px" >
+	<h:form>
+		<p:panel header="Acceso" styleClass="centrar-h" style="width:350px; vertical-align:middle;">
+
+			<p:growl />
+
+			<p:panelGrid columns="2" styleClass="centrar-h">
+				<p:outputLabel for="usuario"
+					value="#{mensajes['campo.login.usuario']}" />
+				<p:inputText id="usuario" value="#{loginController.usuario.usuario}"
+					required="true" label="Usuario">
+					<f:validateLength minimum="4" maximum="15" />
+				</p:inputText>
+				<!-- 				<p:message for="usuario" display="icon" /> -->
+
+				<p:outputLabel for="clave" value="#{mensajes['campo.login.clave']}" />
+				<p:password id="clave" value="#{loginController.usuario.clave}"
+					required="true" label="Clave">
+					<f:validateLength minimum="4" maximum="12" />
+				</p:password>
+				<!-- 				<p:message for="clave" display="icon" /> -->
+
+
+				<p:commandButton value="Ingresar" update="@form"
+					action="#{loginController.login}" ajax="true" validateClient="true" />
+				<p:commandButton value="Limpiar" type="reset" />
+				<!-- 				<p:spacer /> -->
+
+			</p:panelGrid>
+
+		</p:panel>
+
+	</h:form>
+	</div>
+	
+	<h:form>
+		<p:confirmDialog header="Vista expirada"
+			visible="#{not empty param['expired']}"
+			message="La vista ha expirado" severity="alert"
+			widgetVar="dlgViewExpired" modal="false" closeOnEscape="true">
+			<p:commandButton value="Aceptar" type="button"
+				onclick="PF('dlgViewExpired').hide()" />
+		</p:confirmDialog>
+		<p:confirmDialog header="Acceso No autorizado"
+			visible="#{not empty param['unauthorized']}"
+			message="No tiene permisos para acceder" severity="alert"
+			widgetVar="dlgUnauthorized" modal="false" closeOnEscape="true">
+			<p:commandButton value="Aceptar" type="button"
+				onclick="PF('dlgUnauthorized').hide()" />
+		</p:confirmDialog>
+	</h:form>
+</h:body>
+</html>
