@@ -104,7 +104,7 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="9" rowCount="0">
                 <Column editable="false" title="Codigo" type="java.lang.String"/>
-                <Column editable="false" title="Producto" type="java.lang.String"/>
+                <Column editable="false" title="Producto/Servicio" type="java.lang.String"/>
                 <Column editable="false" title="U M" type="java.lang.String"/>
                 <Column editable="false" title="Stock" type="java.lang.Double"/>
                 <Column editable="false" title="Precio" type="java.lang.Double"/>
@@ -329,23 +329,19 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jXLabel5" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jXLabel7" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jXLabel6" min="-2" pref="160" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jXLabel11" alignment="0" max="32767" attributes="1"/>
-                              <Component id="jXLabel8" alignment="0" pref="150" max="32767" attributes="1"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jXLabel9" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jXLabel10" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jXLabel5" pref="181" max="32767" attributes="0"/>
+                      <Component id="jXLabel8" max="32767" attributes="1"/>
+                      <Component id="jXLabel11" alignment="0" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jXLabel7" max="32767" attributes="0"/>
+                      <Component id="jXLabel9" min="-2" pref="140" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jXLabel6" max="32767" attributes="0"/>
+                      <Component id="jXLabel10" pref="129" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -367,7 +363,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jXLabel11" min="-2" pref="28" max="-2" attributes="0"/>
-                  <EmptySpace pref="105" max="32767" attributes="0"/>
+                  <EmptySpace pref="109" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -381,7 +377,7 @@
               </Border>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="F9=Buscar Producto"/>
+            <Property name="text" type="java.lang.String" value="F9=Buscar Producto/Servicio"/>
           </Properties>
         </Component>
         <Component class="org.jdesktop.swingx.JXLabel" name="jXLabel6">

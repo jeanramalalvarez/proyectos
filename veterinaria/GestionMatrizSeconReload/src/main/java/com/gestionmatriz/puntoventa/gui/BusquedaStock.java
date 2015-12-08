@@ -82,7 +82,7 @@ public class BusquedaStock extends javax.swing.JDialog {
 
         jXLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jXLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jXLabel6.setText("Producto: ");
+        jXLabel6.setText("Producto/Servicio: ");
 
         txtProducto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -103,7 +103,7 @@ public class BusquedaStock extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Codigo", "Producto", "Fabricante", "Cod Proveedor", "Proveedor", "CUM", "Nombre UM", "Precio", "Stock", "UC", "R T", "DP", "Codigo"
+                "Codigo", "Producto/Servicio", "Fabricante", "Cod Proveedor", "Proveedor", "CUM", "Nombre UM", "Precio", "Stock", "UC", "R T", "DP", "Codigo"
             }
         ) {
             Class[] types = new Class [] {
@@ -149,7 +149,7 @@ public class BusquedaStock extends javax.swing.JDialog {
         jXPanel1.setLayout(jXPanel1Layout);
         jXPanel1Layout.setHorizontalGroup(
             jXPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jXPanel1Layout.setVerticalGroup(
             jXPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +162,7 @@ public class BusquedaStock extends javax.swing.JDialog {
 
         jXLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jXLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jXLabel5.setText("[ENTER]=Cargar Producto");
+        jXLabel5.setText("[ENTER]=Cargar Producto/Servicio");
 
         jXLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jXLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -174,10 +174,10 @@ public class BusquedaStock extends javax.swing.JDialog {
             jXPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jXPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jXLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jXLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jXLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(592, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jXPanel3Layout.setVerticalGroup(
             jXPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,10 +194,10 @@ public class BusquedaStock extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jXPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jXLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jXLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE))
+                        .addComponent(txtProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jXPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -214,6 +214,8 @@ public class BusquedaStock extends javax.swing.JDialog {
                 .addComponent(jXPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jXPanel1.getAccessibleContext().setAccessibleName("Precios Por Producto/Servicio");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -263,7 +265,7 @@ private void tbDetalleStockKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST
     // End of variables declaration//GEN-END:variables
 
     private void CargaInicial() {
-        this.setTitle("" + gui.getTitle().concat("").concat(" - [Modulo: Precio por Producto]"));
+        this.setTitle("" + gui.getTitle().concat("").concat(" - [Modulo: Precio por Producto/Servicio]"));
     }
 
     private void evento(KeyEvent evt) {

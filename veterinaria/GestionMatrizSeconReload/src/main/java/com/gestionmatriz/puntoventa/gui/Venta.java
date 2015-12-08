@@ -95,11 +95,11 @@ public class Venta extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Codigo", "Producto", "U M", "Stock", "Precio", "Cantidad", "Afecto", "Desc %", "SubTotal"
+                "Codigo", "Producto/Servicio", "U M", "Stock", "Precio", "Cantidad", "Afecto", "Desc %", "SubTotal"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.math.BigDecimal.class, java.math.BigDecimal.class, java.math.BigDecimal.class, java.lang.Boolean.class, java.math.BigDecimal.class, java.math.BigDecimal.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false
@@ -113,7 +113,7 @@ public class Venta extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tbDetalleVenta.setFont(new java.awt.Font("SansSerif", 1, 13));
+        tbDetalleVenta.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
         tbDetalleVenta.setNextFocusableComponent(tbDetalleVenta);
         tbDetalleVenta.setRowHeight(30);
         tbDetalleVenta.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -140,48 +140,48 @@ public class Venta extends javax.swing.JInternalFrame {
         jXLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jXLabel1.setText("SubTotal: ");
 
+        txtSubTotal.setEditable(false);
         txtSubTotal.setBackground(new java.awt.Color(0, 0, 0));
         txtSubTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 204, 51)));
-        txtSubTotal.setEditable(false);
         txtSubTotal.setForeground(new java.awt.Color(255, 102, 0));
         txtSubTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtSubTotal.setFont(new java.awt.Font("Consolas", 1, 24));
+        txtSubTotal.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
 
         jXLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jXLabel2.setText("Descuento (-):");
 
+        txtDescuento.setEditable(false);
         txtDescuento.setBackground(new java.awt.Color(0, 0, 0));
         txtDescuento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 204, 51)));
-        txtDescuento.setEditable(false);
         txtDescuento.setForeground(new java.awt.Color(255, 102, 0));
         txtDescuento.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtDescuento.setFont(new java.awt.Font("Consolas", 1, 24));
+        txtDescuento.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
 
         jXLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jXLabel3.setText("IGV (+): ");
 
+        txtIGV.setEditable(false);
         txtIGV.setBackground(new java.awt.Color(0, 0, 0));
         txtIGV.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 204, 51)));
-        txtIGV.setEditable(false);
         txtIGV.setForeground(new java.awt.Color(255, 102, 0));
         txtIGV.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtIGV.setFont(new java.awt.Font("Consolas", 1, 24));
+        txtIGV.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
 
         jXLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jXLabel4.setText("Total");
 
+        txtTotal.setEditable(false);
         txtTotal.setBackground(new java.awt.Color(0, 0, 0));
         txtTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 204, 51)));
-        txtTotal.setEditable(false);
         txtTotal.setForeground(new java.awt.Color(255, 102, 0));
         txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txtTotal.setFont(new java.awt.Font("Consolas", 1, 24));
+        txtTotal.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
 
         jXPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Opciones"));
 
         jXLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jXLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jXLabel5.setText("F9=Buscar Producto");
+        jXLabel5.setText("F9=Buscar Producto/Servicio");
 
         jXLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jXLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -214,20 +214,17 @@ public class Venta extends javax.swing.JInternalFrame {
             .addGroup(jXPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jXPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jXPanel1Layout.createSequentialGroup()
-                        .addComponent(jXLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jXLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jXLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jXPanel1Layout.createSequentialGroup()
-                        .addGroup(jXPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jXLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jXLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jXLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jXLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)))
+                    .addComponent(jXLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                    .addComponent(jXLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jXLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jXPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jXLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jXLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jXPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jXLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jXLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jXPanel1Layout.setVerticalGroup(
@@ -244,7 +241,7 @@ public class Venta extends javax.swing.JInternalFrame {
                     .addComponent(jXLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jXLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -291,7 +288,7 @@ public class Venta extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jXLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(89, Short.MAX_VALUE))
+                        .addContainerGap(93, Short.MAX_VALUE))
                     .addComponent(jXPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
