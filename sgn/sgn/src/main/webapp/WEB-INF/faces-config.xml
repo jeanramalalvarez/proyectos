@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<locale-config>
+			<default-locale>es</default-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>com.notariaberrospi.sgn.resources.mensajes</base-name>
+			<var>mensaje</var>
+		</resource-bundle>
+		<message-bundle>com.notariaberrospi.sgn.resources.messages</message-bundle>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+
+		<!-- PARA TRABAJAR CON DIALOG FRAMEWORK -->
+		<action-listener>org.primefaces.application.DialogActionListener</action-listener>
+		<navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
+		<view-handler>org.primefaces.application.DialogViewHandler</view-handler>
+
+	</application>
+
+	<!-- <factory> -->
+	<!-- <exception-handler-factory>com.notariaberrospi.sgn.handler.ViewExceptionHandlerFactory</exception-handler-factory> -->
+	<!-- </factory> -->
+
+	<factory>
+		<exception-handler-factory>org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory</exception-handler-factory>
+	</factory>
+
+</faces-config>

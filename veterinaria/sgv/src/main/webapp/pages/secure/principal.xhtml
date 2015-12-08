@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+<h:head>
+
+<script type="text/javascript">
+function handleMessage(facesMessage) {
+console.log("handleMessage");
+}
+</script>
+
+</h:head>
+
+<h:body>
+
+	<h1>Welcome !!</h1>
+
+
+	<h:form>
+
+		<p:panel header="All Customers">
+			<p:dataTable value="#{loginMB.customerList}" var="customer">
+				<p:column headerText="Name">#{customer.customer_name}</p:column>
+
+			</p:dataTable>
+			<p:separator />
+			<sec:authorize access="hasRole('ADMIN')">
+				<p:commandButton value="Delete Customer"
+					actionListener="#{loginMB.delete}" />
+			</sec:authorize>
+
+
+		</p:panel>
+
+		<p:commandButton value="Logout" action="#{loginMB.logout}" />
+	</h:form>
+	<p:push channel="/notify" onmessage="handleMessage"/>
+</h:body>
+</html>

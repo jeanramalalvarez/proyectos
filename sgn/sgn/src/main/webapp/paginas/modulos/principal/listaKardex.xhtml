@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="../../recursos/plantilla.xhtml">
+		<ui:define name="options">
+			<h:form>
+				<p:commandButton value="Registrar Kardex"
+					action="#{irPaginaController.mantKardex}" id="btnRegistrarKardex"
+					icon="ui-icon-pencil" title="Registrar" />
+			</h:form>
+		</ui:define>
+		<ui:define name="content">
+			<f:event type="preRenderView" listener="#{mantKardexController.limpiar}" />
+
+			<h:form id="form1">
+				<h3 style="margin: 5px">Lista Kardex</h3>
+				<p:panelGrid style="boder:0px; width:600px;" >
+					<f:facet name="header">
+						<p:row style="center">
+							<p:column colspan="3">Busqueda</p:column>
+						</p:row>
+					</f:facet>
+					<p:row>
+						<p:column colspan="2">
+							<p:outputLabel for="nrokardex"
+								value="#{mensaje['campo.kardex.nroKardex']}" />
+							<p:inputText size="40" id="nrokardex"
+								value="#{listaKardexController.busqueda.nrokardex}"
+								label="Nro. Kardex">
+							</p:inputText>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="1">
+							<p:outputLabel for="fecInicio"
+								value="#{mensaje['campo.busqueda.fecInicio']}" />
+							<p:calendar id="fecInicio" pattern="EEE MM/dd/yyyy"
+								value="#{listaKardexController.busqueda.fecInicio}"
+								showOn="button" readonlyInput="true" size="20" />
+							<p:message for="fecInicio" display="icon" />
+						</p:column>
+						<p:column colspan="1">
+							<p:outputLabel for="fecFin"
+								value="#{mensaje['campo.busqueda.fecFin']}" />
+							<p:calendar id="fecFin" pattern="EEE MM/dd/yyyy"
+								value="#{listaKardexController.busqueda.fecFin}" showOn="button"
+								readonlyInput="true" size="20" />
+							<p:message for="fecFin" display="icon" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</h:form>
+			<p:spacer height="10" />
+			<h:form id="form2">
+
+				<p:dataTable var="kardex" value="#{listaKardexController.kardexs}">
+					<p:column headerText="Id">
+						<h:outputText value="#{kardex.idkardex}" />
+					</p:column>
+
+					<p:column headerText="Numero kardex">
+						<h:outputText value="#{kardex.nrokardex}" />
+					</p:column>
+
+					<p:column headerText="fecha Ingreso">
+						<h:outputText value="#{kardex.fecingreso}">
+							<f:convertDateTime pattern="EEEE MM/dd/yyyy HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Opcion" width="60"
+						style="width:4%; text-align:center;">
+						<p:commandButton
+							action="#{mantKardexController.cargar(kardex.idkardex)}"
+							id="editar" icon="ui-icon-pencil" title="Editar" />
+					</p:column>
+				</p:dataTable>
+				<!-- 				</p:panel> -->
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title>Preguntas Frecuentes</title>
+</h:head>
+<body>
+
+<!-- 			<h:form> -->
+<!-- 				<p:commandButton value="Buscar" immediate="true" -->
+<!-- 					icon="ui-icon-extlink" -->
+<!-- 					actionListener="#{popupController.popupListaPersona}" /> -->
+
+<!-- 				<p:commandButton value="Modal" type="button" -->
+<!-- 					onclick="PF('popupAbogado5').show();" /> -->
+<!-- 			</h:form> -->
+			<h2></h2>
+			<h:form id="form5">
+				<p:panel header="Lista Persona">
+					<p:messages />
+					<p:dataTable var="persona" value="#{personaController.personas}">
+						<p:column headerText="Id">
+							<h:outputText value="#{persona.idpersona}" />
+						</p:column>
+
+						<p:column headerText="Doc. Identidad">
+							<h:outputText value="#{persona.docidentidad}" />
+						</p:column>
+
+						<p:column headerText="Nombre Completo">
+							<h:outputText value="#{persona.nombreCompleto}" />
+						</p:column>
+						
+						<p:column>
+							<p:commandButton value="Buscar" immediate="true"
+								icon="ui-icon-extlink"
+								actionListener="#{popupController.popupListaPersona}"
+								update=":form1:intervinienteEmpresa" />
+						</p:column>
+						
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+</body>
+</html>
