@@ -56,9 +56,15 @@ public class Logeo extends javax.swing.JFrame {
         jXLabel2 = new org.jdesktop.swingx.JXLabel();
         jXLabel3 = new org.jdesktop.swingx.JXLabel();
         txtUsuarioLogeo = new org.jdesktop.swingx.JXTextField();
+        //Inicio JRAMAL
+        txtUsuarioLogeo.setText("J76PEREZ");
+        //Fin JRAMAL
         cboEmpresa = new org.jdesktop.swingx.JXComboBox();
         cboLocal = new org.jdesktop.swingx.JXComboBox();
         txtContraseniaLogeo = new javax.swing.JPasswordField();
+        //Inicio JRAMAL
+        txtContraseniaLogeo.setText("1");
+        //Fin JRAMAL
         btnIngresarLogeo = new org.jdesktop.swingx.JXButton();
         btnCancelar = new org.jdesktop.swingx.JXButton();
         jXTitledPanel1 = new org.jdesktop.swingx.JXTitledPanel();
@@ -313,6 +319,10 @@ private void cboLocalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_
             for (Empresa empresa : listaEmpresa) {
                 cboEmpresa.addItem(empresa.getStr_razonSocial());
             }
+            //Inicio JRAMAL
+            cboEmpresa.setSelectedIndex(1);
+            cboLocal.setSelectedIndex(1);
+            //Fin JRAMAL
         } catch (SQLException ex) {
             log.error(ex);
         }
