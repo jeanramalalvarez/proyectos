@@ -4,9 +4,6 @@
  */
 package com.gestionmatriz.puntoventa.gui;
 
-import com.gestionmatriz.dao.PaqueteBusinessDelegate;
-import com.gestionmatriz.puntoventa.bean.Cliente;
-
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -14,6 +11,9 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
+
+import com.gestionmatriz.dao.PaqueteBusinessDelegate;
+import com.gestionmatriz.puntoventa.bean.Cliente;
 
 /**
  *
@@ -29,6 +29,7 @@ public class BuscarCliente extends javax.swing.JDialog {
     private Frame gui;
     private GestionCliente frmGestionCliente;
     private PreVenta frmPreVenta;
+    private PrecargaCliente frmPrecargaCliente;
     private List<Cliente> listaCliente;
 
     public BuscarCliente(Frame gui, List<Cliente> listaCliente, GestionCliente frmGestionCliente) {
@@ -45,6 +46,15 @@ public class BuscarCliente extends javax.swing.JDialog {
         this.gui = gui;
         this.listaCliente = listaCliente;
         this.frmPreVenta = frmPreVenta;
+        initComponents();
+        cargarDatos();
+    }
+    
+    public BuscarCliente(Frame gui, List<Cliente> listaCliente, PrecargaCliente frmPrecargaCliente) {
+        super(gui, true);
+        this.gui = gui;
+        this.listaCliente = listaCliente;
+        this.frmPrecargaCliente = frmPrecargaCliente;
         initComponents();
         cargarDatos();
     }
@@ -258,13 +268,15 @@ public class BuscarCliente extends javax.swing.JDialog {
 
     private void evento() {
 
-        if (frmGestionCliente == null) {
-            frmPreVenta.cargarDatosBusquedaCliente(clienteSeleccionado());
-            this.setVisible(false);
-            return;
+        if (frmGestionCliente != null) {
+        	frmGestionCliente.cargarDatosBusquedaCliente(clienteSeleccionado());
+        }if(frmPreVenta != null){
+        	frmPreVenta.cargarDatosBusquedaCliente(clienteSeleccionado());        		
+        }else if(frmPrecargaCliente != null){
+        	frmPrecargaCliente.cargarDatosBusquedaCliente(clienteSeleccionado());        		
         }
-        frmGestionCliente.cargarDatosBusquedaCliente(clienteSeleccionado());
         this.setVisible(false);
+        //return;
     }
 
     private void cargarTabla(List<Cliente> listaCliente) {

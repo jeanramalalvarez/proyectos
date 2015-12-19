@@ -35,6 +35,9 @@ public class BusquedaStock extends javax.swing.JDialog {
     private PrecargaProducto jdPrecarga;
     private GuiaRemision frmGuiaRemision;
 
+    /**
+     * @wbp.parser.constructor
+     */
     public BusquedaStock(Principal gui, Venta guiVenta) {
         super(gui);
         this.gui = gui;
