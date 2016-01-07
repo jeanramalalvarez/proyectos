@@ -15,4 +15,6 @@ public class Constantes {
     
     public final static String RESULTSET_OK = "1";
     public final static String RESULTSET_NO_PROCESOR = "0";
+    
+    public final static int FAMI_SERV = 99999999;
 }

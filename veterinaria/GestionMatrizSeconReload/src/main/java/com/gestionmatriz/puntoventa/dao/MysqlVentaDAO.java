@@ -16,6 +16,7 @@ import java.util.Objects;
 import org.apache.log4j.Logger;
 
 import com.gestionmatriz.almacen.bean.Almacen;
+import com.gestionmatriz.almacen.bean.Familia;
 import com.gestionmatriz.almacen.bean.Producto;
 import com.gestionmatriz.almacen.bean.Proveedor;
 import com.gestionmatriz.almacen.bean.TipoMovimiento;
@@ -56,6 +57,9 @@ public class MysqlVentaDAO extends ConexionSqlSpring implements VentaDAO {
         Producto objProducto;
         Proveedor objProveedor;
         UnidadMedida objUnidadMedida;
+        //Inicio JRAMAL
+        Familia objFamilia;
+        //Fin JRAMAL
 
         try {
             cnn = Objects.equals(Globales.TIPO_CONEXION, Constantes.JDBC)?ConexionSql.getConexion():this.getDataSource().getConnection();
@@ -83,12 +87,23 @@ public class MysqlVentaDAO extends ConexionSqlSpring implements VentaDAO {
                 objProducto.setStr_fabricante(rs.getString(3));
                 objProducto.setStr_reintegroTributario(rs.getString(11));
                 objProducto.setStr_codigoInterno(rs.getString(14));
+                
+                //Inicio JRAMAL
+                objFamilia = new Familia();
+                objFamilia.setInt_idFamilia(rs.getInt(15));
+                objProducto.setObjFamilia(objFamilia);
+                //Fin JRAMAL
+                
                 objConsultaStock.setObjProducto(objProducto);
-
+                
+                
+                //if(objFamilia.getInt_idFamilia() != Constantes.FAMI_SERV){
                 objProveedor = new Proveedor();
                 objProveedor.setInt_idProveedor(rs.getInt(4));
                 objProveedor.setStr_razonSocial(rs.getString(5));
                 objConsultaStock.setObjProveedor(objProveedor);
+                //}
+                //Fin JRAMAL
 
                 objUnidadMedida = new UnidadMedida();
                 objUnidadMedida.setInt_idUnidadMedida(rs.getInt(6));
